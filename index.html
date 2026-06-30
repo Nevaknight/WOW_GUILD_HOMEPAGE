@@ -21,8 +21,8 @@
         .loot-grid {
             display: grid;
             grid-template-columns: repeat(16, minmax(0, 1fr));
-            gap: 4px;
-            min-width: 600px;
+            gap: 6px;
+            min-width: 900px;
         }
 
         /* Эффекты для интерактивных иконок */
@@ -136,8 +136,21 @@
                 <h3 class="text-xl font-black text-slate-800 mb-2 text-center uppercase tracking-wide">Приоритет Лута</h3>
                 <p class="text-slate-500 text-sm mb-6 text-center">Выбери предметы (слоты), которые тебе нужны с каждого босса, и оставь комментарий при необходимости.</p>
                 
+                <!-- Блок для ссылки на трансляцию -->
+                <div class="mb-8 bg-purple-50 p-5 rounded-xl border border-purple-100 flex flex-col sm:flex-row sm:items-center gap-4 shadow-sm">
+                    <div class="flex-shrink-0 flex justify-center">
+                        <div class="w-12 h-12 bg-purple-600 text-white rounded-lg flex items-center justify-center shadow-sm">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <label class="block text-sm font-bold text-purple-900 mb-1">Ссылка на стрим (Twitch, YouTube, и т.д.)</label>
+                        <input type="url" id="stream-link" class="w-full border border-purple-200 rounded-lg p-2.5 outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 font-medium text-sm shadow-sm bg-white" placeholder="https://twitch.tv/..." oninput="showFloatingSave()">
+                    </div>
+                </div>
+
                 <div class="overflow-x-auto custom-scrollbar pb-4">
-                    <table class="w-full border-collapse min-w-[850px]">
+                    <table class="w-full border-collapse min-w-[1100px]">
                         <thead>
                             <tr class="text-sm text-slate-500 border-b border-slate-200">
                                 <th class="pb-3 px-2 w-[20%] text-left">Босс</th>
@@ -182,8 +195,19 @@
         const REPO_NAME = 'WOW_GUILD_HOMEPAGE';
         // ==========================================
 
-        const PLAYERS = ['Сейлоркринж', 'Рейнон', 'Рид', 'Рипыч'];
-        const PASSWORDS = { 'Рид': 'R1234', 'Рипыч': 'DHtop', 'Сейлоркринж': 'Яакулатутуру', 'Рейнон': 'R1234' };
+        const PLAYERS = [
+            'Сейлоркринж', 'Рейнон', 'Рид', 'Рипыч',
+            'Тралл', 'Джайна', 'Артас', 'Иллидан', 'Сильвана', 'Утер',
+            'Тирион', 'Вариан', 'Андуин', 'Гулдан', 'Кадгар', 'Малфурион',
+            'Тиранда', 'Майев', 'Кельтас', 'Волджин'
+        ];
+        
+        const PASSWORDS = { 
+            'Рид': 'R1234', 'Рипыч': 'DHtop', 'Сейлоркринж': 'Яакулатутуру', 'Рейнон': 'R1234',
+            'Тралл': '123', 'Джайна': '123', 'Артас': '123', 'Иллидан': '123', 'Сильвана': '123', 'Утер': '123',
+            'Тирион': '123', 'Вариан': '123', 'Андуин': '123', 'Гулдан': '123', 'Кадгар': '123', 'Малфурион': '123',
+            'Тиранда': '123', 'Майев': '123', 'Кельтас': '123', 'Волджин': '123'
+        };
         
         // Массив слотов (16 штук: 1-17, без рубашки 4)
         const SLOTS = [1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
@@ -205,6 +229,29 @@
         let currentAllLootData = {};
         let currentActivePlayers = [];
 
+        // Названия слотов на русском
+        function getSlotName(slotNumber) {
+            const names = {
+                1: 'Голова',
+                2: 'Шея',
+                3: 'Плечи',
+                5: 'Грудь',
+                6: 'Пояс',
+                7: 'Ноги',
+                8: 'Ступни',
+                9: 'Запястья',
+                10: 'Кисти рук',
+                11: 'Палец 1 (Верхний)',
+                12: 'Палец 2 (Нижний)',
+                13: 'Аксессуар 1 (Верхний)',
+                14: 'Аксессуар 2 (Нижний)',
+                15: 'Спина',
+                16: 'Правая рука (Мейн)',
+                17: 'Левая рука (Оффхенд)'
+            };
+            return names[slotNumber] || `Слот ${slotNumber}`;
+        }
+
         // Вспомогательная функция для получения иконки слота
         function getSlotIconPath(slotNumber) {
             return `./ICONS/SLOT_${slotNumber}.webp`;
@@ -212,6 +259,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             const playerSelect = document.getElementById('login-player');
+            playerSelect.innerHTML = '<option value="" disabled selected hidden>Выбери своё имя</option>';
             PLAYERS.forEach(p => {
                 playerSelect.insertAdjacentHTML('beforeend', `<option value="${p}" class="text-slate-800">${p}</option>`);
             });
@@ -321,7 +369,6 @@
                 showMessage('Тестовый режим отключен (реальные данные)', 'info');
             }
             
-            // Если мы находимся на вкладке дашборда, сразу обновляем данные
             if (!document.getElementById('view-dashboard').classList.contains('hidden-view')) {
                 loadAllData();
             } else {
@@ -372,6 +419,12 @@
         function renderForm(userData = {}) {
             const tbody = document.getElementById('form-body-bosses');
             tbody.innerHTML = '';
+            
+            // Заполняем поле стрима, если оно было сохранено ранее
+            const streamInput = document.getElementById('stream-link');
+            if (streamInput) {
+                streamInput.value = userData.stream_link || '';
+            }
 
             BOSSES.forEach(boss => {
                 const bossData = userData[boss.id] || { items: [], comment: '' };
@@ -381,11 +434,11 @@
                     const isSelected = bossData.items.includes(slotId);
                     slotsHtml += `
                         <img src="${getSlotIconPath(slotId)}" 
-                             alt="Slot ${slotId}" 
+                             alt="${getSlotName(slotId)}" 
                              data-slot-id="${slotId}"
                              class="item-icon w-full h-auto aspect-square object-cover ${isSelected ? 'selected' : ''}"
                              onclick="toggleItemSlot(this)"
-                             title="Слот ${slotId}">
+                             title="${getSlotName(slotId)}">
                     `;
                 });
                 slotsHtml += `</div>`;
@@ -422,7 +475,11 @@
             btn.innerHTML = `<div class="w-6 h-6 border-4 border-white border-t-transparent rounded-full loader"></div>`;
             btn.disabled = true;
 
-            const dataToSave = {};
+            // Захватываем ссылку на стрим
+            const streamLink = document.getElementById('stream-link') ? document.getElementById('stream-link').value.trim() : '';
+            const dataToSave = {
+                stream_link: streamLink
+            };
             
             BOSSES.forEach(boss => {
                 const grid = document.querySelector(`.loot-grid[data-boss-id="${boss.id}"]`);
@@ -505,7 +562,6 @@
             let playersWhoFilled = [];
 
             if (isTestMode) {
-                // В режиме тестирования загружаем 20 игроков из файла testdata.json
                 const fileData = await githubAPI('GET', 'testdata.json');
                 if (fileData && fileData.content) {
                     try {
@@ -517,7 +573,6 @@
                     }
                 }
             } else {
-                // В обычном режиме загружаем реальных игроков по одному
                 for (let player of PLAYERS) {
                     const fileData = await githubAPI('GET', `loot_${player}.json`);
                     if (fileData && fileData.content) {
@@ -532,11 +587,9 @@
 
             document.getElementById('dashboard-loading').classList.add('hidden');
             
-            // Сохраняем в глобальные переменные для фильтра
             currentAllLootData = allLootData;
             currentActivePlayers = playersWhoFilled;
 
-            // Обновляем фильтр
             filterDropdown.innerHTML = '<option value="all">Все игроки</option>';
             playersWhoFilled.forEach(p => {
                 filterDropdown.insertAdjacentHTML('beforeend', `<option value="${p}">${p}</option>`);
@@ -565,15 +618,17 @@
                 let interestedPlayers = [];
                 
                 currentActivePlayers.forEach(player => {
-                    // Если выбран конкретный игрок в фильтре - пропускаем остальных
                     if (filterValue !== 'all' && player !== filterValue) return;
 
                     const pData = currentAllLootData[player]?.[boss.id];
+                    const streamLink = currentAllLootData[player]?.stream_link || '';
+                    
                     if (pData && (pData.items.length > 0 || pData.comment.trim() !== '')) {
                         interestedPlayers.push({
                             name: player,
                             items: pData.items,
-                            comment: pData.comment
+                            comment: pData.comment,
+                            stream_link: streamLink
                         });
                     }
                 });
@@ -588,7 +643,7 @@
                                 <h3 class="text-xl font-black text-slate-800 uppercase tracking-wide">${boss.name}</h3>
                             </div>
                             <div class="overflow-x-auto custom-scrollbar pb-2">
-                                <table class="w-full min-w-[700px]">
+                                <table class="w-full min-w-[900px]">
                                     <tbody class="text-sm">
                     `;
 
@@ -596,17 +651,32 @@
                         const isLast = index === interestedPlayers.length - 1;
                         const borderClass = isLast ? '' : 'border-b border-slate-100';
                         
-                        let gridHtml = `<div class="loot-grid w-[400px]">`;
+                        let gridHtml = `<div class="loot-grid w-[600px]">`;
                         SLOTS.forEach(slotId => {
                             const hasItem = p.items.includes(slotId);
                             const imgClass = hasItem ? 'dash-item-icon active' : 'dash-item-icon empty';
-                            gridHtml += `<img src="${getSlotIconPath(slotId)}" class="w-full h-auto aspect-square object-cover ${imgClass}" title="Слот ${slotId}">`;
+                            gridHtml += `<img src="${getSlotIconPath(slotId)}" class="w-full h-auto aspect-square object-cover ${imgClass}" title="${getSlotName(slotId)}">`;
                         });
                         gridHtml += `</div>`;
 
+                        // Иконка трансляции (камера) с проверкой ссылки
+                        const streamUrl = p.stream_link.startsWith('http') ? p.stream_link : `https://${p.stream_link}`;
+                        const streamIconHtml = p.stream_link ? `
+                            <a href="${streamUrl}" target="_blank" title="Перейти на трансляцию игрока" class="flex-shrink-0 hover:scale-105 transition-transform duration-200">
+                                <div class="w-10 h-10 bg-purple-600 rounded-md flex items-center justify-center shadow-sm border border-purple-700 text-white hover:bg-purple-500">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+                                </div>
+                            </a>
+                        ` : '';
+
                         bossHtml += `
                                         <tr class="${borderClass} hover:bg-slate-50 transition-colors">
-                                            <td class="py-4 px-4 w-[20%] font-bold text-slate-800 text-base">${p.name}</td>
+                                            <td class="py-4 px-4 w-[20%] font-bold text-slate-800 text-base">
+                                                <div class="flex items-center gap-3">
+                                                    <span class="truncate">${p.name}</span>
+                                                    ${streamIconHtml}
+                                                </div>
+                                            </td>
                                             <td class="py-4 px-4 w-[50%]">${gridHtml}</td>
                                             <td class="py-4 px-4 w-[30%]">
                                                 ${p.comment ? `<div class="bg-slate-100 text-slate-700 px-3 py-2 rounded-lg text-xs font-medium border border-slate-200">${p.comment}</div>` : ''}
