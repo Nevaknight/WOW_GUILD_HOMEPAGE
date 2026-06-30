@@ -1,0 +1,36 @@
+{
+  "boss_1": {
+    "items": [
+      1
+    ],
+    "comment": "57456"
+  },
+  "boss_2": {
+    "items": [],
+    "comment": ""
+  },
+  "boss_3": {
+    "items": [],
+    "comment": ""
+  },
+  "boss_4": {
+    "items": [],
+    "comment": ""
+  },
+  "boss_5": {
+    "items": [],
+    "comment": ""
+  },
+  "boss_6": {
+    "items": [],
+    "comment": ""
+  },
+  "boss_7": {
+    "items": [],
+    "comment": ""
+  },
+  "boss_8": {
+    "items": [],
+    "comment": ""
+  }
+}
