@@ -108,8 +108,11 @@
         <!-- ЭКРАН 2: СВОДНАЯ ТАБЛИЦА (DASHBOARD) -->
         <div id="view-dashboard" class="hidden-view space-y-6 w-full">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <div class="flex-1 text-center sm:text-left">
-                    <h2 id="dashboard-status-text" class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Ожидание данных...</h2>
+                <div class="flex-1 flex flex-col sm:flex-row sm:items-center gap-3">
+                    <span class="text-slate-700 font-bold text-lg whitespace-nowrap">Фильтр по игроку:</span>
+                    <select id="dashboard-filter" onchange="applyFilter()" class="w-full sm:w-auto border border-slate-300 rounded-lg p-2 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 font-medium bg-white shadow-sm disabled:opacity-50 disabled:bg-slate-50 cursor-pointer text-slate-800" disabled>
+                        <option value="all">Загрузка...</option>
+                    </select>
                 </div>
                 <button onclick="loadAllData()" class="text-sm bg-white border border-slate-300 hover:bg-slate-50 px-4 py-2.5 rounded-lg transition flex items-center justify-center gap-2 font-bold shadow-sm w-full sm:w-auto">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
@@ -199,6 +202,8 @@
 
         let currentUser = null;
         let isTestMode = false;
+        let currentAllLootData = {};
+        let currentActivePlayers = [];
 
         // Вспомогательная функция для получения иконки слота
         function getSlotIconPath(slotNumber) {
@@ -491,7 +496,10 @@
         async function loadAllData() {
             document.getElementById('dashboard-content').innerHTML = '';
             document.getElementById('dashboard-loading').classList.remove('hidden');
-            document.getElementById('dashboard-status-text').innerText = 'Загрузка данных...';
+            
+            const filterDropdown = document.getElementById('dashboard-filter');
+            filterDropdown.innerHTML = '<option value="all">Загрузка...</option>';
+            filterDropdown.disabled = true;
 
             let allLootData = {};
             let playersWhoFilled = [];
@@ -523,28 +531,44 @@
             }
 
             document.getElementById('dashboard-loading').classList.add('hidden');
-            renderDashboard(allLootData, playersWhoFilled);
+            
+            // Сохраняем в глобальные переменные для фильтра
+            currentAllLootData = allLootData;
+            currentActivePlayers = playersWhoFilled;
+
+            // Обновляем фильтр
+            filterDropdown.innerHTML = '<option value="all">Все игроки</option>';
+            playersWhoFilled.forEach(p => {
+                filterDropdown.insertAdjacentHTML('beforeend', `<option value="${p}">${p}</option>`);
+            });
+            filterDropdown.disabled = playersWhoFilled.length === 0;
+
+            renderDashboard();
         }
 
-        function renderDashboard(allLootData, activePlayers) {
+        function applyFilter() {
+            renderDashboard();
+        }
+
+        function renderDashboard() {
             const container = document.getElementById('dashboard-content');
-            const statusText = document.getElementById('dashboard-status-text');
+            const filterValue = document.getElementById('dashboard-filter').value;
             
-            if (activePlayers.length === 0) {
-                statusText.innerHTML = `<span class="text-slate-500 font-medium">Никто еще не заполнил вишлист.</span>`;
+            if (currentActivePlayers.length === 0) {
                 container.innerHTML = `<div class="p-12 text-center bg-white rounded-2xl border border-slate-200 border-dashed text-slate-500">Данных для отображения пока нет.</div>`;
                 return;
             }
-
-            statusText.innerHTML = `Заполнили: <span class="font-black text-blue-600">${activePlayers.join(', ')}</span>`;
 
             let finalHtml = '';
 
             BOSSES.forEach(boss => {
                 let interestedPlayers = [];
                 
-                activePlayers.forEach(player => {
-                    const pData = allLootData[player]?.[boss.id];
+                currentActivePlayers.forEach(player => {
+                    // Если выбран конкретный игрок в фильтре - пропускаем остальных
+                    if (filterValue !== 'all' && player !== filterValue) return;
+
+                    const pData = currentAllLootData[player]?.[boss.id];
                     if (pData && (pData.items.length > 0 || pData.comment.trim() !== '')) {
                         interestedPlayers.push({
                             name: player,
