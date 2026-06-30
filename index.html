@@ -174,11 +174,11 @@
     <script>
         // ==========================================
         // НАСТРОЙКИ GITHUB API (Оставлены без изменений)
-        const TOKEN_PART_1 = 'github_pat_11AVPVAWY0ePzqamRGnq9g_'; 
-        const TOKEN_PART_2 = 'BC7Dk6egQINo2Ov5LVH59PguyVwKS5nbpYLMIQmR3THXKAIBS45KnOiguhn'; 
+        const TOKEN_PART_1 = 'github_pat_11AVPVAWY0QjL4plSQzj4t_'; 
+        const TOKEN_PART_2 = 'xIFTrFU8SACkqnC3J3N5Ox4zoYhvjhBqIOx31pzrfOrELLHUEGAngVEIoCv'; 
         const GITHUB_TOKEN = TOKEN_PART_1 + TOKEN_PART_2; 
         const REPO_OWNER = 'Nevaknight';
-        const REPO_NAME = 'KeyPlanner';
+        const REPO_NAME = 'WOW_GUILD_HOMEPAGE';
         // ==========================================
 
         const PLAYERS = ['Сейлоркринж', 'Рейнон', 'Рид', 'Рипыч'];
@@ -189,45 +189,21 @@
         
         // Массив тестовых боссов (8 шт)
         const BOSSES = [
-            { id: 'boss_1', name: 'Налоракк', icon: 'https://wow.zamimg.com/images/wow/icons/large/achievement_boss_nalorakk.jpg' },
-            { id: 'boss_2', name: 'Акил\'зон', icon: 'https://wow.zamimg.com/images/wow/icons/large/achievement_boss_akilzon.jpg' },
-            { id: 'boss_3', name: 'Халлаз', icon: 'https://wow.zamimg.com/images/wow/icons/large/achievement_boss_halazzi.jpg' },
-            { id: 'boss_4', name: 'Джан\'алай', icon: 'https://wow.zamimg.com/images/wow/icons/large/achievement_boss_janalai.jpg' },
-            { id: 'boss_5', name: 'Малакрасс', icon: 'https://wow.zamimg.com/images/wow/icons/large/achievement_boss_hexlordmalacrass.jpg' },
-            { id: 'boss_6', name: 'Зул\'джин', icon: 'https://wow.zamimg.com/images/wow/icons/large/achievement_boss_zuljin.jpg' },
-            { id: 'boss_7', name: 'Мороуз', icon: 'https://wow.zamimg.com/images/wow/icons/large/achievement_boss_moroes.jpg' },
-            { id: 'boss_8', name: 'Куратор', icon: 'https://wow.zamimg.com/images/wow/icons/large/achievement_boss_curator.jpg' }
+            { id: 'boss_1', name: 'Налоракк', icon: './ICONS/BOSSES/001.jpg' },
+            { id: 'boss_2', name: 'Акил\'зон', icon: './ICONS/BOSSES/002.jpg' },
+            { id: 'boss_3', name: 'Халлаз', icon: './ICONS/BOSSES/003.jpg' },
+            { id: 'boss_4', name: 'Джан\'алай', icon: './ICONS/BOSSES/004.jpg' },
+            { id: 'boss_5', name: 'Малакрасс', icon: './ICONS/BOSSES/005.jpg' },
+            { id: 'boss_6', name: 'Зул\'джин', icon: './ICONS/BOSSES/006.jpg' },
+            { id: 'boss_7', name: 'Мороуз', icon: './ICONS/BOSSES/007.jpg' },
+            { id: 'boss_8', name: 'Куратор', icon: './ICONS/BOSSES/008.jpg' }
         ];
 
         let currentUser = null;
 
         // Вспомогательная функция для получения иконки слота
         function getSlotIconPath(slotNumber) {
-            // ТУТ ВАЖНО: Сейчас используются временные иконки с Wowhead для демонстрации.
-            // Чтобы использовать твои локальные картинки из папки ICONS, раскомментируй строку ниже 
-            // и закомментируй блок "switch".
-            
-            // return `./ICONS/SLOT_${slotNumber}.webp`;
-
-            switch(slotNumber) {
-                case 1: return 'https://wow.zamimg.com/images/wow/icons/large/inventoryslot_head.jpg';
-                case 2: return 'https://wow.zamimg.com/images/wow/icons/large/inventoryslot_neck.jpg';
-                case 3: return 'https://wow.zamimg.com/images/wow/icons/large/inventoryslot_shoulder.jpg';
-                case 5: return 'https://wow.zamimg.com/images/wow/icons/large/inventoryslot_chest.jpg';
-                case 6: return 'https://wow.zamimg.com/images/wow/icons/large/inventoryslot_waist.jpg';
-                case 7: return 'https://wow.zamimg.com/images/wow/icons/large/inventoryslot_legs.jpg';
-                case 8: return 'https://wow.zamimg.com/images/wow/icons/large/inventoryslot_feet.jpg';
-                case 9: return 'https://wow.zamimg.com/images/wow/icons/large/inventoryslot_wrists.jpg';
-                case 10: return 'https://wow.zamimg.com/images/wow/icons/large/inventoryslot_hands.jpg';
-                case 11: return 'https://wow.zamimg.com/images/wow/icons/large/inventoryslot_finger.jpg';
-                case 12: return 'https://wow.zamimg.com/images/wow/icons/large/inventoryslot_finger.jpg';
-                case 13: return 'https://wow.zamimg.com/images/wow/icons/large/inventoryslot_trinket.jpg';
-                case 14: return 'https://wow.zamimg.com/images/wow/icons/large/inventoryslot_trinket.jpg';
-                case 15: return 'https://wow.zamimg.com/images/wow/icons/large/inventoryslot_back.jpg';
-                case 16: return 'https://wow.zamimg.com/images/wow/icons/large/inventoryslot_mainhand.jpg';
-                case 17: return 'https://wow.zamimg.com/images/wow/icons/large/inventoryslot_offhand.jpg';
-                default: return 'https://wow.zamimg.com/images/wow/icons/large/inv_misc_questionmark.jpg';
-            }
+            return `./ICONS/SLOT_${slotNumber}.webp`;
         }
 
         document.addEventListener('DOMContentLoaded', () => {
