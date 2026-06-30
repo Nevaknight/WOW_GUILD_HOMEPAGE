@@ -2,15 +2,15 @@
   "characters": {
     "main": {
       "class": "paladin",
-      "name": "Паладин"
+      "name": "Рейн"
     },
     "alt1": {
       "class": "druid",
-      "name": "Друид"
+      "name": "Арей"
     },
     "alt2": {
       "class": "monk",
-      "name": "Монах"
+      "name": "Гор"
     }
   },
   "stream_link": "https://www.twitch.tv/rainon_",
