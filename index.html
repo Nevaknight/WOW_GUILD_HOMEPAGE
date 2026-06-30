@@ -22,7 +22,7 @@
             display: grid;
             grid-template-columns: repeat(16, minmax(0, 1fr));
             gap: 4px;
-            min-width: 600px; /* Чтобы на мобилках скроллилось, а не сжималось в кашу */
+            min-width: 600px;
         }
 
         /* Эффекты для интерактивных иконок */
@@ -39,7 +39,7 @@
         }
         .item-icon.selected {
             filter: grayscale(0%) opacity(100%);
-            border-color: #22c55e; /* Зеленый border */
+            border-color: #22c55e;
             box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
             transform: scale(1.05);
         }
@@ -70,6 +70,7 @@
                 <span id="nav-player-name" class="font-bold text-blue-600 hidden sm:inline-block"></span>
                 <button id="nav-btn-dashboard" onclick="showView('dashboard')" class="text-sm px-3 py-1.5 rounded-md transition font-medium">Сводка</button>
                 <button id="nav-btn-form" onclick="showView('form')" class="text-sm px-3 py-1.5 rounded-md transition font-medium">Мой Вишлист</button>
+                <button id="nav-btn-test" onclick="toggleTestMode()" class="text-sm text-emerald-500 hover:text-emerald-700 transition font-bold px-3 py-1.5 border border-transparent rounded-md">Тест: ВЫКЛ</button>
                 <button onclick="logout()" class="text-sm text-red-500 hover:text-red-700 transition font-bold px-2">Выйти</button>
             </div>
         </div>
@@ -86,10 +87,7 @@
                     <div class="relative">
                         <select id="login-player" class="w-full border border-slate-300 rounded-lg p-2.5 pl-3 pr-10 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 bg-white font-medium appearance-none invalid:text-slate-400" required onchange="this.classList.remove('text-slate-400')">
                             <option value="" disabled selected hidden>Выбери своё имя</option>
-                            <option value="Сейлоркринж" class="text-slate-800">Сейлоркринж</option>
-                            <option value="Рейнон" class="text-slate-800">Рейнон</option>
-                            <option value="Рид" class="text-slate-800">Рид</option>
-                            <option value="Рипыч" class="text-slate-800">Рипыч</option>
+                            <!-- Генерируется через JS -->
                         </select>
                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-500">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -173,7 +171,7 @@
 
     <script>
         // ==========================================
-        // НАСТРОЙКИ GITHUB API (Оставлены без изменений)
+        // НАСТРОЙКИ GITHUB API
         const TOKEN_PART_1 = 'github_pat_11AVPVAWY0QjL4plSQzj4t_'; 
         const TOKEN_PART_2 = 'xIFTrFU8SACkqnC3J3N5Ox4zoYhvjhBqIOx31pzrfOrELLHUEGAngVEIoCv'; 
         const GITHUB_TOKEN = TOKEN_PART_1 + TOKEN_PART_2; 
@@ -200,6 +198,7 @@
         ];
 
         let currentUser = null;
+        let isTestMode = false;
 
         // Вспомогательная функция для получения иконки слота
         function getSlotIconPath(slotNumber) {
@@ -207,6 +206,11 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            const playerSelect = document.getElementById('login-player');
+            PLAYERS.forEach(p => {
+                playerSelect.insertAdjacentHTML('beforeend', `<option value="${p}" class="text-slate-800">${p}</option>`);
+            });
+
             const savedUser = localStorage.getItem('wow_user');
             if (savedUser && PLAYERS.includes(savedUser)) {
                 currentUser = savedUser;
@@ -294,6 +298,32 @@
             }
         }
 
+        function toggleTestMode() {
+            isTestMode = !isTestMode;
+            const btn = document.getElementById('nav-btn-test');
+            
+            if (isTestMode) {
+                btn.innerText = 'Тест: ВКЛ';
+                btn.classList.replace('text-emerald-500', 'text-amber-500');
+                btn.classList.replace('hover:text-emerald-700', 'hover:text-amber-700');
+                btn.classList.add('border-amber-200', 'bg-amber-50');
+                showMessage('Включен тестовый режим (20 игроков)', 'info');
+            } else {
+                btn.innerText = 'Тест: ВЫКЛ';
+                btn.classList.replace('text-amber-500', 'text-emerald-500');
+                btn.classList.replace('hover:text-amber-700', 'hover:text-emerald-700');
+                btn.classList.remove('border-amber-200', 'bg-amber-50');
+                showMessage('Тестовый режим отключен (реальные данные)', 'info');
+            }
+            
+            // Если мы находимся на вкладке дашборда, сразу обновляем данные
+            if (!document.getElementById('view-dashboard').classList.contains('hidden-view')) {
+                loadAllData();
+            } else {
+                showView('dashboard');
+            }
+        }
+
         function login() {
             const player = document.getElementById('login-player').value;
             const password = document.getElementById('login-password').value;
@@ -341,7 +371,6 @@
             BOSSES.forEach(boss => {
                 const bossData = userData[boss.id] || { items: [], comment: '' };
                 
-                // Генерируем HTML для сетки иконок слотов
                 let slotsHtml = `<div class="loot-grid" data-boss-id="${boss.id}">`;
                 SLOTS.forEach(slotId => {
                     const isSelected = bossData.items.includes(slotId);
@@ -358,18 +387,15 @@
 
                 const rowHtml = `
                     <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
-                        <!-- Босс -->
                         <td class="py-4 px-2 align-middle">
                             <div class="flex items-center gap-3">
                                 <img src="${boss.icon}" alt="${boss.name}" class="w-12 h-12 rounded-lg shadow-sm border border-slate-200 object-cover">
                                 <span class="font-bold text-slate-800 text-base">${boss.name}</span>
                             </div>
                         </td>
-                        <!-- Иконки -->
                         <td class="py-4 px-2 align-middle">
                             ${slotsHtml}
                         </td>
-                        <!-- Комментарий -->
                         <td class="py-4 px-2 pl-4 align-middle">
                             <input type="text" 
                                    id="comment-${boss.id}" 
@@ -393,7 +419,6 @@
 
             const dataToSave = {};
             
-            // Сбор данных из DOM
             BOSSES.forEach(boss => {
                 const grid = document.querySelector(`.loot-grid[data-boss-id="${boss.id}"]`);
                 const commentInput = document.getElementById(`comment-${boss.id}`);
@@ -407,7 +432,6 @@
                 
                 const comment = commentInput ? commentInput.value.trim() : '';
 
-                // Сохраняем, даже если пусто (чтобы затереть старые данные, если игрок передумал)
                 dataToSave[boss.id] = {
                     items: selectedItems,
                     comment: comment
@@ -441,10 +465,7 @@
                     hideFloatingSave();
                 }, 2000);
             } else {
-                // Фолбек для теста (Если GitHub API отвалится)
-                localStorage.setItem(`loot_fallback_${currentUser}`, jsonString);
-                showMessage('Сохранено локально (ошибка GitHub)', 'info');
-                
+                showMessage('Ошибка при сохранении на GitHub', 'error');
                 btn.innerHTML = originalContent;
                 btn.disabled = false;
                 hideFloatingSave();
@@ -460,13 +481,7 @@
                 renderForm(data);
                 showMessage('Анкета загружена', 'info');
             } else {
-                // Проверяем локальный фолбек
-                const fallbackData = localStorage.getItem(`loot_fallback_${currentUser}`);
-                if (fallbackData) {
-                    renderForm(JSON.parse(fallbackData));
-                } else {
-                    renderForm({});
-                }
+                renderForm({});
             }
         }
 
@@ -481,21 +496,28 @@
             let allLootData = {};
             let playersWhoFilled = [];
 
-            // Грузим данные по луту для всех игроков
-            for (let player of PLAYERS) {
-                const fileData = await githubAPI('GET', `loot_${player}.json`);
+            if (isTestMode) {
+                // В режиме тестирования загружаем 20 игроков из файла testdata.json
+                const fileData = await githubAPI('GET', 'testdata.json');
                 if (fileData && fileData.content) {
                     try {
                         const jsonString = decodeURIComponent(escape(atob(fileData.content)));
-                        allLootData[player] = JSON.parse(jsonString);
-                        playersWhoFilled.push(player);
-                    } catch(e) {}
-                } else {
-                    // Фолбек локальный
-                    const fallbackData = localStorage.getItem(`loot_fallback_${player}`);
-                    if (fallbackData) {
-                        allLootData[player] = JSON.parse(fallbackData);
-                        playersWhoFilled.push(player);
+                        allLootData = JSON.parse(jsonString);
+                        playersWhoFilled = Object.keys(allLootData);
+                    } catch(e) {
+                        console.error("Ошибка парсинга testdata.json", e);
+                    }
+                }
+            } else {
+                // В обычном режиме загружаем реальных игроков по одному
+                for (let player of PLAYERS) {
+                    const fileData = await githubAPI('GET', `loot_${player}.json`);
+                    if (fileData && fileData.content) {
+                        try {
+                            const jsonString = decodeURIComponent(escape(atob(fileData.content)));
+                            allLootData[player] = JSON.parse(jsonString);
+                            playersWhoFilled.push(player);
+                        } catch(e) {}
                     }
                 }
             }
@@ -519,7 +541,6 @@
             let finalHtml = '';
 
             BOSSES.forEach(boss => {
-                // Собираем игроков, которые хотят хоть что-то или оставили коммент
                 let interestedPlayers = [];
                 
                 activePlayers.forEach(player => {
@@ -533,18 +554,15 @@
                     }
                 });
 
-                // Сортировка по количеству предметов (от большего к меньшему)
                 interestedPlayers.sort((a, b) => b.items.length - a.items.length);
 
                 if (interestedPlayers.length > 0) {
                     let bossHtml = `
                         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-                            <!-- Шапка Босса -->
                             <div class="bg-slate-50 p-4 border-b border-slate-200 flex items-center gap-4">
                                 <img src="${boss.icon}" alt="${boss.name}" class="w-12 h-12 rounded-lg shadow-sm border border-slate-300">
                                 <h3 class="text-xl font-black text-slate-800 uppercase tracking-wide">${boss.name}</h3>
                             </div>
-                            <!-- Таблица Игроков -->
                             <div class="overflow-x-auto custom-scrollbar pb-2">
                                 <table class="w-full min-w-[700px]">
                                     <tbody class="text-sm">
@@ -554,7 +572,6 @@
                         const isLast = index === interestedPlayers.length - 1;
                         const borderClass = isLast ? '' : 'border-b border-slate-100';
                         
-                        // Рендерим СЕТКУ ИКОНОК. Пустые будут тусклыми. Это гарантирует ровные столбцы.
                         let gridHtml = `<div class="loot-grid w-[400px]">`;
                         SLOTS.forEach(slotId => {
                             const hasItem = p.items.includes(slotId);
@@ -590,7 +607,6 @@
 
             container.innerHTML = finalHtml;
         }
-
 
         // ==========================================
         // GITHUB API
