@@ -154,7 +154,7 @@
     "dungeon_1": {
       "main": {
         "rio": false,
-        "w": false
+        "w": true
       },
       "alt1": {
         "rio": false,
@@ -200,7 +200,7 @@
       },
       "alt1": {
         "rio": false,
-        "w": false
+        "w": true
       },
       "alt2": {
         "rio": false,
@@ -232,7 +232,7 @@
       },
       "alt2": {
         "rio": false,
-        "w": false
+        "w": true
       }
     },
     "dungeon_7": {
