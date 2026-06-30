@@ -14,40 +14,138 @@
     }
   },
   "stream_link": "https://www.twitch.tv/rainon_",
-  "boss_1": {
-    "items": [],
-    "comment": "57456"
-  },
-  "boss_2": {
-    "items": [],
-    "comment": "Штаны не обязательны, но хотелось бы"
-  },
-  "boss_3": {
-    "items": [],
-    "comment": ""
-  },
-  "boss_4": {
-    "items": [],
-    "comment": ""
-  },
-  "boss_5": {
-    "items": [],
-    "comment": ""
-  },
-  "boss_6": {
-    "items": [],
-    "comment": ""
-  },
-  "boss_7": {
-    "items": [],
-    "comment": ""
-  },
-  "boss_8": {
-    "items": [],
-    "comment": ""
-  },
-  "boss_9": {
-    "items": [],
-    "comment": ""
+  "bosses": {
+    "boss_1": {
+      "main": {
+        "items": [
+          2
+        ],
+        "comment": "57456"
+      },
+      "alt1": {
+        "items": [
+          6
+        ],
+        "comment": ""
+      },
+      "alt2": {
+        "items": [
+          3
+        ],
+        "comment": ""
+      }
+    },
+    "boss_2": {
+      "main": {
+        "items": [],
+        "comment": "Штаны не обязательны, но хотелось бы"
+      },
+      "alt1": {
+        "items": [],
+        "comment": ""
+      },
+      "alt2": {
+        "items": [],
+        "comment": ""
+      }
+    },
+    "boss_3": {
+      "main": {
+        "items": [],
+        "comment": ""
+      },
+      "alt1": {
+        "items": [],
+        "comment": ""
+      },
+      "alt2": {
+        "items": [],
+        "comment": ""
+      }
+    },
+    "boss_4": {
+      "main": {
+        "items": [],
+        "comment": ""
+      },
+      "alt1": {
+        "items": [],
+        "comment": ""
+      },
+      "alt2": {
+        "items": [],
+        "comment": ""
+      }
+    },
+    "boss_5": {
+      "main": {
+        "items": [],
+        "comment": ""
+      },
+      "alt1": {
+        "items": [],
+        "comment": ""
+      },
+      "alt2": {
+        "items": [],
+        "comment": ""
+      }
+    },
+    "boss_6": {
+      "main": {
+        "items": [],
+        "comment": ""
+      },
+      "alt1": {
+        "items": [],
+        "comment": ""
+      },
+      "alt2": {
+        "items": [],
+        "comment": ""
+      }
+    },
+    "boss_7": {
+      "main": {
+        "items": [],
+        "comment": ""
+      },
+      "alt1": {
+        "items": [],
+        "comment": ""
+      },
+      "alt2": {
+        "items": [],
+        "comment": ""
+      }
+    },
+    "boss_8": {
+      "main": {
+        "items": [],
+        "comment": ""
+      },
+      "alt1": {
+        "items": [],
+        "comment": ""
+      },
+      "alt2": {
+        "items": [],
+        "comment": ""
+      }
+    },
+    "boss_9": {
+      "main": {
+        "items": [],
+        "comment": ""
+      },
+      "alt1": {
+        "items": [],
+        "comment": ""
+      },
+      "alt2": {
+        "items": [],
+        "comment": ""
+      }
+    }
   }
 }
