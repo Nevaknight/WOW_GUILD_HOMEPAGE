@@ -50,6 +50,12 @@
             filter: grayscale(100%) opacity(15%);
             border-color: #cbd5e1;
         }
+
+        /* Стиль для кнопки сброса фильтров в сводке, чтобы выровнять с комментами */
+        .reset-filter-btn {
+             width: 44px; /* w-11 */
+             height: 44px; /* h-11 */
+        }
     </style>
 </head>
 <body class="text-slate-800 antialiased min-h-screen flex flex-col relative">
@@ -142,13 +148,18 @@
                         </div>
                     </div>
 
-                    <!-- Фильтр по предмету -->
-                    <div class="relative w-full sm:w-[220px]">
-                        <select id="dashboard-item-filter" onchange="applyFilter()" class="w-full h-[42px] pl-3 pr-8 border border-slate-300 rounded-lg text-sm font-semibold text-slate-700 bg-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 shadow-sm appearance-none cursor-pointer disabled:opacity-50" disabled>
-                            <option value="all">Загрузка...</option>
-                        </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-slate-400">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <!-- Фильтр по предмету (Мультивыбор) -->
+                    <div class="relative w-full sm:w-[220px]" id="item-filter-container">
+                        <div onclick="document.getElementById('item-filter-dropdown').classList.toggle('hidden')" class="w-full h-[42px] px-3 border border-slate-300 rounded-lg text-sm font-semibold text-slate-700 bg-white shadow-sm cursor-pointer flex items-center justify-between transition-colors hover:bg-slate-50">
+                            <span id="item-filter-text" class="truncate">Все предметы</span>
+                            <svg class="w-4 h-4 text-slate-400 shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div id="item-filter-dropdown" class="absolute z-[100] w-[260px] mt-1 bg-white border border-slate-200 rounded-lg shadow-xl hidden max-h-[300px] overflow-y-auto p-1.5 flex flex-col gap-1">
+                            <label class="flex items-center gap-3 p-2 hover:bg-slate-50 rounded-md cursor-pointer transition-colors">
+                                <input type="checkbox" value="all" class="item-filter-cb w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500" checked onchange="handleItemFilterChange(this)">
+                                <span class="text-sm font-bold text-slate-700">Все предметы</span>
+                            </label>
+                            <!-- Сюда JS добавит предметы -->
                         </div>
                     </div>
 
@@ -164,9 +175,12 @@
                         <span class="text-sm font-semibold text-slate-700 whitespace-nowrap">Ключи</span>
                     </label>
                 </div>
-                <button onclick="resetFiltersAndRefresh()" class="w-[42px] h-[42px] bg-white border border-slate-300 hover:border-red-300 hover:bg-red-50 hover:text-red-500 text-slate-400 rounded-lg transition-colors flex items-center justify-center shadow-sm shrink-0" title="Сбросить фильтры и обновить данные">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                </button>
+                <!-- Кнопка сброса (выровнена с кнопками комментариев) -->
+                <div class="w-[100px] shrink-0 flex items-center justify-center">
+                    <button onclick="resetFiltersAndRefresh()" class="reset-filter-btn rounded-lg border-2 border-slate-200 text-slate-400 hover:text-red-500 hover:border-red-300 hover:bg-red-50 transition-colors shadow-sm flex items-center justify-center" title="Сбросить фильтры и обновить данные">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    </button>
+                </div>
             </div>
             
             <div id="dashboard-loading" class="text-center py-20 hidden bg-white rounded-2xl shadow-sm border border-slate-200">
@@ -245,9 +259,11 @@
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden tree-container-block text-left relative">
                     <div class="bg-slate-50 p-4 border-b border-slate-200 flex items-center justify-between gap-4">
                         <img src="./ICONS/DUNGEONS/ЭПОХАЛЬНЫЙ_КЛЮЧ.jpg" alt="Ключи" class="w-12 h-12 rounded-lg shadow-sm border border-slate-300 object-cover bg-slate-900">
-                        <button onclick="resetDungeonsSelection()" class="text-slate-400 hover:text-red-500 bg-white border border-slate-200 hover:border-red-200 hover:bg-red-50 p-2 rounded-xl transition-all shadow-sm flex items-center gap-2 shrink-0" title="Сбросить выбор всех ключей">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                        </button>
+                        <div class="w-[100px] shrink-0 flex items-center justify-center pr-4">
+                            <button onclick="resetDungeonsSelection()" class="text-slate-400 hover:text-red-500 bg-white border border-slate-200 hover:border-red-200 hover:bg-red-50 w-11 h-11 rounded-lg transition-all shadow-sm flex items-center justify-center" title="Сбросить выбор всех ключей">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                            </button>
+                        </div>
                     </div>
                     <div class="overflow-x-auto custom-scrollbar pb-2">
                         <table class="w-max min-w-full table-fixed border-collapse">
@@ -274,7 +290,7 @@
         
         <!-- ФУТЕР -->
         <footer class="text-center pt-10 pb-4 text-slate-400 font-medium text-sm mt-auto">
-            Guild Planner V2.8 - @Rainon
+            Guild Planner V2.9 - @Rainon
         </footer>
         
     </main>
@@ -511,6 +527,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             initBossFilter(); // Инициализация мультивыбора боссов
+            initItemFilter(); // Инициализация мультивыбора предметов
 
             const playerSelect = document.getElementById('login-player');
             playerSelect.innerHTML = '<option value="" disabled selected hidden>Выбери своё имя</option>';
@@ -558,6 +575,28 @@
             });
         }
 
+        function initItemFilter() {
+            const dropdown = document.getElementById('item-filter-dropdown');
+            if (!dropdown) return;
+            SLOTS.forEach(slotId => {
+                const label = document.createElement('label');
+                label.className = "flex items-center gap-3 p-2 hover:bg-slate-50 rounded-md cursor-pointer transition-colors";
+                label.innerHTML = `
+                    <input type="checkbox" value="${slotId}" class="item-filter-cb w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500" onchange="handleItemFilterChange(this)">
+                    <img src="${getSlotIconPath(slotId)}" class="w-6 h-6 rounded-md border border-slate-300 object-cover shrink-0">
+                    <span class="text-sm font-semibold text-slate-700 truncate">${getSlotName(slotId)}</span>
+                `;
+                dropdown.appendChild(label);
+            });
+
+            document.addEventListener('click', (e) => {
+                const container = document.getElementById('item-filter-container');
+                if (container && !container.contains(e.target)) {
+                    document.getElementById('item-filter-dropdown').classList.add('hidden');
+                }
+            });
+        }
+
         function handleBossFilterChange(changedCb) {
             const checkboxes = Array.from(document.querySelectorAll('.boss-filter-cb'));
             const allCb = checkboxes.find(cb => cb.value === 'all');
@@ -590,6 +629,38 @@
             applyFilter();
         }
 
+        function handleItemFilterChange(changedCb) {
+            const checkboxes = Array.from(document.querySelectorAll('.item-filter-cb'));
+            const allCb = checkboxes.find(cb => cb.value === 'all');
+            
+            if (changedCb.value === 'all') {
+                if (changedCb.checked) {
+                    checkboxes.forEach(cb => { if (cb.value !== 'all') cb.checked = false; });
+                } else {
+                    changedCb.checked = true; 
+                }
+            } else {
+                if (changedCb.checked) {
+                    allCb.checked = false;
+                } else {
+                    const anyChecked = checkboxes.some(cb => cb.value !== 'all' && cb.checked);
+                    if (!anyChecked) allCb.checked = true;
+                }
+            }
+
+            const selected = checkboxes.filter(cb => cb.value !== 'all' && cb.checked);
+            const textEl = document.getElementById('item-filter-text');
+            if (selected.length === 0) {
+                textEl.innerText = 'Все предметы';
+            } else if (selected.length === 1) {
+                textEl.innerText = getSlotName(parseInt(selected[0].value));
+            } else {
+                textEl.innerText = `Предметов: ${selected.length}`;
+            }
+
+            applyFilter();
+        }
+
         function getSelectedBosses() {
             const checkboxes = Array.from(document.querySelectorAll('.boss-filter-cb'));
             if (!checkboxes || checkboxes.length === 0) return [];
@@ -598,12 +669,17 @@
             return checkboxes.filter(cb => cb.value !== 'all' && cb.checked).map(cb => cb.value);
         }
 
+        function getSelectedItems() {
+            const checkboxes = Array.from(document.querySelectorAll('.item-filter-cb'));
+            if (!checkboxes || checkboxes.length === 0) return [];
+            const allCb = checkboxes.find(cb => cb.value === 'all');
+            if (allCb && allCb.checked) return [];
+            return checkboxes.filter(cb => cb.value !== 'all' && cb.checked).map(cb => parseInt(cb.value));
+        }
+
         window.resetFiltersAndRefresh = function() {
             const pFilter = document.getElementById('dashboard-player-filter');
             if (pFilter) pFilter.value = 'all';
-
-            const iFilter = document.getElementById('dashboard-item-filter');
-            if (iFilter) iFilter.value = 'all';
 
             const mOnly = document.getElementById('dashboard-mains-only');
             if (mOnly) mOnly.checked = false;
@@ -611,12 +687,16 @@
             const kToggle = document.getElementById('dashboard-keys-toggle');
             if (kToggle) kToggle.checked = true;
 
-            const checkboxes = Array.from(document.querySelectorAll('.boss-filter-cb'));
-            if (checkboxes.length > 0) {
-                checkboxes.forEach(cb => {
-                    cb.checked = (cb.value === 'all');
-                });
+            const bossCheckboxes = Array.from(document.querySelectorAll('.boss-filter-cb'));
+            if (bossCheckboxes.length > 0) {
+                bossCheckboxes.forEach(cb => { cb.checked = (cb.value === 'all'); });
                 document.getElementById('boss-filter-text').innerText = 'Все боссы';
+            }
+
+            const itemCheckboxes = Array.from(document.querySelectorAll('.item-filter-cb'));
+            if (itemCheckboxes.length > 0) {
+                itemCheckboxes.forEach(cb => { cb.checked = (cb.value === 'all'); });
+                document.getElementById('item-filter-text').innerText = 'Все предметы';
             }
 
             loadAllData();
@@ -1009,7 +1089,7 @@
             const streamInput = document.getElementById('stream-link');
             if (streamInput) streamInput.value = userData.stream_link || '';
 
-            // Рендер Подземелий (Ключей)
+            // Рендер Подземелий (Ключей) в Анкете
             const dContainer = document.getElementById('form-body-dungeons');
             dContainer.innerHTML = '';
             
@@ -1018,9 +1098,13 @@
                 const charData = chars[charType] || { class: 'none', name: '' };
                 const charDungeons = userData.dungeons || {};
                 
+                let hasAnyDungeonSelection = false;
+
                 let dungeonsHtml = `<div class="flex gap-4 w-max">`;
                 DUNGEONS.forEach(d => {
                     const dState = charDungeons[d.id]?.[charType] || { rio: false, w: false };
+                    if (dState.rio || dState.w) hasAnyDungeonSelection = true;
+                    
                     const rioCls = dState.rio ? 'bg-blue-500 text-white border-blue-600' : 'bg-slate-100 text-slate-400 border-slate-200';
                     const wCls = dState.w ? 'bg-purple-500 text-white border-purple-600' : 'bg-slate-100 text-slate-400 border-slate-200';
                     
@@ -1042,8 +1126,11 @@
                 const isAlt = charType !== 'main';
                 const rowBgClass = isAlt ? 'bg-slate-50/50' : '';
 
+                // Скрываем строку в Анкете, если класс не выбран ИЛИ если не выбрано ни одно подземелье.
+                const shouldHideRow = charData.class === 'none' || (!hasAnyDungeonSelection && isAlt === false && charData.class !== 'none');
+
                 dRowsHtml += `
-                    <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors row-char-${charType} ${rowBgClass} ${isHiddenClass}" data-char-type="${charType}">
+                    <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors row-char-${charType} ${rowBgClass} ${shouldHideRow ? 'hidden' : ''}" data-char-type="${charType}">
                         <td class="w-[240px] p-0 border-r border-slate-100/50 align-middle">
                             <div class="relative flex items-center h-[64px] w-full">
                                 <div class="tree-line-container w-[40px] shrink-0 relative h-full"></div>
@@ -1141,9 +1228,11 @@
                                 <img src="${boss.icon}" alt="${boss.name}" class="w-12 h-12 rounded-lg shadow-sm border border-slate-300 object-cover bg-slate-900">
                                 <h3 class="text-xl font-black text-slate-800 uppercase tracking-wide">${boss.name}</h3>
                             </div>
-                            <button onclick="resetBossSelection('${boss.id}')" class="text-slate-400 hover:text-red-500 bg-white border border-slate-200 hover:border-red-200 hover:bg-red-50 p-2 rounded-xl transition-all shadow-sm flex items-center gap-2" title="Сбросить выбор предметов">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                            </button>
+                            <div class="w-[100px] shrink-0 flex items-center justify-center pr-4">
+                                <button onclick="resetBossSelection('${boss.id}')" class="text-slate-400 hover:text-red-500 bg-white border border-slate-200 hover:border-red-200 hover:bg-red-50 w-11 h-11 rounded-lg transition-all shadow-sm flex items-center justify-center" title="Сбросить выбор предметов">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                                </button>
+                            </div>
                         </div>
                         <div class="overflow-x-auto custom-scrollbar pb-2">
                             <table class="w-max min-w-full table-fixed border-collapse">
@@ -1280,11 +1369,15 @@
             
             const playerFilterDropdown = document.getElementById('dashboard-player-filter');
             const itemFilterDropdown = document.getElementById('dashboard-item-filter');
+            const bossFilterText = document.getElementById('boss-filter-text');
             
             playerFilterDropdown.innerHTML = '<option value="all">Загрузка...</option>';
             itemFilterDropdown.innerHTML = '<option value="all">Загрузка...</option>';
+            bossFilterText.innerText = 'Загрузка...';
+            
             playerFilterDropdown.disabled = true;
             itemFilterDropdown.disabled = true;
+            document.getElementById('boss-filter-container').classList.add('opacity-50', 'pointer-events-none');
 
             let allLootData = {};
             let playersWhoFilled = [];
@@ -1337,11 +1430,22 @@
             });
             playerFilterDropdown.disabled = playersWhoFilled.length === 0;
 
-            itemFilterDropdown.innerHTML = '<option value="all">Все предметы</option>';
-            SLOTS.forEach(slotId => {
-                itemFilterDropdown.insertAdjacentHTML('beforeend', `<option value="${slotId}">${getSlotName(slotId)}</option>`);
-            });
-            itemFilterDropdown.disabled = false;
+            // Восстанавливаем работоспособность фильтра предметов (мультивыбор)
+            document.getElementById('item-filter-container').classList.remove('opacity-50', 'pointer-events-none');
+            
+            // Восстанавливаем работоспособность фильтра боссов (мультивыбор)
+            document.getElementById('boss-filter-container').classList.remove('opacity-50', 'pointer-events-none');
+            
+            // Устанавливаем правильный текст, если фильтры были сброшены
+            const selectedBosses = getSelectedBosses();
+            if (selectedBosses.length === 0) {
+                document.getElementById('boss-filter-text').innerText = 'Все боссы';
+            }
+            
+            const selectedItems = getSelectedItems();
+            if (selectedItems.length === 0) {
+                document.getElementById('item-filter-text').innerText = 'Все предметы';
+            }
 
             renderDashboard();
         }
@@ -1434,7 +1538,7 @@
         function renderDashboard() {
             const container = document.getElementById('dashboard-content');
             const playerFilterValue = document.getElementById('dashboard-player-filter').value;
-            const itemFilterValue = document.getElementById('dashboard-item-filter').value;
+            const itemFilterValues = getSelectedItems();
             const mainsOnly = document.getElementById('dashboard-mains-only').checked;
             const showKeys = document.getElementById('dashboard-keys-toggle').checked;
             
@@ -1561,9 +1665,9 @@
                         let hasItems = charObj.items.length > 0;
                         let hasComment = charObj.comment.trim() !== '';
                         
-                        if (itemFilterValue !== 'all') {
-                            const slotNum = parseInt(itemFilterValue);
-                            return charObj.items.includes(slotNum);
+                        if (itemFilterValues.length > 0) {
+                            // Если выбраны предметы в фильтре, проверяем есть ли хоть один нужный у персонажа
+                            return itemFilterValues.some(slotNum => charObj.items.includes(slotNum));
                         } else {
                             return hasItems || hasComment;
                         }
