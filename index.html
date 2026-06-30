@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOOT PLANNER</title>
+    <title>Guild Planner</title>
     <!-- Иконка сундука -->
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📦%3C/text%3E%3C/svg%3E">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -64,14 +64,14 @@
     <nav class="bg-white shadow-sm border-b border-slate-200 sticky top-0 z-20">
         <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
             <h1 class="text-xl font-bold text-slate-900 tracking-tight cursor-pointer flex items-center gap-2" onclick="showView('dashboard')">
-                <span>📦</span> LOOT PLANNER
+                <span>📦</span> GUILD PLANNER
             </h1>
             <div id="nav-user" class="hidden flex items-center gap-4">
-                <span id="nav-player-name" class="font-bold text-blue-600 hidden sm:inline-block"></span>
-                <button id="nav-btn-dashboard" onclick="showView('dashboard')" class="text-sm px-3 py-1.5 rounded-md transition font-medium">Сводка</button>
-                <button id="nav-btn-form" onclick="showView('form')" class="text-sm px-3 py-1.5 rounded-md transition font-medium">Мой Вишлист</button>
-                <button id="nav-btn-test" onclick="toggleTestMode()" class="text-sm text-emerald-500 hover:text-emerald-700 transition font-bold px-3 py-1.5 border border-transparent rounded-md">Тест: ВЫКЛ</button>
-                <button onclick="logout()" class="text-sm text-red-500 hover:text-red-700 transition font-bold px-2">Выйти</button>
+                <button id="nav-btn-test" onclick="toggleTestMode()" class="text-sm px-3 py-1.5 rounded-md transition font-bold border border-transparent text-emerald-500 hover:text-emerald-700">Тест: ВЫКЛ</button>
+                <span id="nav-player-name" class="font-bold text-blue-600 hidden sm:inline-block px-1"></span>
+                <button id="nav-btn-dashboard" onclick="showView('dashboard')" class="text-sm px-3 py-1.5 rounded-md transition font-medium border border-transparent text-slate-600 hover:bg-slate-100">Сводка</button>
+                <button id="nav-btn-form" onclick="showView('form')" class="text-sm px-3 py-1.5 rounded-md transition font-medium border border-transparent text-slate-600 hover:bg-slate-100">Мой Вишлист</button>
+                <button onclick="logout()" class="text-sm px-3 py-1.5 rounded-md transition font-bold border border-transparent text-red-500 hover:text-red-700 hover:bg-red-50">Выйти</button>
             </div>
         </div>
     </nav>
@@ -145,7 +145,7 @@
                     </div>
                     <div class="flex-1">
                         <label class="block text-sm font-bold text-purple-900 mb-1">Ссылка на стрим (Twitch, YouTube, и т.д.)</label>
-                        <input type="url" id="stream-link" class="w-full border border-purple-200 rounded-lg p-2.5 outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 font-medium text-sm shadow-sm bg-white" placeholder="https://twitch.tv/..." oninput="showFloatingSave()">
+                        <input type="url" id="stream-link" class="w-full border border-purple-200 rounded-lg p-2.5 outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 font-medium text-sm shadow-sm bg-white" placeholder="https://twitch.tv/..." onchange="showFloatingSave()">
                     </div>
                 </div>
 
@@ -153,9 +153,9 @@
                     <table class="w-full border-collapse min-w-[1100px]">
                         <thead>
                             <tr class="text-sm text-slate-500 border-b border-slate-200">
-                                <th class="pb-3 px-2 w-[20%] text-left">Босс</th>
-                                <th class="pb-3 font-bold px-2 w-[50%] text-center">Слоты предметов</th>
-                                <th class="pb-3 font-bold px-2 w-[30%] text-left pl-4">Комментарий</th>
+                                <th class="pb-3 px-2 w-[25%] text-left">Босс</th>
+                                <th class="pb-3 font-bold px-2 w-[55%] text-center">Слоты предметов</th>
+                                <th class="pb-3 font-bold px-2 w-[20%] text-center">Комментарии</th>
                             </tr>
                         </thead>
                         <tbody id="form-body-bosses" class="text-sm">
@@ -168,7 +168,7 @@
         
         <!-- ФУТЕР -->
         <footer class="text-center pt-10 pb-4 text-slate-400 font-medium text-sm mt-auto">
-            Loot Planner V2.0 - @Atlantida
+            Guild Planner V1.1 - @Rainon
         </footer>
         
     </main>
@@ -183,6 +183,24 @@
     <div id="message-box" class="fixed top-20 right-4 px-6 py-4 rounded-xl shadow-2xl z-50 text-white font-medium hidden transition-all duration-300 transform -translate-y-4 opacity-0 flex items-center gap-3 max-w-sm">
         <span id="message-icon"></span>
         <span id="message-text"></span>
+    </div>
+
+    <!-- Модальное окно для комментариев -->
+    <div id="comment-modal" class="fixed inset-0 bg-slate-900 bg-opacity-60 z-[100] hidden flex items-center justify-center backdrop-blur-sm">
+        <div class="bg-white rounded-xl shadow-2xl p-6 w-[90%] max-w-md transform transition-all scale-95 opacity-0" id="comment-modal-content">
+            <h3 class="text-xl font-black text-slate-800 mb-4 tracking-wide">Добавить комментарий</h3>
+            <textarea id="modal-textarea" rows="4" class="w-full border border-slate-300 rounded-lg p-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 resize-none font-medium text-slate-700 shadow-inner leading-relaxed" placeholder="Напишите здесь важную информацию о луте с этого босса (например, нужен кусок сета или тринкет)..."></textarea>
+            <div class="flex justify-end gap-3 mt-6">
+                <!-- Кнопка Отмена (Крестик) -->
+                <button onclick="closeCommentModal()" class="w-12 h-12 flex items-center justify-center rounded-xl border-2 border-slate-200 text-slate-400 hover:text-red-500 hover:border-red-500 hover:bg-red-50 transition-colors shadow-sm" title="Отмена (ESC)">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+                <!-- Кнопка Сохранить (Галочка) -->
+                <button onclick="saveCommentFromModal()" class="w-12 h-12 flex items-center justify-center rounded-xl border-2 border-green-500 text-white bg-green-500 hover:bg-green-600 hover:border-green-600 transition-all shadow-md hover:shadow-lg" title="Сохранить комментарий">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                </button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -228,6 +246,7 @@
         let isTestMode = false;
         let currentAllLootData = {};
         let currentActivePlayers = [];
+        let currentEditCommentBossId = null;
 
         // Названия слотов на русском
         function getSlotName(slotNumber) {
@@ -252,7 +271,6 @@
             return names[slotNumber] || `Слот ${slotNumber}`;
         }
 
-        // Вспомогательная функция для получения иконки слота
         function getSlotIconPath(slotNumber) {
             return `./ICONS/SLOT_${slotNumber}.webp`;
         }
@@ -318,8 +336,9 @@
             const btnDash = document.getElementById('nav-btn-dashboard');
             const btnForm = document.getElementById('nav-btn-form');
             
-            const inactiveClasses = "text-slate-600 hover:bg-slate-100 bg-transparent".split(' ');
-            const activeClasses = "text-blue-700 bg-blue-50 border border-blue-100 shadow-sm".split(' ');
+            // Чтобы текст не ехал, задаем фиксированную прозрачную рамку всем кнопкам
+            const inactiveClasses = "text-slate-600 hover:bg-slate-100 border-transparent bg-transparent".split(' ');
+            const activeClasses = "text-blue-700 bg-blue-50 border-blue-100 shadow-sm".split(' ');
 
             btnDash.classList.remove(...activeClasses);
             btnDash.classList.add(...inactiveClasses);
@@ -359,13 +378,15 @@
                 btn.innerText = 'Тест: ВКЛ';
                 btn.classList.replace('text-emerald-500', 'text-amber-500');
                 btn.classList.replace('hover:text-emerald-700', 'hover:text-amber-700');
-                btn.classList.add('border-amber-200', 'bg-amber-50');
+                btn.classList.replace('border-transparent', 'border-amber-200');
+                btn.classList.add('bg-amber-50');
                 showMessage('Включен тестовый режим (20 игроков)', 'info');
             } else {
                 btn.innerText = 'Тест: ВЫКЛ';
                 btn.classList.replace('text-amber-500', 'text-emerald-500');
                 btn.classList.replace('hover:text-amber-700', 'hover:text-emerald-700');
-                btn.classList.remove('border-amber-200', 'bg-amber-50');
+                btn.classList.replace('border-amber-200', 'border-transparent');
+                btn.classList.remove('bg-amber-50');
                 showMessage('Тестовый режим отключен (реальные данные)', 'info');
             }
             
@@ -409,18 +430,77 @@
         }
 
         // ==========================================
-        // ЛОГИКА АНКЕТЫ (ВИШЛИСТА)
+        // ЛОГИКА АНКЕТЫ (ВИШЛИСТА И КОММЕНТАРИЕВ)
         // ==========================================
         function toggleItemSlot(imgElement) {
             imgElement.classList.toggle('selected');
             showFloatingSave();
         }
 
+        function openCommentModal(bossId) {
+            currentEditCommentBossId = bossId;
+            const hiddenInput = document.getElementById(`comment-${bossId}`);
+            const textarea = document.getElementById('modal-textarea');
+            textarea.value = hiddenInput.value;
+            
+            const modal = document.getElementById('comment-modal');
+            const content = document.getElementById('comment-modal-content');
+            
+            modal.classList.remove('hidden');
+            // Маленькая задержка для плавного появления
+            requestAnimationFrame(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                textarea.focus();
+            });
+        }
+
+        function closeCommentModal() {
+            const modal = document.getElementById('comment-modal');
+            const content = document.getElementById('comment-modal-content');
+            content.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                currentEditCommentBossId = null;
+            }, 200); // Совпадает с длительностью transition
+        }
+
+        window.saveCommentFromModal = function() {
+            if (!currentEditCommentBossId) return;
+            
+            const textarea = document.getElementById('modal-textarea');
+            const hiddenInput = document.getElementById(`comment-${currentEditCommentBossId}`);
+            const btn = document.getElementById(`btn-comment-${currentEditCommentBossId}`);
+            
+            // Записываем текст в скрытый инпут
+            hiddenInput.value = textarea.value.trim();
+            
+            // Если текст есть, делаем квадрат зеленым. Если пусто - возвращаем серый.
+            if (hiddenInput.value) {
+                btn.classList.add('border-green-500', 'text-green-500', 'shadow-[0_0_8px_rgba(34,197,94,0.5)]');
+                btn.classList.remove('border-slate-300', 'text-slate-400');
+            } else {
+                btn.classList.remove('border-green-500', 'text-green-500', 'shadow-[0_0_8px_rgba(34,197,94,0.5)]');
+                btn.classList.add('border-slate-300', 'text-slate-400');
+            }
+            
+            closeCommentModal();
+            
+            // Автоматически запускаем сохранение в базу!
+            saveForm();
+        }
+
+        // Закрытие по ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !document.getElementById('comment-modal').classList.contains('hidden')) {
+                closeCommentModal();
+            }
+        });
+
         function renderForm(userData = {}) {
             const tbody = document.getElementById('form-body-bosses');
             tbody.innerHTML = '';
             
-            // Заполняем поле стрима, если оно было сохранено ранее
             const streamInput = document.getElementById('stream-link');
             if (streamInput) {
                 streamInput.value = userData.stream_link || '';
@@ -443,6 +523,12 @@
                 });
                 slotsHtml += `</div>`;
 
+                // Определение стилей кнопки коммента в зависимости от наличия текста
+                const hasComment = bossData.comment && bossData.comment.trim() !== '';
+                const btnClasses = hasComment 
+                    ? 'border-green-500 text-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]' 
+                    : 'border-slate-300 text-slate-400 hover:text-slate-600 hover:border-slate-400';
+
                 const rowHtml = `
                     <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
                         <td class="py-4 px-2 align-middle">
@@ -454,13 +540,13 @@
                         <td class="py-4 px-2 align-middle">
                             ${slotsHtml}
                         </td>
-                        <td class="py-4 px-2 pl-4 align-middle">
-                            <input type="text" 
-                                   id="comment-${boss.id}" 
-                                   class="w-full border border-slate-300 rounded-lg p-2.5 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 font-medium text-sm shadow-sm bg-white" 
-                                   placeholder="Добавить комментарий..."
-                                   value="${bossData.comment || ''}"
-                                   oninput="showFloatingSave()">
+                        <td class="py-4 px-2 align-middle text-center">
+                            <div class="flex justify-center items-center">
+                                <button id="btn-comment-${boss.id}" onclick="openCommentModal('${boss.id}')" class="w-10 h-10 rounded-lg border-2 flex items-center justify-center transition-colors ${btnClasses}" title="Оставить комментарий">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+                                </button>
+                                <input type="hidden" id="comment-${boss.id}" value="${bossData.comment || ''}">
+                            </div>
                         </td>
                     </tr>
                 `;
@@ -475,7 +561,6 @@
             btn.innerHTML = `<div class="w-6 h-6 border-4 border-white border-t-transparent rounded-full loader"></div>`;
             btn.disabled = true;
 
-            // Захватываем ссылку на стрим
             const streamLink = document.getElementById('stream-link') ? document.getElementById('stream-link').value.trim() : '';
             const dataToSave = {
                 stream_link: streamLink
@@ -562,27 +647,40 @@
             let playersWhoFilled = [];
 
             if (isTestMode) {
+                // Если режим теста, тянем только один файл testdata.json
                 const fileData = await githubAPI('GET', 'testdata.json');
                 if (fileData && fileData.content) {
                     try {
                         const jsonString = decodeURIComponent(escape(atob(fileData.content)));
                         allLootData = JSON.parse(jsonString);
-                        playersWhoFilled = Object.keys(allLootData);
+                        // Проверка на корректность и сбор игроков, у которых есть хоть что-то
+                        playersWhoFilled = Object.keys(allLootData).filter(p => typeof allLootData[p] === 'object');
                     } catch(e) {
                         console.error("Ошибка парсинга testdata.json", e);
+                        showMessage("Ошибка чтения тестовых данных", "error");
                     }
                 }
             } else {
-                for (let player of PLAYERS) {
-                    const fileData = await githubAPI('GET', `loot_${player}.json`);
+                // ОПТИМИЗАЦИЯ СКОРОСТИ: Загружаем все 20 файлов ОДНОВРЕМЕННО через Promise.all
+                const fetchPromises = PLAYERS.map(player => 
+                    githubAPI('GET', `loot_${player}.json`)
+                        .then(fileData => ({ player, fileData }))
+                        .catch(() => ({ player, fileData: null }))
+                );
+
+                const results = await Promise.all(fetchPromises);
+                
+                results.forEach(({ player, fileData }) => {
                     if (fileData && fileData.content) {
                         try {
                             const jsonString = decodeURIComponent(escape(atob(fileData.content)));
                             allLootData[player] = JSON.parse(jsonString);
                             playersWhoFilled.push(player);
-                        } catch(e) {}
+                        } catch(e) {
+                            console.error(`Ошибка парсинга файла ${player}`, e);
+                        }
                     }
-                }
+                });
             }
 
             document.getElementById('dashboard-loading').classList.add('hidden');
@@ -623,11 +721,11 @@
                     const pData = currentAllLootData[player]?.[boss.id];
                     const streamLink = currentAllLootData[player]?.stream_link || '';
                     
-                    if (pData && (pData.items.length > 0 || pData.comment.trim() !== '')) {
+                    if (pData && (pData.items && pData.items.length > 0 || pData.comment && pData.comment.trim() !== '')) {
                         interestedPlayers.push({
                             name: player,
-                            items: pData.items,
-                            comment: pData.comment,
+                            items: pData.items || [],
+                            comment: pData.comment || '',
                             stream_link: streamLink
                         });
                     }
@@ -659,12 +757,11 @@
                         });
                         gridHtml += `</div>`;
 
-                        // Иконка трансляции (камера) с проверкой ссылки
                         const streamUrl = p.stream_link.startsWith('http') ? p.stream_link : `https://${p.stream_link}`;
                         const streamIconHtml = p.stream_link ? `
-                            <a href="${streamUrl}" target="_blank" title="Перейти на трансляцию игрока" class="flex-shrink-0 hover:scale-105 transition-transform duration-200">
-                                <div class="w-10 h-10 bg-purple-600 rounded-md flex items-center justify-center shadow-sm border border-purple-700 text-white hover:bg-purple-500">
-                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+                            <a href="${streamUrl}" target="_blank" title="Перейти на трансляцию игрока" class="flex-shrink-0 hover:scale-105 transition-transform duration-200 ml-2">
+                                <div class="w-8 h-8 bg-purple-600 rounded-md flex items-center justify-center shadow-sm border border-purple-700 text-white hover:bg-purple-500">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
                                 </div>
                             </a>
                         ` : '';
@@ -672,7 +769,7 @@
                         bossHtml += `
                                         <tr class="${borderClass} hover:bg-slate-50 transition-colors">
                                             <td class="py-4 px-4 w-[20%] font-bold text-slate-800 text-base">
-                                                <div class="flex items-center gap-3">
+                                                <div class="flex items-center">
                                                     <span class="truncate">${p.name}</span>
                                                     ${streamIconHtml}
                                                 </div>
