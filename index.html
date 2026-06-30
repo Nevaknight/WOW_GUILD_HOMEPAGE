@@ -51,10 +51,10 @@
             border-color: #cbd5e1;
         }
 
-        /* Стиль для кнопки сброса фильтров в сводке, чтобы выровнять с комментами */
+        /* Стиль для кнопки сброса фильтров в сводке */
         .reset-filter-btn {
-             width: 44px; /* w-11 */
-             height: 44px; /* h-11 */
+             width: 44px;
+             height: 44px;
         }
     </style>
 </head>
@@ -175,7 +175,7 @@
                         <span class="text-sm font-semibold text-slate-700 whitespace-nowrap">Ключи</span>
                     </label>
                 </div>
-                <!-- Кнопка сброса (выровнена с кнопками комментариев) -->
+                <!-- Кнопка сброса -->
                 <div class="w-[100px] shrink-0 flex items-center justify-center">
                     <button onclick="resetFiltersAndRefresh()" class="reset-filter-btn rounded-lg border-2 border-slate-200 text-slate-400 hover:text-red-500 hover:border-red-300 hover:bg-red-50 transition-colors shadow-sm flex items-center justify-center" title="Сбросить фильтры и обновить данные">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
@@ -290,7 +290,7 @@
         
         <!-- ФУТЕР -->
         <footer class="text-center pt-10 pb-4 text-slate-400 font-medium text-sm mt-auto">
-            Guild Planner V2.9 - @Rainon
+            Guild Planner V3.0 - @Rainon
         </footer>
         
     </main>
@@ -526,8 +526,8 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            initBossFilter(); // Инициализация мультивыбора боссов
-            initItemFilter(); // Инициализация мультивыбора предметов
+            initBossFilter();
+            initItemFilter();
 
             const playerSelect = document.getElementById('login-player');
             playerSelect.innerHTML = '<option value="" disabled selected hidden>Выбери своё имя</option>';
@@ -696,7 +696,8 @@
             const itemCheckboxes = Array.from(document.querySelectorAll('.item-filter-cb'));
             if (itemCheckboxes.length > 0) {
                 itemCheckboxes.forEach(cb => { cb.checked = (cb.value === 'all'); });
-                document.getElementById('item-filter-text').innerText = 'Все предметы';
+                const itemFilterText = document.getElementById('item-filter-text');
+                if(itemFilterText) itemFilterText.innerText = 'Все предметы';
             }
 
             loadAllData();
@@ -1126,7 +1127,6 @@
                 const isAlt = charType !== 'main';
                 const rowBgClass = isAlt ? 'bg-slate-50/50' : '';
 
-                // Скрываем строку в Анкете, если класс не выбран ИЛИ если не выбрано ни одно подземелье.
                 const shouldHideRow = charData.class === 'none' || (!hasAnyDungeonSelection && isAlt === false && charData.class !== 'none');
 
                 dRowsHtml += `
@@ -1584,7 +1584,10 @@
                         });
                     });
 
-                    if (rioList.length > 0 || wList.length > 0) keysFound = true;
+                    // ПРОПУСКАЕМ ЕСЛИ НИКТО НЕ ВЫБРАЛ (избавляемся от лишнего шума)
+                    if (rioList.length === 0 && wList.length === 0) return;
+
+                    keysFound = true;
 
                     globalDungeonLists[`${d.id}_rio`] = { dungeon: d, type: 'RIO', list: rioList };
                     globalDungeonLists[`${d.id}_w`] = { dungeon: d, type: 'W', list: wList };
@@ -1596,7 +1599,7 @@
                     const wActive = wList.length > 0 ? 'bg-purple-100 text-purple-700 border-purple-300 hover:bg-purple-200 shadow-sm cursor-pointer' : 'bg-slate-50 text-slate-400 border-slate-200 cursor-auto';
 
                     dashDungeonsHtml += `
-                        <div class="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-sm shrink-0 w-full">
+                        <div class="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-sm shrink-0 w-[260px]">
                             <img src="${d.icon}" alt="${d.name}" class="w-[60px] h-[60px] rounded-lg object-cover bg-slate-900 shadow-sm shrink-0 border border-slate-200">
                             <div class="flex flex-col gap-2 w-full overflow-hidden items-center text-center">
                                 <span class="text-sm font-bold text-slate-800 truncate w-full" title="${d.name}">${d.name}</span>
@@ -1609,25 +1612,24 @@
                     `;
                 });
 
-                finalHtml += `
-                    <div class="bg-transparent mb-6 text-center mt-10">
-                        <h3 class="text-xl font-black text-slate-800 mb-2 uppercase tracking-wide px-2 flex items-center justify-center gap-2">
-                            Эпохальные подземелья
-                        </h3>
-                    </div>
-                `;
-
                 if (keysFound) {
                     finalHtml += `
+                        <div class="bg-transparent mb-6 text-center mt-10">
+                            <h3 class="text-xl font-black text-slate-800 mb-2 uppercase tracking-wide px-2 flex items-center justify-center gap-2">
+                                Эпохальные подземелья
+                            </h3>
+                        </div>
                         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-8">
+                            <div class="bg-slate-50 p-4 border-b border-slate-200 flex items-center gap-4">
+                                <img src="./ICONS/DUNGEONS/ЭПОХАЛЬНЫЙ_КЛЮЧ.jpg" alt="Эпохальные подземелья" class="w-12 h-12 rounded-lg shadow-sm border border-slate-300 object-cover bg-slate-900">
+                            </div>
                             <div class="p-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 bg-slate-50/50">
                                 ${dashDungeonsHtml}
                             </div>
                         </div>
                     `;
-                } else {
-                    finalHtml += `<div class="p-8 mb-8 text-center bg-white rounded-2xl border border-slate-200 border-dashed text-slate-500 font-medium shadow-sm">Совпадений по фильтрам не найдено</div>`;
                 }
+                // Если keysFound == false, мы просто ничего не добавляем, как и просил!
             }
 
             finalHtml += `
@@ -1666,7 +1668,6 @@
                         let hasComment = charObj.comment.trim() !== '';
                         
                         if (itemFilterValues.length > 0) {
-                            // Если выбраны предметы в фильтре, проверяем есть ли хоть один нужный у персонажа
                             return itemFilterValues.some(slotNum => charObj.items.includes(slotNum));
                         } else {
                             return hasItems || hasComment;
