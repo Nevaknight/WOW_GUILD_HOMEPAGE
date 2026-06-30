@@ -1,202 +1,34 @@
 {
   "Сейлоркринж": {
-    "boss_1": { "items": [1, 8], "comment": "" },
-    "boss_2": { "items": [13], "comment": "Очень нужен тринкет!" },
-    "boss_3": { "items": [], "comment": "" },
-    "boss_4": { "items": [], "comment": "" },
-    "boss_5": { "items": [5, 7], "comment": "Сет" },
-    "boss_6": { "items": [], "comment": "" },
-    "boss_7": { "items": [11, 12], "comment": "" },
-    "boss_8": { "items": [15], "comment": "" }
+    "characters": {
+      "main": { "class": "paladin", "name": "Сейлор" },
+      "alt1": { "class": "none", "name": "" },
+      "alt2": { "class": "none", "name": "" }
+    },
+    "stream_link": "",
+    "bosses": {
+      "boss_1": {
+        "main": { "items": [1, 8], "comment": "Очень надо" },
+        "alt1": { "items": [], "comment": "" },
+        "alt2": { "items": [], "comment": "" }
+      }
+    }
   },
   "Рейнон": {
-    "boss_1": { "items": [1, 2, 3], "comment": "Любая шмотка отсюда" },
-    "boss_2": { "items": [], "comment": "" },
-    "boss_3": { "items": [16, 17], "comment": "Оружие топ приорити" },
-    "boss_4": { "items": [], "comment": "" },
-    "boss_5": { "items": [10], "comment": "" },
-    "boss_6": { "items": [], "comment": "" },
-    "boss_7": { "items": [8], "comment": "" },
-    "boss_8": { "items": [13, 14], "comment": "" }
-  },
-  "Рид": {
-    "boss_1": { "items": [], "comment": "" },
-    "boss_2": { "items": [5, 6, 7], "comment": "Нужны куски" },
-    "boss_3": { "items": [], "comment": "" },
-    "boss_4": { "items": [1, 3], "comment": "" },
-    "boss_5": { "items": [], "comment": "" },
-    "boss_6": { "items": [15, 16], "comment": "" },
-    "boss_7": { "items": [], "comment": "" },
-    "boss_8": { "items": [11], "comment": "Кольцо" }
-  },
-  "Рипыч": {
-    "boss_1": { "items": [13], "comment": "" },
-    "boss_2": { "items": [14], "comment": "" },
-    "boss_3": { "items": [15], "comment": "" },
-    "boss_4": { "items": [16], "comment": "Бис пушка" },
-    "boss_5": { "items": [17], "comment": "" },
-    "boss_6": { "items": [1], "comment": "" },
-    "boss_7": { "items": [2], "comment": "" },
-    "boss_8": { "items": [3], "comment": "" }
-  },
-  "Тралл": {
-    "boss_1": { "items": [1, 2, 3], "comment": "" },
-    "boss_2": { "items": [], "comment": "" },
-    "boss_3": { "items": [], "comment": "" },
-    "boss_4": { "items": [], "comment": "" },
-    "boss_5": { "items": [], "comment": "" },
-    "boss_6": { "items": [], "comment": "" },
-    "boss_7": { "items": [], "comment": "" },
-    "boss_8": { "items": [16, 17], "comment": "" }
-  },
-  "Джайна": {
-    "boss_1": { "items": [], "comment": "" },
-    "boss_2": { "items": [1, 5, 7], "comment": "" },
-    "boss_3": { "items": [], "comment": "" },
-    "boss_4": { "items": [], "comment": "" },
-    "boss_5": { "items": [13, 14], "comment": "" },
-    "boss_6": { "items": [], "comment": "" },
-    "boss_7": { "items": [], "comment": "" },
-    "boss_8": { "items": [], "comment": "" }
-  },
-  "Артас": {
-    "boss_1": { "items": [], "comment": "" },
-    "boss_2": { "items": [], "comment": "" },
-    "boss_3": { "items": [16], "comment": "Фростморн жаждет крови" },
-    "boss_4": { "items": [], "comment": "" },
-    "boss_5": { "items": [], "comment": "" },
-    "boss_6": { "items": [1, 3], "comment": "" },
-    "boss_7": { "items": [], "comment": "" },
-    "boss_8": { "items": [], "comment": "" }
-  },
-  "Иллидан": {
-    "boss_1": { "items": [], "comment": "" },
-    "boss_2": { "items": [], "comment": "" },
-    "boss_3": { "items": [], "comment": "" },
-    "boss_4": { "items": [], "comment": "" },
-    "boss_5": { "items": [], "comment": "" },
-    "boss_6": { "items": [17], "comment": "Вторая аззинотка" },
-    "boss_7": { "items": [], "comment": "" },
-    "boss_8": { "items": [11, 12], "comment": "" }
-  },
-  "Сильвана": {
-    "boss_1": { "items": [], "comment": "" },
-    "boss_2": { "items": [5, 6, 7], "comment": "" },
-    "boss_3": { "items": [], "comment": "" },
-    "boss_4": { "items": [15, 16], "comment": "Лук" },
-    "boss_5": { "items": [], "comment": "" },
-    "boss_6": { "items": [], "comment": "" },
-    "boss_7": { "items": [], "comment": "" },
-    "boss_8": { "items": [], "comment": "" }
-  },
-  "Утер": {
-    "boss_1": { "items": [1, 3, 5], "comment": "Латные шмотки" },
-    "boss_2": { "items": [], "comment": "" },
-    "boss_3": { "items": [], "comment": "" },
-    "boss_4": { "items": [], "comment": "" },
-    "boss_5": { "items": [], "comment": "" },
-    "boss_6": { "items": [16], "comment": "" },
-    "boss_7": { "items": [], "comment": "" },
-    "boss_8": { "items": [], "comment": "" }
-  },
-  "Тирион": {
-    "boss_1": { "items": [], "comment": "" },
-    "boss_2": { "items": [], "comment": "" },
-    "boss_3": { "items": [], "comment": "" },
-    "boss_4": { "items": [16, 17], "comment": "" },
-    "boss_5": { "items": [], "comment": "" },
-    "boss_6": { "items": [], "comment": "" },
-    "boss_7": { "items": [1, 5, 7], "comment": "" },
-    "boss_8": { "items": [], "comment": "" }
-  },
-  "Вариан": {
-    "boss_1": { "items": [16], "comment": "" },
-    "boss_2": { "items": [17], "comment": "" },
-    "boss_3": { "items": [], "comment": "" },
-    "boss_4": { "items": [], "comment": "" },
-    "boss_5": { "items": [5, 7], "comment": "" },
-    "boss_6": { "items": [], "comment": "" },
-    "boss_7": { "items": [], "comment": "" },
-    "boss_8": { "items": [], "comment": "" }
-  },
-  "Андуин": {
-    "boss_1": { "items": [], "comment": "" },
-    "boss_2": { "items": [1, 2, 3], "comment": "Прист шмот" },
-    "boss_3": { "items": [], "comment": "" },
-    "boss_4": { "items": [], "comment": "" },
-    "boss_5": { "items": [], "comment": "" },
-    "boss_6": { "items": [13, 14], "comment": "" },
-    "boss_7": { "items": [], "comment": "" },
-    "boss_8": { "items": [], "comment": "" }
-  },
-  "Гулдан": {
-    "boss_1": { "items": [1, 5], "comment": "" },
-    "boss_2": { "items": [], "comment": "" },
-    "boss_3": { "items": [13], "comment": "" },
-    "boss_4": { "items": [16], "comment": "Посох" },
-    "boss_5": { "items": [], "comment": "" },
-    "boss_6": { "items": [], "comment": "" },
-    "boss_7": { "items": [], "comment": "" },
-    "boss_8": { "items": [], "comment": "" }
-  },
-  "Кадгар": {
-    "boss_1": { "items": [], "comment": "" },
-    "boss_2": { "items": [], "comment": "" },
-    "boss_3": { "items": [13, 14], "comment": "" },
-    "boss_4": { "items": [], "comment": "" },
-    "boss_5": { "items": [1, 2, 3], "comment": "" },
-    "boss_6": { "items": [], "comment": "" },
-    "boss_7": { "items": [], "comment": "" },
-    "boss_8": { "items": [11], "comment": "" }
-  },
-  "Малфурион": {
-    "boss_1": { "items": [1, 3], "comment": "" },
-    "boss_2": { "items": [], "comment": "" },
-    "boss_3": { "items": [], "comment": "" },
-    "boss_4": { "items": [5, 7], "comment": "" },
-    "boss_5": { "items": [], "comment": "" },
-    "boss_6": { "items": [], "comment": "" },
-    "boss_7": { "items": [16, 17], "comment": "" },
-    "boss_8": { "items": [], "comment": "" }
-  },
-  "Тиранда": {
-    "boss_1": { "items": [], "comment": "" },
-    "boss_2": { "items": [11, 12], "comment": "" },
-    "boss_3": { "items": [], "comment": "" },
-    "boss_4": { "items": [], "comment": "" },
-    "boss_5": { "items": [16], "comment": "" },
-    "boss_6": { "items": [], "comment": "" },
-    "boss_7": { "items": [15], "comment": "" },
-    "boss_8": { "items": [13, 14], "comment": "" }
-  },
-  "Майев": {
-    "boss_1": { "items": [1, 8], "comment": "" },
-    "boss_2": { "items": [], "comment": "" },
-    "boss_3": { "items": [16, 17], "comment": "" },
-    "boss_4": { "items": [], "comment": "" },
-    "boss_5": { "items": [], "comment": "" },
-    "boss_6": { "items": [5], "comment": "" },
-    "boss_7": { "items": [], "comment": "" },
-    "boss_8": { "items": [], "comment": "" }
-  },
-  "Кельтас": {
-    "boss_1": { "items": [], "comment": "" },
-    "boss_2": { "items": [], "comment": "" },
-    "boss_3": { "items": [1], "comment": "Корона" },
-    "boss_4": { "items": [], "comment": "" },
-    "boss_5": { "items": [5, 6, 7], "comment": "" },
-    "boss_6": { "items": [], "comment": "" },
-    "boss_7": { "items": [15], "comment": "Плащ" },
-    "boss_8": { "items": [], "comment": "" }
-  },
-  "Волджин": {
-    "boss_1": { "items": [16], "comment": "" },
-    "boss_2": { "items": [], "comment": "" },
-    "boss_3": { "items": [], "comment": "" },
-    "boss_4": { "items": [1, 2, 3], "comment": "" },
-    "boss_5": { "items": [], "comment": "" },
-    "boss_6": { "items": [13, 14], "comment": "" },
-    "boss_7": { "items": [], "comment": "" },
-    "boss_8": { "items": [], "comment": "" }
+    "characters": {
+      "main": { "class": "druid", "name": "Рейнон" },
+      "alt1": { "class": "warrior", "name": "РейТанк" },
+      "alt2": { "class": "none", "name": "" }
+    },
+    "stream_link": "twitch.tv/rainon_",
+    "bosses": {
+      "boss_1": {
+        "main": { "items": [1, 2, 3], "comment": "Любая шмотка отсюда" },
+        "alt1": { "items": [16, 17], "comment": "На танка" },
+        "alt2": { "items": [], "comment": "" }
+      }
+    }
   }
 }
+
+Проверяй! Теперь всё должно быть ровно, красиво и безупречно функционально!
