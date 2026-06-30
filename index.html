@@ -225,9 +225,18 @@
                 <h3 class="text-xl font-black text-slate-800 mb-2 uppercase tracking-wide px-2 flex items-center justify-center gap-2">
                     Эпохальные подземелья
                 </h3>
-                <p class="text-slate-500 text-sm mb-4 px-2 text-center">Выберите подземелья, в которых вам нужен RIO или W (недельный ключ) для каждого персонажа.</p>
+                <p class="text-slate-500 text-sm mb-4 px-2 max-w-3xl mx-auto text-center">Выберите подземелья, в которых вам нужен RIO или W (недельный ключ) для каждого персонажа.</p>
                 
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden tree-container-block text-left">
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden tree-container-block text-left relative">
+                    <div class="bg-slate-50 p-4 border-b border-slate-200 flex items-center justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                            <span class="text-2xl ml-2">🗝️</span>
+                            <h3 class="text-lg font-black text-slate-800 uppercase tracking-wide">Ключи</h3>
+                        </div>
+                        <button onclick="resetDungeonsSelection()" class="text-slate-400 hover:text-red-500 bg-white border border-slate-200 hover:border-red-200 hover:bg-red-50 p-2 rounded-xl transition-all shadow-sm flex items-center gap-2" title="Сбросить выбор всех ключей">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        </button>
+                    </div>
                     <div class="overflow-x-auto custom-scrollbar pb-2">
                         <table class="w-max min-w-full table-fixed border-collapse">
                             <tbody id="form-body-dungeons" class="text-sm border-b border-slate-200">
@@ -243,7 +252,7 @@
                 <h3 class="text-xl font-black text-slate-800 mb-2 uppercase tracking-wide px-2 flex items-center justify-center gap-2">
                     Рейдовые подземелья
                 </h3>
-                <p class="text-slate-500 text-sm mb-4 px-2 text-center">Выбери предметы для каждого персонажа. Нажми на иконку комментария справа, чтобы оставить пояснение.</p>
+                <p class="text-slate-500 text-sm mb-4 px-2 max-w-3xl mx-auto text-center">Выбери предметы для каждого персонажа. Нажми на иконку комментария справа, чтобы оставить пояснение.</p>
                 
                 <div id="form-body-bosses" class="space-y-6 text-left">
                     <!-- Сюда рендерятся боссы (карточки) -->
@@ -253,7 +262,7 @@
         
         <!-- ФУТЕР -->
         <footer class="text-center pt-10 pb-4 text-slate-400 font-medium text-sm mt-auto">
-            Guild Planner V2.3 - @Rainon
+            Guild Planner V2.4 - @Rainon
         </footer>
         
     </main>
@@ -352,10 +361,10 @@
         const WOW_CLASSES = {
             'none': { name: 'Не выбран', icon: 'https://wow.zamimg.com/images/wow/icons/large/inv_misc_questionmark.jpg' },
             'paladin': { name: 'Паладин', icon: 'https://wow.zamimg.com/images/wow/icons/large/classicon_paladin.jpg' },
-            'druid': { name: 'Друид', icon: 'https://wow.wowhead.com/images/wow/icons/large/classicon_druid.jpg' },
+            'druid': { name: 'Друид', icon: 'https://wow.zamimg.com/images/wow/icons/large/classicon_druid.jpg' },
             'monk': { name: 'Монах', icon: 'https://wow.zamimg.com/images/wow/icons/large/classicon_monk.jpg' },
             'mage': { name: 'Маг', icon: 'https://wow.zamimg.com/images/wow/icons/large/classicon_mage.jpg' },
-            'evoker': { name: 'Пробудитель', icon: 'https://wow.wowhead.com/images/wow/icons/large/classicon_evoker.jpg' },
+            'evoker': { name: 'Пробудитель', icon: 'https://wow.zamimg.com/images/wow/icons/large/classicon_evoker.jpg' },
             'warrior': { name: 'Воин', icon: 'https://wow.zamimg.com/images/wow/icons/large/classicon_warrior.jpg' },
             'demonhunter': { name: 'Охотник на демонов', icon: 'https://wow.zamimg.com/images/wow/icons/large/classicon_demonhunter.jpg' },
             'shaman': { name: 'Шаман', icon: 'https://wow.zamimg.com/images/wow/icons/large/classicon_shaman.jpg' },
@@ -553,6 +562,28 @@
             lastModifiedBox = null;
             const btn = document.getElementById('floating-save-btn');
             btn.classList.add('translate-y-24', 'opacity-0');
+        }
+
+        window.resetBossSelection = function(bossId) {
+            const bossBlock = document.querySelector(`div[data-boss-id="${bossId}"]`);
+            if (bossBlock) {
+                bossBlock.querySelectorAll('.form-item-icon.selected').forEach(img => {
+                    img.classList.remove('selected');
+                });
+                showFloatingSave(bossBlock);
+            }
+        }
+
+        window.resetDungeonsSelection = function() {
+            const container = document.getElementById('form-body-dungeons');
+            if (container) {
+                container.querySelectorAll('.dungeon-btn-rio, .dungeon-btn-w').forEach(btn => {
+                    btn.setAttribute('data-active', 'false');
+                    btn.classList.remove('bg-blue-500', 'bg-purple-500', 'text-white', 'border-blue-600', 'border-purple-600');
+                    btn.classList.add('bg-slate-100', 'text-slate-400', 'border-slate-200');
+                });
+                showFloatingSave(container);
+            }
         }
 
         function updateNavStyles(activeViewId) {
@@ -807,7 +838,6 @@
             
             closeCommentModal();
             showFloatingSave(btn);
-            saveForm(); 
         }
 
         document.addEventListener('keydown', (e) => {
@@ -897,9 +927,9 @@
                     dungeonsHtml += `
                         <div class="flex items-center gap-2 bg-slate-50 p-2 rounded-xl border border-slate-200 shadow-sm shrink-0" data-dungeon-id="${d.id}">
                             <img src="${d.icon}" alt="${d.name}" class="w-[48px] h-[48px] rounded-lg object-cover bg-slate-900 border border-slate-300" title="${d.name}">
-                            <div class="flex flex-row gap-1.5">
-                                <button onclick="toggleDungeonBtn(this, 'rio')" data-active="${dState.rio}" class="dungeon-btn-rio w-10 h-6 rounded border text-[10px] font-black transition-colors flex items-center justify-center ${rioCls}">RIO</button>
-                                <button onclick="toggleDungeonBtn(this, 'w')" data-active="${dState.w}" class="dungeon-btn-w w-10 h-6 rounded border text-[10px] font-black transition-colors flex items-center justify-center ${wCls}">W</button>
+                            <div class="flex flex-col gap-1 justify-center">
+                                <button onclick="toggleDungeonBtn(this, 'rio')" data-active="${dState.rio}" class="dungeon-btn-rio w-10 h-[22px] rounded border text-[10px] font-black transition-colors flex items-center justify-center ${rioCls}">RIO</button>
+                                <button onclick="toggleDungeonBtn(this, 'w')" data-active="${dState.w}" class="dungeon-btn-w w-10 h-[22px] rounded border text-[10px] font-black transition-colors flex items-center justify-center ${wCls}">W</button>
                             </div>
                         </div>
                     `;
@@ -1006,9 +1036,14 @@
 
                 const bossContainerHtml = `
                     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden tree-container-block" data-boss-id="${boss.id}">
-                        <div class="bg-slate-50 p-4 border-b border-slate-200 flex items-center gap-4">
-                            <img src="${boss.icon}" alt="${boss.name}" class="w-12 h-12 rounded-lg shadow-sm border border-slate-300 object-cover bg-slate-900">
-                            <h3 class="text-xl font-black text-slate-800 uppercase tracking-wide">${boss.name}</h3>
+                        <div class="bg-slate-50 p-4 border-b border-slate-200 flex items-center justify-between gap-4">
+                            <div class="flex items-center gap-4">
+                                <img src="${boss.icon}" alt="${boss.name}" class="w-12 h-12 rounded-lg shadow-sm border border-slate-300 object-cover bg-slate-900">
+                                <h3 class="text-xl font-black text-slate-800 uppercase tracking-wide">${boss.name}</h3>
+                            </div>
+                            <button onclick="resetBossSelection('${boss.id}')" class="text-slate-400 hover:text-red-500 bg-white border border-slate-200 hover:border-red-200 hover:bg-red-50 p-2 rounded-xl transition-all shadow-sm flex items-center gap-2" title="Сбросить выбор предметов">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                            </button>
                         </div>
                         <div class="overflow-x-auto custom-scrollbar pb-2">
                             <table class="w-max min-w-full table-fixed border-collapse">
@@ -1026,11 +1061,8 @@
         }
 
         window.saveForm = async function() {
-            hasUnsavedChanges = false;
-            lastModifiedBox = null;
-
             const btn = document.getElementById('floating-save-btn');
-            const originalContent = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg><span>Сохранить</span>`;
+            const originalContent = btn.innerHTML;
             
             btn.innerHTML = `<div class="w-6 h-6 border-4 border-white border-t-transparent rounded-full loader"></div>`;
             btn.disabled = true;
@@ -1104,6 +1136,10 @@
             const result = await githubAPI('PUT', `loot_${currentUser}.json`, body);
 
             if (result) {
+                // СБРАСЫВАЕМ ГРЯЗНЫЙ ФЛАГ ДО ТАЙМАУТА! 
+                hasUnsavedChanges = false;
+                lastModifiedBox = null;
+                
                 btn.innerHTML = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> <span>Сохранено!</span>`;
                 btn.classList.replace('bg-green-600', 'bg-emerald-500');
                 btn.classList.replace('hover:bg-green-700', 'hover:bg-emerald-600');
@@ -1116,7 +1152,7 @@
                     hideFloatingSave();
                 }, 2000);
             } else {
-                hasUnsavedChanges = true; // Возвращаем флаг при ошибке
+                hasUnsavedChanges = true; 
                 showMessage('Ошибка при сохранении на GitHub', 'error');
                 btn.innerHTML = originalContent;
                 btn.disabled = false;
@@ -1252,6 +1288,7 @@
 
             const rowClass = isAlt ? 'bg-slate-50/50' : '';
 
+            // СТРОГАЯ ФИКСАЦИЯ ШИРИНЫ 
             let playerDisplayHtml = `
                 <div class="relative flex items-center h-[56px] w-full">
                     <div class="w-[40px] shrink-0 relative h-full">
@@ -1350,11 +1387,11 @@
                     const wActive = wList.length > 0 ? 'bg-purple-100 text-purple-700 border-purple-300 hover:bg-purple-200 shadow-sm cursor-pointer' : 'bg-slate-50 text-slate-400 border-slate-200 cursor-auto';
 
                     dashDungeonsHtml += `
-                        <div class="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-sm shrink-0 w-[260px]">
+                        <div class="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-sm shrink-0 w-[280px]">
                             <img src="${d.icon}" alt="${d.name}" class="w-[60px] h-[60px] rounded-lg object-cover bg-slate-900 shadow-sm shrink-0 border border-slate-200">
-                            <div class="flex flex-col gap-2 w-full overflow-hidden">
-                                <span class="text-sm font-bold text-slate-800 truncate" title="${d.name}">${d.name}</span>
-                                <div class="flex gap-1.5 w-full">
+                            <div class="flex flex-col gap-2 w-full overflow-hidden items-center text-center">
+                                <span class="text-sm font-bold text-slate-800 truncate w-full" title="${d.name}">${d.name}</span>
+                                <div class="flex gap-1.5 w-full mt-auto">
                                     <button ${rioList.length > 0 ? `onclick="openDungeonListModal('${d.id}_rio')"` : ''} class="flex-1 h-7 rounded border text-[11px] font-black transition-colors ${rioActive}" title="${rioNames}">RIO (${rioList.length})</button>
                                     <button ${wList.length > 0 ? `onclick="openDungeonListModal('${d.id}_w')"` : ''} class="flex-1 h-7 rounded border text-[11px] font-black transition-colors ${wActive}" title="${wNames}">W (${wList.length})</button>
                                 </div>
@@ -1439,7 +1476,7 @@
                 if (interestedAccounts.length > 0) {
                     let bossHtml = `
                         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-8">
-                            <div class="bg-slate-50 p-4 border-b border-slate-200 flex items-center gap-4">
+                            <div class="bg-slate-50 p-4 border-b border-slate-200 flex items-center justify-center gap-4">
                                 <img src="${boss.icon}" alt="${boss.name}" class="w-12 h-12 rounded-lg shadow-sm border border-slate-300 object-cover bg-slate-900">
                                 <h3 class="text-xl font-black text-slate-800 uppercase tracking-wide">${boss.name}</h3>
                             </div>
