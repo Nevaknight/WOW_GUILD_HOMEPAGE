@@ -100,10 +100,10 @@
 
         <!-- ЭКРАН 2: СВОДНАЯ ТАБЛИЦА (DASHBOARD) -->
         <div id="view-dashboard" class="hidden-view space-y-6 w-full">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <div class="flex-1 flex flex-col sm:flex-row sm:items-center gap-4">
+            <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex-1 flex flex-col md:flex-row md:items-center gap-4">
                     <span class="text-slate-700 font-bold text-lg whitespace-nowrap">Фильтры:</span>
-                    <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                    <div class="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
                         <!-- Фильтр по игроку -->
                         <div class="relative w-full sm:w-[260px]">
                             <select id="dashboard-player-filter" onchange="applyFilter()" class="w-full border border-slate-300 rounded-lg py-2.5 pl-3 pr-10 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 font-medium bg-white shadow-sm disabled:opacity-50 disabled:bg-slate-50 cursor-pointer text-slate-800 appearance-none" disabled>
@@ -122,9 +122,14 @@
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </div>
                         </div>
+                        <!-- Фильтр: Только мейны -->
+                        <label class="flex items-center gap-2 cursor-pointer bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 hover:bg-slate-100 transition h-[46px] w-full sm:w-auto shrink-0 shadow-sm">
+                            <input type="checkbox" id="dashboard-mains-only" onchange="applyFilter()" class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500">
+                            <span class="text-sm font-bold text-slate-700 whitespace-nowrap">Только мейны</span>
+                        </label>
                     </div>
                 </div>
-                <button onclick="loadAllData()" class="text-sm bg-white border border-slate-300 hover:bg-slate-50 px-4 py-2.5 rounded-lg transition flex items-center justify-center gap-2 font-bold shadow-sm w-full sm:w-auto">
+                <button onclick="loadAllData()" class="text-sm bg-white border border-slate-300 hover:bg-slate-50 px-5 py-2.5 rounded-lg transition flex items-center justify-center gap-2 font-bold shadow-sm w-full xl:w-auto h-[46px] shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
                     Обновить данные
                 </button>
@@ -209,7 +214,7 @@
         
         <!-- ФУТЕР -->
         <footer class="text-center pt-10 pb-4 text-slate-400 font-medium text-sm mt-auto">
-            Guild Planner V1.5 - @Rainon
+            Guild Planner V1.6 - @Rainon
         </footer>
         
     </main>
@@ -230,7 +235,7 @@
     <div id="comment-modal" class="fixed inset-0 bg-slate-900 bg-opacity-60 z-[100] hidden flex items-center justify-center backdrop-blur-sm">
         <div class="bg-white rounded-xl shadow-2xl p-6 w-[90%] max-w-md transform transition-all scale-95 opacity-0" id="comment-modal-content">
             <h3 class="text-xl font-black text-slate-800 mb-4 tracking-wide">Добавить комментарий</h3>
-            <textarea id="modal-textarea" rows="4" class="w-full border border-slate-300 rounded-lg p-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 resize-none font-medium text-slate-700 shadow-inner leading-relaxed" placeholder="Напишите здесь важную информацию о луте с этого босса (например, нужен кусок сета или тринкет)..."></textarea>
+            <textarea id="modal-textarea" rows="4" class="w-full border border-slate-300 rounded-lg p-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 resize-none font-medium text-slate-700 shadow-inner leading-relaxed" placeholder="Напишите здесь важную информацию о луте (например, нужен кусок сета или тринкет)..."></textarea>
             <div class="flex justify-end gap-3 mt-6">
                 <button onclick="closeCommentModal()" class="w-12 h-12 flex items-center justify-center rounded-xl border-2 border-slate-200 text-slate-400 hover:text-red-500 hover:border-red-500 hover:bg-red-50 transition-colors shadow-sm" title="Отмена (ESC)">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -272,7 +277,7 @@
             'druid': { name: 'Друид', icon: 'https://wow.zamimg.com/images/wow/icons/large/classicon_druid.jpg' },
             'monk': { name: 'Монах', icon: 'https://wow.zamimg.com/images/wow/icons/large/classicon_monk.jpg' },
             'mage': { name: 'Маг', icon: 'https://wow.zamimg.com/images/wow/icons/large/classicon_mage.jpg' },
-            'evoker': { name: 'Пробудитель', icon: 'https://wow.zamimg.com/images/wow/icons/large/classicon_evoker.jpg' },
+            'evoker': { name: 'Пробудитель', icon: 'https://wow.wowhead.com/images/wow/icons/large/classicon_evoker.jpg' },
             'warrior': { name: 'Воин', icon: 'https://wow.zamimg.com/images/wow/icons/large/classicon_warrior.jpg' },
             'demonhunter': { name: 'Охотник на демонов', icon: 'https://wow.zamimg.com/images/wow/icons/large/classicon_demonhunter.jpg' },
             'shaman': { name: 'Шаман', icon: 'https://wow.zamimg.com/images/wow/icons/large/classicon_shaman.jpg' },
@@ -303,7 +308,7 @@
         let isTestMode = false;
         let currentAllLootData = {};
         let currentActivePlayers = [];
-        let currentEditParams = null; // { bossId, charType }
+        let currentEditParams = null; 
 
         function getSlotName(slotNumber) {
             const names = {
@@ -319,6 +324,43 @@
             return `./ICONS/SLOT_${slotNumber}.webp`;
         }
 
+        // Логика отрисовки зеленых веточек в Анкете
+        function updateFormTreeLines() {
+            document.querySelectorAll('div[data-boss-id]').forEach(bossBlock => {
+                const mainRow = bossBlock.querySelector('.row-char-main');
+                const alt1Row = bossBlock.querySelector('.row-char-alt1');
+                const alt2Row = bossBlock.querySelector('.row-char-alt2');
+                
+                if(!mainRow) return;
+
+                const hasAlt1 = alt1Row && alt1Row.style.display !== 'none';
+                const hasAlt2 = alt2Row && alt2Row.style.display !== 'none';
+                const hasAnyAlts = hasAlt1 || hasAlt2;
+
+                const mainLine = mainRow.querySelector('.tree-line-container');
+                if (mainLine) {
+                    mainLine.innerHTML = hasAnyAlts ? `<div class="absolute left-[30px] top-1/2 bottom-[-1px] border-l-[3px] border-emerald-400 z-0"></div>` : '';
+                }
+
+                const alt1Line = alt1Row ? alt1Row.querySelector('.tree-line-container') : null;
+                if (alt1Line) {
+                    if (hasAlt2) {
+                        alt1Line.innerHTML = `
+                            <div class="absolute left-[30px] top-[-1px] bottom-1/2 w-6 border-l-[3px] border-b-[3px] border-emerald-400 rounded-bl-[12px] z-0"></div>
+                            <div class="absolute left-[30px] top-1/2 bottom-[-1px] border-l-[3px] border-emerald-400 z-0"></div>
+                        `;
+                    } else {
+                        alt1Line.innerHTML = `<div class="absolute left-[30px] top-[-1px] bottom-1/2 w-6 border-l-[3px] border-b-[3px] border-emerald-400 rounded-bl-[12px] z-0"></div>`;
+                    }
+                }
+
+                const alt2Line = alt2Row ? alt2Row.querySelector('.tree-line-container') : null;
+                if (alt2Line) {
+                    alt2Line.innerHTML = `<div class="absolute left-[30px] top-[-1px] bottom-1/2 w-6 border-l-[3px] border-b-[3px] border-emerald-400 rounded-bl-[12px] z-0"></div>`;
+                }
+            });
+        }
+
         function updateClassIcon(type) {
             const select = document.getElementById(`${type}-class`);
             const iconImg = document.getElementById(`${type}-icon`);
@@ -329,7 +371,6 @@
                 iconImg.src = classData ? classData.icon : WOW_CLASSES['none'].icon;
             }
 
-            // Прячем или показываем строчки в анкете для этого персонажа
             document.querySelectorAll(`.row-char-${type}`).forEach(row => {
                 if (className === 'none') {
                     row.style.display = 'none';
@@ -339,6 +380,8 @@
                     if (rowIcon) rowIcon.src = classData.icon;
                 }
             });
+
+            updateFormTreeLines();
             showFloatingSave();
         }
 
@@ -346,7 +389,6 @@
             const input = document.getElementById(`${type}-name`);
             const newName = input.value.trim() || currentUser;
 
-            // Обновляем имена в строках вишлиста
             document.querySelectorAll(`.row-char-${type}`).forEach(row => {
                 const nameEl = row.querySelector('.display-name');
                 if (nameEl) nameEl.innerText = newName;
@@ -576,10 +618,10 @@
             }
         });
 
-        // Функция миграции данных со старой версии на новую
+        // Функция миграции данных со старой версии
         function migrateData(oldData) {
             if (!oldData) return null;
-            if (oldData.bosses) return oldData; // Если уже новый формат
+            if (oldData.bosses) return oldData;
 
             let newData = {
                 characters: {
@@ -611,7 +653,6 @@
         }
 
         function renderForm(rawData = {}) {
-            // Прогоняем через мигратор
             const userData = migrateData(rawData) || {
                 characters: { main: { class: 'none', name: '' }, alt1: { class: 'none', name: '' }, alt2: { class: 'none', name: '' } },
                 stream_link: '', bosses: {}
@@ -622,7 +663,7 @@
                 const charData = chars[type] || { class: 'none', name: '' };
                 document.getElementById(`${type}-class`).value = charData.class || 'none';
                 document.getElementById(`${type}-name`).value = charData.name || '';
-                updateClassIcon(type); // Обновит иконку и спрячет/покажет строки
+                updateClassIcon(type); 
             });
 
             const streamInput = document.getElementById('stream-link');
@@ -660,24 +701,34 @@
                     const isHidden = charData.class === 'none' ? 'style="display: none;"' : '';
                     const displayName = charData.name || currentUser;
                     const displayIcon = WOW_CLASSES[charData.class]?.icon || WOW_CLASSES['none'].icon;
+                    const isAlt = charType !== 'main';
+                    const paddingClass = isAlt ? 'pl-[60px]' : 'pl-4';
+                    const rowBgClass = isAlt ? 'bg-slate-50/50' : '';
 
                     rowsHtml += `
-                        <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors row-char-${charType}" ${isHidden} data-char-type="${charType}">
-                            <td class="py-4 px-4 w-[25%] text-base">
-                                <div class="flex items-center gap-3">
-                                    <img src="${displayIcon}" class="display-icon w-8 h-8 rounded border border-slate-300 object-cover shadow-sm">
-                                    <div class="flex flex-col leading-tight">
-                                        <span class="display-name truncate font-bold text-slate-800">${displayName}</span>
-                                        <span class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">${currentUser}</span>
+                        <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors row-char-${charType} ${rowBgClass}" ${isHidden} data-char-type="${charType}">
+                            <td class="w-[25%] p-0 border-r border-slate-100/50">
+                                <div class="relative flex items-center h-full w-full py-2">
+                                    <div class="tree-line-container"></div>
+                                    <div class="flex items-center justify-between w-full relative z-10 ${paddingClass} pr-4">
+                                        <div class="flex items-center gap-3 w-[160px] shrink-0">
+                                            <img src="${displayIcon}" class="display-icon w-8 h-8 rounded-md border border-slate-300 object-cover shadow-sm bg-slate-900 shrink-0">
+                                            <div class="flex flex-col leading-tight overflow-hidden">
+                                                <span class="display-name truncate font-bold text-slate-800 text-[15px]">${displayName}</span>
+                                                <span class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">${charType === 'main' ? currentUser : 'Альт'}</span>
+                                            </div>
+                                        </div>
+                                        <!-- Пустой блок для выравнивания с иконкой стрима в сводке -->
+                                        <div class="w-10 shrink-0 flex justify-center"></div>
                                     </div>
                                 </div>
                             </td>
-                            <td class="py-4 px-4 w-[60%]">
+                            <td class="py-3 px-4 w-[60%] border-r border-slate-100/50">
                                 <div class="flex flex-wrap items-center gap-1.5 w-max loot-grid-char">
                                     ${slotsHtml}
                                 </div>
                             </td>
-                            <td class="py-4 px-4 w-[15%] text-center">
+                            <td class="py-3 px-4 w-[15%] text-center">
                                 <div class="flex justify-center items-center">
                                     <button id="btn-comment-${boss.id}-${charType}" onclick="openCommentModal('${boss.id}', '${charType}')" class="w-11 h-11 rounded-lg border-2 flex items-center justify-center transition-colors ${btnClasses}" title="Оставить комментарий">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
@@ -697,7 +748,7 @@
                         </div>
                         <div class="overflow-x-auto custom-scrollbar pb-2">
                             <table class="w-full min-w-[900px]">
-                                <tbody class="text-sm">
+                                <tbody class="text-sm border-b-2 border-slate-200 last:border-0">
                                     ${rowsHtml}
                                 </tbody>
                             </table>
@@ -706,6 +757,8 @@
                 `;
                 container.insertAdjacentHTML('beforeend', bossContainerHtml);
             });
+
+            updateFormTreeLines();
         }
 
         window.saveForm = async function() {
@@ -864,10 +917,80 @@
             renderDashboard();
         }
 
+        function buildDashboardRow(account, charObj, charType, isAlt, isLastAlt, hasAlts) {
+            let gridHtml = `<div class="flex flex-wrap items-center gap-1.5 w-max">`;
+            SLOTS.forEach(slotId => {
+                const hasItem = charObj.items.includes(slotId);
+                const imgClass = hasItem ? 'dash-item-icon active' : 'dash-item-icon empty';
+                gridHtml += `<img src="${getSlotIconPath(slotId)}" class="w-11 h-11 object-cover ${imgClass}" title="${getSlotName(slotId)}">`;
+            });
+            gridHtml += `</div>`;
+
+            const streamUrl = account.stream_link.startsWith('http') ? account.stream_link : `https://${account.stream_link}`;
+            const streamIconHtml = (account.stream_link && charType === 'main') ? `
+                <a href="${streamUrl}" target="_blank" title="Перейти на трансляцию игрока" class="flex-shrink-0 hover:scale-105 transition-transform duration-200">
+                    <div class="w-8 h-8 bg-purple-600 rounded-md flex items-center justify-center shadow-sm border border-purple-700 text-white hover:bg-purple-500">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+                    </div>
+                </a>
+            ` : `<div class="w-8"></div>`;
+
+            const classIcon = WOW_CLASSES[charObj.charConfig.class]?.icon || WOW_CLASSES['none'].icon;
+            const displayName = charObj.charConfig.name || account.accountName;
+
+            let treeLineHtml = '';
+            if (charType === 'main' && hasAlts) {
+                treeLineHtml = `<div class="absolute left-[30px] top-1/2 bottom-[-1px] border-l-[3px] border-emerald-400 z-0"></div>`;
+            } else if (isAlt) {
+                if (isLastAlt) {
+                    treeLineHtml = `<div class="absolute left-[30px] top-[-1px] bottom-1/2 w-6 border-l-[3px] border-b-[3px] border-emerald-400 rounded-bl-[12px] z-0"></div>`;
+                } else {
+                    treeLineHtml = `
+                        <div class="absolute left-[30px] top-[-1px] bottom-1/2 w-6 border-l-[3px] border-b-[3px] border-emerald-400 rounded-bl-[12px] z-0"></div>
+                        <div class="absolute left-[30px] top-1/2 bottom-[-1px] border-l-[3px] border-emerald-400 z-0"></div>
+                    `;
+                }
+            }
+
+            const paddingClass = isAlt ? 'pl-[60px]' : 'pl-4';
+            const rowClass = isAlt ? 'bg-slate-50/50' : '';
+
+            let playerDisplayHtml = `
+                <div class="relative flex items-center h-full w-full py-2">
+                    ${treeLineHtml}
+                    <div class="flex items-center justify-between w-full relative z-10 ${paddingClass} pr-4">
+                        <div class="flex items-center gap-3 w-[160px] shrink-0">
+                            <img src="${classIcon}" class="w-8 h-8 rounded-md border border-slate-300 object-cover shadow-sm bg-slate-900 shrink-0">
+                            <div class="flex flex-col leading-tight overflow-hidden">
+                                <span class="truncate font-bold text-slate-800 text-[15px]">${displayName}</span>
+                                <span class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">${charType === 'main' ? account.accountName : 'Альт'}</span>
+                            </div>
+                        </div>
+                        <div class="w-10 shrink-0 flex justify-center">
+                            ${streamIconHtml}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            return `
+                <tr class="hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0 ${rowClass}">
+                    <td class="w-[25%] p-0 border-r border-slate-100/50">
+                        ${playerDisplayHtml}
+                    </td>
+                    <td class="py-3 px-4 w-[60%] border-r border-slate-100/50">${gridHtml}</td>
+                    <td class="py-3 px-4 w-[15%]">
+                        ${charObj.comment ? `<div class="bg-slate-100 text-slate-700 px-3 py-2 rounded-lg text-xs font-medium border border-slate-200 break-words">${charObj.comment}</div>` : ''}
+                    </td>
+                </tr>
+            `;
+        }
+
         function renderDashboard() {
             const container = document.getElementById('dashboard-content');
             const playerFilterValue = document.getElementById('dashboard-player-filter').value;
             const itemFilterValue = document.getElementById('dashboard-item-filter').value;
+            const mainsOnly = document.getElementById('dashboard-mains-only').checked;
             
             if (currentActivePlayers.length === 0) {
                 container.innerHTML = `<div class="p-12 text-center bg-white rounded-2xl border border-slate-200 border-dashed text-slate-500">Данных для отображения пока нет.</div>`;
@@ -877,7 +1000,7 @@
             let finalHtml = '';
 
             BOSSES.forEach(boss => {
-                let interestedCharacters = []; // Собираем теперь не игроков, а конкретных персонажей (Мейн, Альт)
+                let interestedAccounts = [];
                 
                 currentActivePlayers.forEach(player => {
                     if (playerFilterValue !== 'all' && player !== playerFilterValue) return;
@@ -889,43 +1012,48 @@
                     const chars = pData.characters || {};
                     const bossLoot = pData.bosses?.[boss.id] || {};
 
-                    ['main', 'alt1', 'alt2'].forEach(charType => {
-                        const charConfig = chars[charType];
-                        const charLoot = bossLoot[charType];
+                    let accMain = { charConfig: chars.main, items: bossLoot.main?.items || [], comment: bossLoot.main?.comment || '' };
+                    let accAlt1 = { charConfig: chars.alt1, items: bossLoot.alt1?.items || [], comment: bossLoot.alt1?.comment || '' };
+                    let accAlt2 = { charConfig: chars.alt2, items: bossLoot.alt2?.items || [], comment: bossLoot.alt2?.comment || '' };
 
-                        if (charConfig && charConfig.class !== 'none' && charLoot) {
-                            let hasItems = charLoot.items && charLoot.items.length > 0;
-                            let hasComment = charLoot.comment && charLoot.comment.trim() !== '';
-                            
-                            let passesItemFilter = true;
-                            if (itemFilterValue !== 'all') {
-                                const slotNum = parseInt(itemFilterValue);
-                                passesItemFilter = charLoot.items && charLoot.items.includes(slotNum);
-                            }
-
-                            let shouldInclude = false;
-                            if (itemFilterValue !== 'all') {
-                                shouldInclude = passesItemFilter;
-                            } else {
-                                shouldInclude = hasItems || hasComment;
-                            }
-
-                            if (shouldInclude) {
-                                interestedCharacters.push({
-                                    accountName: player,
-                                    charConfig: charConfig,
-                                    items: charLoot.items || [],
-                                    comment: charLoot.comment || '',
-                                    stream_link: streamLink
-                                });
-                            }
+                    const checkFilter = (charObj) => {
+                        if (!charObj.charConfig || charObj.charConfig.class === 'none') return false;
+                        let hasItems = charObj.items.length > 0;
+                        let hasComment = charObj.comment.trim() !== '';
+                        
+                        if (itemFilterValue !== 'all') {
+                            const slotNum = parseInt(itemFilterValue);
+                            return charObj.items.includes(slotNum);
+                        } else {
+                            return hasItems || hasComment;
                         }
-                    });
+                    };
+
+                    let showMain = checkFilter(accMain);
+                    let showAlt1 = !mainsOnly && checkFilter(accAlt1);
+                    let showAlt2 = !mainsOnly && checkFilter(accAlt2);
+
+                    if (showMain || showAlt1 || showAlt2) {
+                        // Если альты отображаются, обязательно выводим мейна как корень дерева
+                        if (!showMain && (showAlt1 || showAlt2)) showMain = true;
+
+                        interestedAccounts.push({
+                            accountName: player,
+                            stream_link: streamLink,
+                            chars: {
+                                main: showMain ? accMain : null,
+                                alt1: showAlt1 ? accAlt1 : null,
+                                alt2: showAlt2 ? accAlt2 : null
+                            },
+                            // Сортируем по количеству шмоток у мейна
+                            sortScore: showMain ? accMain.items.length : 0
+                        });
+                    }
                 });
 
-                interestedCharacters.sort((a, b) => b.items.length - a.items.length);
+                interestedAccounts.sort((a, b) => b.sortScore - a.sortScore);
 
-                if (interestedCharacters.length > 0) {
+                if (interestedAccounts.length > 0) {
                     let bossHtml = `
                         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                             <div class="bg-slate-50 p-4 border-b border-slate-200 flex items-center gap-4">
@@ -934,58 +1062,31 @@
                             </div>
                             <div class="overflow-x-auto custom-scrollbar pb-2">
                                 <table class="w-full min-w-[900px]">
-                                    <tbody class="text-sm">
                     `;
 
-                    interestedCharacters.forEach((c, index) => {
-                        const isLast = index === interestedCharacters.length - 1;
-                        const borderClass = isLast ? '' : 'border-b border-slate-100';
+                    interestedAccounts.forEach(acc => {
+                        let tbodyHtml = `<tbody class="text-sm border-b-4 border-slate-200 last:border-0">`;
                         
-                        let gridHtml = `<div class="flex flex-wrap items-center gap-1.5 w-max">`;
-                        SLOTS.forEach(slotId => {
-                            const hasItem = c.items.includes(slotId);
-                            const imgClass = hasItem ? 'dash-item-icon active' : 'dash-item-icon empty';
-                            gridHtml += `<img src="${getSlotIconPath(slotId)}" class="w-11 h-11 object-cover ${imgClass}" title="${getSlotName(slotId)}">`;
-                        });
-                        gridHtml += `</div>`;
+                        let hasAlts = acc.chars.alt1 || acc.chars.alt2;
 
-                        const streamUrl = c.stream_link.startsWith('http') ? c.stream_link : `https://${c.stream_link}`;
-                        const streamIconHtml = c.stream_link ? `
-                            <a href="${streamUrl}" target="_blank" title="Перейти на трансляцию игрока" class="flex-shrink-0 hover:scale-105 transition-transform duration-200 ml-3">
-                                <div class="w-8 h-8 bg-purple-600 rounded-md flex items-center justify-center shadow-sm border border-purple-700 text-white hover:bg-purple-500">
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
-                                </div>
-                            </a>
-                        ` : '';
+                        if (acc.chars.main) {
+                            tbodyHtml += buildDashboardRow(acc, acc.chars.main, 'main', false, false, hasAlts);
+                        }
 
-                        const classIcon = WOW_CLASSES[c.charConfig.class]?.icon || WOW_CLASSES['none'].icon;
-                        const displayName = c.charConfig.name || c.accountName;
-                        let playerDisplayHtml = `
-                            <img src="${classIcon}" class="w-8 h-8 rounded border border-slate-300 object-cover shadow-sm">
-                            <div class="flex flex-col leading-tight">
-                                <span class="truncate font-bold text-slate-800 text-base">${displayName}</span>
-                                <span class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">${c.accountName}</span>
-                            </div>
-                        `;
+                        if (acc.chars.alt1) {
+                            let isLastAlt = !acc.chars.alt2;
+                            tbodyHtml += buildDashboardRow(acc, acc.chars.alt1, 'alt1', true, isLastAlt, false);
+                        }
 
-                        bossHtml += `
-                                        <tr class="${borderClass} hover:bg-slate-50 transition-colors">
-                                            <td class="py-4 px-4 w-[25%]">
-                                                <div class="flex items-center gap-3">
-                                                    ${playerDisplayHtml}
-                                                    ${streamIconHtml}
-                                                </div>
-                                            </td>
-                                            <td class="py-4 px-4 w-[60%]">${gridHtml}</td>
-                                            <td class="py-4 px-4 w-[15%]">
-                                                ${c.comment ? `<div class="bg-slate-100 text-slate-700 px-3 py-2 rounded-lg text-xs font-medium border border-slate-200">${c.comment}</div>` : ''}
-                                            </td>
-                                        </tr>
-                        `;
+                        if (acc.chars.alt2) {
+                            tbodyHtml += buildDashboardRow(acc, acc.chars.alt2, 'alt2', true, true, false);
+                        }
+
+                        tbodyHtml += `</tbody>`;
+                        bossHtml += tbodyHtml;
                     });
 
                     bossHtml += `
-                                    </tbody>
                                 </table>
                             </div>
                         </div>
