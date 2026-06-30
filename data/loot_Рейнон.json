@@ -17,7 +17,10 @@
   "bosses": {
     "boss_1": {
       "main": {
-        "items": [],
+        "items": [
+          5,
+          10
+        ],
         "comment": ""
       },
       "alt1": {
