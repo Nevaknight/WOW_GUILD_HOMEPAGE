@@ -259,7 +259,7 @@
         
         <!-- ФУТЕР -->
         <footer class="text-center pt-10 pb-4 text-slate-400 font-medium text-sm mt-auto">
-            Guild Planner V2.6 - @Rainon
+            Guild Planner V2.7 - @Rainon
         </footer>
         
     </main>
@@ -848,38 +848,36 @@
         function migrateData(oldData) {
             if (!oldData) return null;
             
-            let newData = {
+            let isNew = !!oldData.bosses;
+            let newData = isNew ? oldData : {
                 characters: {
                     main: { class: 'none', name: '' },
                     alt1: { class: 'none', name: '' },
                     alt2: { class: 'none', name: '' }
                 },
-                stream_link: '',
+                stream_link: oldData.stream_link || '',
                 bosses: {},
                 dungeons: {}
             };
 
-            if (oldData.characters) {
-                newData.characters = { ...newData.characters, ...oldData.characters };
+            if (!isNew) {
+                if (oldData.characters) newData.characters = oldData.characters;
+                BOSSES.forEach(b => {
+                    if (oldData[b.id]) {
+                        newData.bosses[b.id] = {
+                            main: { items: oldData[b.id].items || [], comment: oldData[b.id].comment || '' },
+                            alt1: { items: [], comment: '' },
+                            alt2: { items: [], comment: '' }
+                        };
+                    }
+                });
             }
-            if (oldData.stream_link) newData.stream_link = oldData.stream_link;
 
-            BOSSES.forEach(b => {
-                if (oldData.bosses && oldData.bosses[b.id]) {
-                    newData.bosses[b.id] = oldData.bosses[b.id];
-                } else if (oldData[b.id]) {
-                    newData.bosses[b.id] = {
-                        main: { items: oldData[b.id].items || [], comment: oldData[b.id].comment || '' },
-                        alt1: { items: [], comment: '' },
-                        alt2: { items: [], comment: '' }
-                    };
-                }
-            });
-
+            if (!newData.dungeons) {
+                newData.dungeons = {};
+            }
             DUNGEONS.forEach(d => {
-                if (oldData.dungeons && oldData.dungeons[d.id]) {
-                    newData.dungeons[d.id] = oldData.dungeons[d.id];
-                } else {
+                if (!newData.dungeons[d.id]) {
                     newData.dungeons[d.id] = {
                         main: { rio: false, w: false },
                         alt1: { rio: false, w: false },
@@ -927,8 +925,8 @@
                         <div class="flex items-center gap-1.5 bg-slate-50 p-2 rounded-xl border border-slate-200 shadow-sm shrink-0" data-dungeon-id="${d.id}">
                             <img src="${d.icon}" alt="${d.name}" class="w-[48px] h-[48px] rounded-lg object-cover bg-slate-900 border border-slate-300" title="${d.name}">
                             <div class="flex flex-col gap-1 justify-center">
-                                <button onclick="toggleDungeonBtn(this, 'rio')" data-active="${dState.rio}" class="dungeon-btn-rio w-10 h-[22px] rounded border text-[10px] font-black transition-colors flex items-center justify-center ${rioCls}">RIO</button>
-                                <button onclick="toggleDungeonBtn(this, 'w')" data-active="${dState.w}" class="dungeon-btn-w w-10 h-[22px] rounded border text-[10px] font-black transition-colors flex items-center justify-center ${wCls}">W</button>
+                                <button onclick="toggleDungeonBtn(this, 'rio')" data-active="${dState.rio}" class="dungeon-btn-rio w-10 h-[22px] rounded border text-[11px] font-black transition-colors flex items-center justify-center ${rioCls}">RIO</button>
+                                <button onclick="toggleDungeonBtn(this, 'w')" data-active="${dState.w}" class="dungeon-btn-w w-10 h-[22px] rounded border text-[11px] font-black transition-colors flex items-center justify-center ${wCls}">W</button>
                             </div>
                         </div>
                     `;
@@ -946,10 +944,10 @@
                         <td class="w-[240px] p-0 border-r border-slate-100/50 align-middle">
                             <div class="relative flex items-center h-[64px] w-full">
                                 <div class="tree-line-container w-[40px] shrink-0 relative h-full"></div>
-                                <div class="flex items-center gap-3 w-[160px] shrink-0">
+                                <div class="flex items-center gap-2 w-[160px] shrink-0">
                                     <img src="${displayIcon}" class="display-icon w-8 h-8 rounded-md border border-slate-300 object-cover shadow-sm bg-slate-900 shrink-0">
                                     <div class="flex flex-col leading-tight overflow-hidden w-full pr-1">
-                                        <span class="display-name truncate font-bold text-slate-800 text-[15px]">${displayName}</span>
+                                        <span class="display-name truncate font-bold text-slate-800 text-[14px]">${displayName}</span>
                                         <span class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">${charType === 'main' ? currentUser : 'Альт'}</span>
                                     </div>
                                 </div>
@@ -1006,10 +1004,10 @@
                             <td class="w-[240px] p-0 border-r border-slate-100/50 align-middle">
                                 <div class="relative flex items-center h-[56px] w-full">
                                     <div class="tree-line-container w-[40px] shrink-0 relative h-full"></div>
-                                    <div class="flex items-center gap-3 w-[160px] shrink-0">
+                                    <div class="flex items-center gap-2 w-[160px] shrink-0">
                                         <img src="${displayIcon}" class="display-icon w-8 h-8 rounded-md border border-slate-300 object-cover shadow-sm bg-slate-900 shrink-0">
                                         <div class="flex flex-col leading-tight overflow-hidden w-full pr-1">
-                                            <span class="display-name truncate font-bold text-slate-800 text-[15px]">${displayName}</span>
+                                            <span class="display-name truncate font-bold text-slate-800 text-[14px]">${displayName}</span>
                                             <span class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">${charType === 'main' ? currentUser : 'Альт'}</span>
                                         </div>
                                     </div>
@@ -1292,7 +1290,7 @@
                     <div class="w-[40px] shrink-0 relative h-full">
                         ${treeLineHtml}
                     </div>
-                    <div class="flex items-center gap-3 w-[160px] shrink-0">
+                    <div class="flex items-center gap-2 w-[160px] shrink-0">
                         <img src="${classIcon}" class="w-8 h-8 rounded-md border border-slate-300 object-cover shadow-sm bg-slate-900 shrink-0">
                         <div class="flex flex-col leading-tight overflow-hidden w-full pr-1">
                             <span class="truncate font-bold text-slate-800 text-[14px]">${displayName}</span>
@@ -1388,13 +1386,13 @@
                     const wActive = wList.length > 0 ? 'bg-purple-100 text-purple-700 border-purple-300 hover:bg-purple-200 shadow-sm cursor-pointer' : 'bg-slate-50 text-slate-400 border-slate-200 cursor-auto';
 
                     dashDungeonsHtml += `
-                        <div class="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-sm shrink-0 w-[300px]">
+                        <div class="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-sm w-full">
                             <img src="${d.icon}" alt="${d.name}" class="w-[60px] h-[60px] rounded-lg object-cover bg-slate-900 shadow-sm shrink-0 border border-slate-200">
                             <div class="flex flex-col gap-2 w-full overflow-hidden items-center text-center">
                                 <span class="text-sm font-bold text-slate-800 truncate w-full" title="${d.name}">${d.name}</span>
                                 <div class="flex gap-1.5 w-full mt-auto">
-                                    <button ${rioList.length > 0 ? `onclick="openDungeonListModal('${d.id}_rio')"` : ''} class="flex-1 h-7 rounded border text-[11px] font-black transition-colors ${rioActive}" title="${rioNames}">RIO (${rioList.length})</button>
-                                    <button ${wList.length > 0 ? `onclick="openDungeonListModal('${d.id}_w')"` : ''} class="flex-1 h-7 rounded border text-[11px] font-black transition-colors ${wActive}" title="${wNames}">W (${wList.length})</button>
+                                    <button ${rioList.length > 0 ? `onclick="openDungeonListModal('${d.id}_rio')"` : ''} class="flex-1 h-7 rounded border text-[12px] font-black transition-colors ${rioActive}" title="${rioNames}">RIO - ${rioList.length}</button>
+                                    <button ${wList.length > 0 ? `onclick="openDungeonListModal('${d.id}_w')"` : ''} class="flex-1 h-7 rounded border text-[12px] font-black transition-colors ${wActive}" title="${wNames}">W - ${wList.length}</button>
                                 </div>
                             </div>
                         </div>
@@ -1415,7 +1413,7 @@
                             <div class="bg-slate-50 p-4 border-b border-slate-200 flex items-center gap-4">
                                 <img src="./ICONS/DUNGEONS/ЭПОХАЛЬНЫЙ_КЛЮЧ.jpg" alt="Эпохальные подземелья" class="w-12 h-12 rounded-lg shadow-sm border border-slate-300 object-cover bg-slate-900">
                             </div>
-                            <div class="p-5 flex flex-wrap justify-center gap-4 bg-slate-50/50">
+                            <div class="p-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 bg-slate-50/50">
                                 ${dashDungeonsHtml}
                             </div>
                         </div>
