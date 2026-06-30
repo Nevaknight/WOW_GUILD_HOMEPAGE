@@ -166,7 +166,7 @@
     "dungeon_2": {
       "main": {
         "rio": false,
-        "w": true
+        "w": false
       },
       "alt1": {
         "rio": false,
