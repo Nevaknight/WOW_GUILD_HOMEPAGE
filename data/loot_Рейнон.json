@@ -18,17 +18,20 @@
     "boss_1": {
       "main": {
         "items": [
-          5,
-          10
+          7
         ],
         "comment": "1234"
       },
       "alt1": {
-        "items": [],
+        "items": [
+          3
+        ],
         "comment": ""
       },
       "alt2": {
-        "items": [],
+        "items": [
+          10
+        ],
         "comment": ""
       }
     },
