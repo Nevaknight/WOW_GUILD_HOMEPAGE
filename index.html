@@ -211,7 +211,7 @@
                 </div>
                 <div class="flex-1">
                     <label class="block text-sm font-black text-purple-900 mb-1 uppercase tracking-widest">Трансляция</label>
-                    <input type="url" id="stream-link" class="w-full border border-purple-200 rounded-lg p-3 outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 font-medium shadow-sm bg-white" placeholder="Ссылка на Twitch, YouTube и т.д." onchange="showFloatingSave()">
+                    <input type="url" id="stream-link" class="w-full border border-purple-200 rounded-lg p-3 outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 font-medium shadow-sm bg-white" placeholder="Ссылка на Twitch, YouTube и т.д." onchange="showFloatingSave(this)">
                 </div>
             </div>
 
@@ -228,7 +228,7 @@
         
         <!-- ФУТЕР -->
         <footer class="text-center pt-10 pb-4 text-slate-400 font-medium text-sm mt-auto">
-            Guild Planner V1.8 - @Rainon
+            Guild Planner V1.9 - @Rainon
         </footer>
         
     </main>
@@ -258,6 +258,22 @@
                     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
                 </button>
             </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для просмотра комментариев (Сводка) -->
+    <div id="view-comment-modal" onclick="if(event.target === this) closeViewCommentModal()" class="fixed inset-0 bg-slate-900 bg-opacity-60 z-[100] hidden flex items-center justify-center backdrop-blur-sm cursor-pointer">
+        <div class="bg-white rounded-xl shadow-2xl p-6 w-[90%] max-w-sm transform transition-all scale-95 opacity-0 cursor-auto" id="view-comment-modal-content">
+            <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-3">
+                <h3 class="text-lg font-black text-slate-800 tracking-wide flex items-center gap-2">
+                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+                    Комментарий
+                </h3>
+                <button onclick="closeViewCommentModal()" class="text-slate-400 hover:text-red-500 hover:bg-red-50 p-1.5 rounded-lg transition-colors" title="Закрыть (ESC)">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <p id="view-modal-text" class="text-slate-700 font-medium leading-relaxed whitespace-pre-wrap break-words"></p>
         </div>
     </div>
 
@@ -323,6 +339,8 @@
         let currentAllLootData = {};
         let currentActivePlayers = [];
         let currentEditParams = null; 
+        let hasUnsavedChanges = false;
+        let lastModifiedBox = null;
 
         function getSlotName(slotNumber) {
             const names = {
@@ -395,7 +413,7 @@
             });
 
             updateFormTreeLines();
-            showFloatingSave();
+            showFloatingSave(document.getElementById(`${type}-class`));
         }
 
         function updateCharName(type) {
@@ -406,7 +424,7 @@
                 const nameEl = row.querySelector('.display-name');
                 if (nameEl) nameEl.innerText = newName;
             });
-            showFloatingSave();
+            showFloatingSave(document.getElementById(`${type}-name`));
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -460,12 +478,18 @@
             }, 5000);
         }
 
-        window.showFloatingSave = function() {
+        window.showFloatingSave = function(element = null) {
+            hasUnsavedChanges = true;
+            if (element) {
+                lastModifiedBox = element.closest('.bg-white.rounded-2xl') || element.closest('.bg-white.p-5');
+            }
             const btn = document.getElementById('floating-save-btn');
             btn.classList.remove('translate-y-24', 'opacity-0');
         }
 
         window.hideFloatingSave = function() {
+            hasUnsavedChanges = false;
+            lastModifiedBox = null;
             const btn = document.getElementById('floating-save-btn');
             btn.classList.add('translate-y-24', 'opacity-0');
         }
@@ -492,6 +516,21 @@
         }
 
         function showView(viewId) {
+            // Если есть несохраненные изменения и мы пытаемся уйти из анкеты
+            if (hasUnsavedChanges && viewId !== 'form') {
+                if (lastModifiedBox) {
+                    lastModifiedBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    lastModifiedBox.classList.add('ring-4', 'ring-red-400', 'transition-all', 'duration-300');
+                    setTimeout(() => lastModifiedBox.classList.remove('ring-4', 'ring-red-400'), 1500);
+                }
+                const btn = document.getElementById('floating-save-btn');
+                btn.classList.add('animate-bounce');
+                setTimeout(() => btn.classList.remove('animate-bounce'), 1500);
+                
+                showMessage('Сначала сохраните изменения в анкете!', 'error');
+                return;
+            }
+
             document.getElementById('view-login').classList.add('hidden-view');
             document.getElementById('view-dashboard').classList.add('hidden-view');
             document.getElementById('view-form').classList.add('hidden-view');
@@ -571,7 +610,7 @@
         // ==========================================
         function toggleItemSlot(imgElement) {
             imgElement.classList.toggle('selected');
-            showFloatingSave();
+            showFloatingSave(imgElement);
         }
 
         function openCommentModal(bossId, charType) {
@@ -601,6 +640,27 @@
             }, 200); 
         }
 
+        window.openViewCommentModal = function(text) {
+            const modal = document.getElementById('view-comment-modal');
+            const content = document.getElementById('view-comment-modal-content');
+            document.getElementById('view-modal-text').innerText = text;
+            
+            modal.classList.remove('hidden');
+            requestAnimationFrame(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+            });
+        }
+
+        window.closeViewCommentModal = function() {
+            const modal = document.getElementById('view-comment-modal');
+            const content = document.getElementById('view-comment-modal-content');
+            content.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 200); 
+        }
+
         window.saveCommentFromModal = function() {
             if (!currentEditParams) return;
             const { bossId, charType } = currentEditParams;
@@ -622,12 +682,16 @@
             }
             
             closeCommentModal();
+            showFloatingSave(btn);
             saveForm(); 
         }
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && !document.getElementById('comment-modal').classList.contains('hidden')) {
                 closeCommentModal();
+            }
+            if (e.key === 'Escape' && !document.getElementById('view-comment-modal').classList.contains('hidden')) {
+                closeViewCommentModal();
             }
         });
 
@@ -850,6 +914,8 @@
             } else {
                 renderForm({});
             }
+            // Сбрасываем статус несохраненности, так как первоначальный рендер мог его случайно триггернуть
+            hideFloatingSave();
         }
 
         // ==========================================
@@ -984,9 +1050,10 @@
 
             let commentHtml = '';
             if (charObj.comment) {
+                const safeComment = charObj.comment.replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/\n/g, '\\n');
                 commentHtml = `
                     <div class="flex justify-center items-center w-full">
-                        <div class="w-11 h-11 rounded-lg border-2 border-green-500 text-green-500 bg-green-50 shadow-[0_0_8px_rgba(34,197,94,0.5)] flex items-center justify-center cursor-help transition-transform hover:scale-105" title="${charObj.comment.replace(/"/g, '&quot;')}">
+                        <div onclick="openViewCommentModal('${safeComment}')" class="w-11 h-11 rounded-lg border-2 border-green-500 text-green-500 bg-green-50 shadow-[0_0_8px_rgba(34,197,94,0.5)] flex items-center justify-center cursor-pointer transition-transform hover:scale-105" title="Посмотреть комментарий">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
                         </div>
                     </div>
