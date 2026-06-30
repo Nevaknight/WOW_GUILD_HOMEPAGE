@@ -17,15 +17,23 @@
   "bosses": {
     "boss_1": {
       "main": {
-        "items": [],
+        "items": [
+          5
+        ],
         "comment": ""
       },
       "alt1": {
-        "items": [],
+        "items": [
+          11,
+          12
+        ],
         "comment": ""
       },
       "alt2": {
-        "items": [],
+        "items": [
+          7,
+          8
+        ],
         "comment": ""
       }
     },
