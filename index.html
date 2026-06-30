@@ -259,7 +259,7 @@
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden tree-container-block text-left relative">
                     <div class="bg-slate-50 p-4 border-b border-slate-200 flex items-center justify-between gap-4">
                         <img src="./ICONS/DUNGEONS/ЭПОХАЛЬНЫЙ_КЛЮЧ.jpg" alt="Ключи" class="w-12 h-12 rounded-lg shadow-sm border border-slate-300 object-cover bg-slate-900">
-                        <div class="w-[100px] shrink-0 flex items-center justify-center pr-4">
+                        <div class="w-[100px] shrink-0 flex items-center justify-end pr-4">
                             <button onclick="resetDungeonsSelection()" class="text-slate-400 hover:text-red-500 bg-white border border-slate-200 hover:border-red-200 hover:bg-red-50 w-11 h-11 rounded-lg transition-all shadow-sm flex items-center justify-center" title="Сбросить выбор всех ключей">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                             </button>
@@ -290,7 +290,7 @@
         
         <!-- ФУТЕР -->
         <footer class="text-center pt-10 pb-4 text-slate-400 font-medium text-sm mt-auto">
-            Guild Planner V3.2 - @Rainon
+            Guild Planner V3.3 - @Rainon
         </footer>
         
     </main>
@@ -1110,8 +1110,8 @@
                         <div class="flex items-center gap-1.5 bg-slate-50 p-2 rounded-xl border border-slate-200 shadow-sm shrink-0" data-dungeon-id="${d.id}">
                             <img src="${d.icon}" alt="${d.name}" class="w-[48px] h-[48px] rounded-lg object-cover bg-slate-900 border border-slate-300" title="${d.name}">
                             <div class="flex flex-col gap-1 justify-center">
-                                <button onclick="toggleDungeonBtn(this, 'rio')" data-active="${dState.rio}" class="dungeon-btn-rio w-10 h-[22px] rounded border text-[11px] font-black transition-colors flex items-center justify-center ${rioCls}">RIO</button>
-                                <button onclick="toggleDungeonBtn(this, 'w')" data-active="${dState.w}" class="dungeon-btn-w w-10 h-[22px] rounded border text-[11px] font-black transition-colors flex items-center justify-center ${wCls}">W</button>
+                                <button onclick="toggleDungeonBtn(this, 'rio')" data-active="${dState.rio}" class="dungeon-btn-rio w-10 h-[22px] rounded border text-[10px] font-black transition-colors flex items-center justify-center ${rioCls}">RIO</button>
+                                <button onclick="toggleDungeonBtn(this, 'w')" data-active="${dState.w}" class="dungeon-btn-w w-10 h-[22px] rounded border text-[10px] font-black transition-colors flex items-center justify-center ${wCls}">W</button>
                             </div>
                         </div>
                     `;
@@ -1126,9 +1126,9 @@
 
                 dRowsHtml += `
                     <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors row-char-${charType} ${rowBgClass} ${isHiddenClass}" data-char-type="${charType}">
-                        <td class="w-[240px] p-0 border-r border-slate-100/50 align-middle">
+                        <td class="w-[200px] p-0 border-r border-slate-100/50 align-middle">
                             <div class="relative flex items-center h-[64px] w-full">
-                                <div class="tree-line-container w-[40px] shrink-0 relative h-full"></div>
+                                <div class="tree-line-container w-[30px] shrink-0 relative h-full"></div>
                                 <div class="flex items-center gap-2 w-[160px] shrink-0">
                                     <img src="${displayIcon}" class="display-icon w-8 h-8 rounded-md border border-slate-300 object-cover shadow-sm bg-slate-900 shrink-0">
                                     <div class="flex flex-col leading-tight overflow-hidden w-full pr-1">
@@ -1136,11 +1136,13 @@
                                         <span class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">${charType === 'main' ? currentUser : 'Альт'}</span>
                                     </div>
                                 </div>
-                                <div class="w-[40px] shrink-0 flex justify-center"></div>
+                                <div class="w-[10px] shrink-0 flex justify-center"></div>
                             </div>
                         </td>
                         <td class="px-4 py-2 align-middle">
                             ${dungeonsHtml}
+                        </td>
+                        <td class="w-[60px] align-middle border-l border-slate-100/50">
                         </td>
                     </tr>
                 `;
@@ -1224,7 +1226,7 @@
                                 <h3 class="text-xl font-black text-slate-800 uppercase tracking-wide">${boss.name}</h3>
                             </div>
                             <div class="w-[100px] shrink-0 flex items-center justify-center pr-4">
-                                <button onclick="resetBossSelection('${boss.id}')" class="text-slate-400 hover:text-red-500 bg-white border border-slate-200 hover:border-red-200 hover:bg-red-50 w-11 h-11 rounded-lg transition-all shadow-sm flex items-center justify-center" title="Сбросить выбор предметов">
+                                <button onclick="resetBossSelection('${boss.id}')" class="w-11 h-11 text-slate-400 hover:text-red-500 bg-white border border-slate-200 hover:border-red-200 hover:bg-red-50 rounded-lg transition-all shadow-sm flex items-center justify-center" title="Сбросить выбор предметов">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                                 </button>
                             </div>
@@ -1587,17 +1589,20 @@
                     globalDungeonLists[`${d.id}_rio`] = { dungeon: d, type: 'RIO', list: rioList };
                     globalDungeonLists[`${d.id}_w`] = { dungeon: d, type: 'W', list: wList };
 
+                    const rioNames = rioList.map(x => x.charConfig.name || x.accountName).join(', ') || 'Нет желающих';
+                    const wNames = wList.map(x => x.charConfig.name || x.accountName).join(', ') || 'Нет желающих';
+
                     const rioActive = rioList.length > 0 ? 'bg-blue-100 text-blue-700 border-blue-300 hover:bg-blue-200 shadow-sm cursor-pointer' : 'bg-slate-50 text-slate-400 border-slate-200 cursor-auto';
                     const wActive = wList.length > 0 ? 'bg-purple-100 text-purple-700 border-purple-300 hover:bg-purple-200 shadow-sm cursor-pointer' : 'bg-slate-50 text-slate-400 border-slate-200 cursor-auto';
 
                     dashDungeonsHtml += `
-                        <div class="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-sm shrink-0 w-full">
+                        <div class="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-sm w-full">
                             <img src="${d.icon}" alt="${d.name}" class="w-[60px] h-[60px] rounded-lg object-cover bg-slate-900 shadow-sm shrink-0 border border-slate-200">
                             <div class="flex flex-col gap-2 w-full overflow-hidden items-center text-center">
                                 <span class="text-sm font-bold text-slate-800 truncate w-full" title="${d.name}">${d.name}</span>
                                 <div class="flex gap-1.5 w-full mt-auto">
-                                    <button ${rioList.length > 0 ? `onclick="openDungeonListModal('${d.id}_rio')"` : ''} class="flex-1 h-7 rounded border text-[11px] font-black transition-colors ${rioActive}">RIO - ${rioList.length}</button>
-                                    <button ${wList.length > 0 ? `onclick="openDungeonListModal('${d.id}_w')"` : ''} class="flex-1 h-7 rounded border text-[11px] font-black transition-colors ${wActive}">W - ${wList.length}</button>
+                                    <button ${rioList.length > 0 ? `onclick="openDungeonListModal('${d.id}_rio')"` : ''} class="flex-1 h-7 rounded border text-[11px] font-black transition-colors ${rioActive}" title="${rioNames}">RIO - ${rioList.length}</button>
+                                    <button ${wList.length > 0 ? `onclick="openDungeonListModal('${d.id}_w')"` : ''} class="flex-1 h-7 rounded border text-[11px] font-black transition-colors ${wActive}" title="${wNames}">W - ${wList.length}</button>
                                 </div>
                             </div>
                         </div>
@@ -1612,6 +1617,9 @@
                             </h3>
                         </div>
                         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-8">
+                            <div class="bg-slate-50 p-4 border-b border-slate-200 flex items-center gap-4">
+                                <img src="./ICONS/DUNGEONS/ЭПОХАЛЬНЫЙ_КЛЮЧ.jpg" alt="Эпохальные подземелья" class="w-12 h-12 rounded-lg shadow-sm border border-slate-300 object-cover bg-slate-900">
+                            </div>
                             <div class="p-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 bg-slate-50/50">
                                 ${dashDungeonsHtml}
                             </div>
