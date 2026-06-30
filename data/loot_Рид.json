@@ -1,0 +1,263 @@
+{
+  "characters": {
+    "main": {
+      "class": "druid",
+      "name": "123"
+    },
+    "alt1": {
+      "class": "none",
+      "name": ""
+    },
+    "alt2": {
+      "class": "none",
+      "name": ""
+    }
+  },
+  "stream_link": "",
+  "bosses": {
+    "boss_1": {
+      "main": {
+        "items": [
+          1,
+          5,
+          6
+        ],
+        "comment": ""
+      },
+      "alt1": {
+        "items": [],
+        "comment": ""
+      },
+      "alt2": {
+        "items": [],
+        "comment": ""
+      }
+    },
+    "boss_2": {
+      "main": {
+        "items": [],
+        "comment": ""
+      },
+      "alt1": {
+        "items": [],
+        "comment": ""
+      },
+      "alt2": {
+        "items": [],
+        "comment": ""
+      }
+    },
+    "boss_3": {
+      "main": {
+        "items": [],
+        "comment": ""
+      },
+      "alt1": {
+        "items": [],
+        "comment": ""
+      },
+      "alt2": {
+        "items": [],
+        "comment": ""
+      }
+    },
+    "boss_4": {
+      "main": {
+        "items": [],
+        "comment": ""
+      },
+      "alt1": {
+        "items": [],
+        "comment": ""
+      },
+      "alt2": {
+        "items": [],
+        "comment": ""
+      }
+    },
+    "boss_5": {
+      "main": {
+        "items": [],
+        "comment": ""
+      },
+      "alt1": {
+        "items": [],
+        "comment": ""
+      },
+      "alt2": {
+        "items": [],
+        "comment": ""
+      }
+    },
+    "boss_6": {
+      "main": {
+        "items": [],
+        "comment": ""
+      },
+      "alt1": {
+        "items": [],
+        "comment": ""
+      },
+      "alt2": {
+        "items": [],
+        "comment": ""
+      }
+    },
+    "boss_7": {
+      "main": {
+        "items": [],
+        "comment": ""
+      },
+      "alt1": {
+        "items": [],
+        "comment": ""
+      },
+      "alt2": {
+        "items": [],
+        "comment": ""
+      }
+    },
+    "boss_8": {
+      "main": {
+        "items": [],
+        "comment": ""
+      },
+      "alt1": {
+        "items": [],
+        "comment": ""
+      },
+      "alt2": {
+        "items": [],
+        "comment": ""
+      }
+    },
+    "boss_9": {
+      "main": {
+        "items": [],
+        "comment": ""
+      },
+      "alt1": {
+        "items": [],
+        "comment": ""
+      },
+      "alt2": {
+        "items": [],
+        "comment": ""
+      }
+    }
+  },
+  "dungeons": {
+    "dungeon_1": {
+      "main": {
+        "rio": true,
+        "w": false
+      },
+      "alt1": {
+        "rio": false,
+        "w": false
+      },
+      "alt2": {
+        "rio": false,
+        "w": false
+      }
+    },
+    "dungeon_2": {
+      "main": {
+        "rio": false,
+        "w": false
+      },
+      "alt1": {
+        "rio": false,
+        "w": false
+      },
+      "alt2": {
+        "rio": false,
+        "w": false
+      }
+    },
+    "dungeon_3": {
+      "main": {
+        "rio": true,
+        "w": false
+      },
+      "alt1": {
+        "rio": false,
+        "w": false
+      },
+      "alt2": {
+        "rio": false,
+        "w": false
+      }
+    },
+    "dungeon_4": {
+      "main": {
+        "rio": false,
+        "w": false
+      },
+      "alt1": {
+        "rio": false,
+        "w": false
+      },
+      "alt2": {
+        "rio": false,
+        "w": false
+      }
+    },
+    "dungeon_5": {
+      "main": {
+        "rio": false,
+        "w": false
+      },
+      "alt1": {
+        "rio": false,
+        "w": false
+      },
+      "alt2": {
+        "rio": false,
+        "w": false
+      }
+    },
+    "dungeon_6": {
+      "main": {
+        "rio": false,
+        "w": false
+      },
+      "alt1": {
+        "rio": false,
+        "w": false
+      },
+      "alt2": {
+        "rio": false,
+        "w": false
+      }
+    },
+    "dungeon_7": {
+      "main": {
+        "rio": false,
+        "w": false
+      },
+      "alt1": {
+        "rio": false,
+        "w": false
+      },
+      "alt2": {
+        "rio": false,
+        "w": false
+      }
+    },
+    "dungeon_8": {
+      "main": {
+        "rio": false,
+        "w": false
+      },
+      "alt1": {
+        "rio": false,
+        "w": false
+      },
+      "alt2": {
+        "rio": false,
+        "w": false
+      }
+    }
+  }
+}
