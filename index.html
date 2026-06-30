@@ -16,13 +16,6 @@
         .custom-scrollbar::-webkit-scrollbar { height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        
-        /* Сетка для иконок лута (16 колонок) */
-        .loot-grid {
-            display: grid;
-            grid-template-columns: repeat(16, minmax(0, 1fr));
-            gap: 6px;
-        }
 
         /* Эффекты для интерактивных иконок в анкете */
         .form-item-icon {
@@ -159,9 +152,8 @@
                         <img id="main-icon" src="https://wow.zamimg.com/images/wow/icons/large/inv_misc_questionmark.jpg" class="w-14 h-14 rounded-xl shadow-sm border border-slate-200 object-cover bg-slate-50">
                         <div class="flex-1 flex flex-col gap-2">
                             <select id="main-class" onchange="updateClassIcon('main')" class="w-full border border-slate-300 rounded-lg p-2 outline-none focus:border-blue-500 text-sm font-bold text-slate-700 bg-white">
-                                <!-- Заполняется скриптом -->
                             </select>
-                            <input type="text" id="main-name" placeholder="Ник персонажа" class="w-full border border-slate-300 rounded-lg p-2 outline-none focus:border-blue-500 text-sm font-bold" oninput="showFloatingSave()">
+                            <input type="text" id="main-name" placeholder="Ник персонажа" class="w-full border border-slate-300 rounded-lg p-2 outline-none focus:border-blue-500 text-sm font-bold" oninput="updateCharName('main')">
                         </div>
                     </div>
                 </div>
@@ -173,7 +165,7 @@
                         <div class="flex-1 flex flex-col gap-2">
                             <select id="alt1-class" onchange="updateClassIcon('alt1')" class="w-full border border-slate-300 rounded-lg p-2 outline-none focus:border-blue-500 text-sm font-bold text-slate-700 bg-white">
                             </select>
-                            <input type="text" id="alt1-name" placeholder="Ник персонажа" class="w-full border border-slate-300 rounded-lg p-2 outline-none focus:border-blue-500 text-sm font-bold" oninput="showFloatingSave()">
+                            <input type="text" id="alt1-name" placeholder="Ник персонажа" class="w-full border border-slate-300 rounded-lg p-2 outline-none focus:border-blue-500 text-sm font-bold" oninput="updateCharName('alt1')">
                         </div>
                     </div>
                 </div>
@@ -185,7 +177,7 @@
                         <div class="flex-1 flex flex-col gap-2">
                             <select id="alt2-class" onchange="updateClassIcon('alt2')" class="w-full border border-slate-300 rounded-lg p-2 outline-none focus:border-blue-500 text-sm font-bold text-slate-700 bg-white">
                             </select>
-                            <input type="text" id="alt2-name" placeholder="Ник персонажа" class="w-full border border-slate-300 rounded-lg p-2 outline-none focus:border-blue-500 text-sm font-bold" oninput="showFloatingSave()">
+                            <input type="text" id="alt2-name" placeholder="Ник персонажа" class="w-full border border-slate-300 rounded-lg p-2 outline-none focus:border-blue-500 text-sm font-bold" oninput="updateCharName('alt2')">
                         </div>
                     </div>
                 </div>
@@ -207,9 +199,9 @@
             <!-- Блок Вишлиста -->
             <div class="bg-transparent mb-6">
                 <h3 class="text-xl font-black text-slate-800 mb-2 uppercase tracking-wide px-2">Приоритет Лута</h3>
-                <p class="text-slate-500 text-sm mb-6 px-2">Выбери предметы, которые тебе нужны с каждого босса. Нажми на иконку комментария справа, чтобы оставить пояснение.</p>
+                <p class="text-slate-500 text-sm mb-6 px-2">Выбери предметы для каждого персонажа. Чтобы у босса появилась отдельная строчка для Альта, выбери класс Альта выше.</p>
                 
-                <div id="form-body-bosses" class="space-y-4">
+                <div id="form-body-bosses" class="space-y-6">
                     <!-- Сюда рендерятся боссы (карточки) -->
                 </div>
             </div>
@@ -217,7 +209,7 @@
         
         <!-- ФУТЕР -->
         <footer class="text-center pt-10 pb-4 text-slate-400 font-medium text-sm mt-auto">
-            Guild Planner V1.4 - @Rainon
+            Guild Planner V1.5 - @Rainon
         </footer>
         
     </main>
@@ -240,11 +232,9 @@
             <h3 class="text-xl font-black text-slate-800 mb-4 tracking-wide">Добавить комментарий</h3>
             <textarea id="modal-textarea" rows="4" class="w-full border border-slate-300 rounded-lg p-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 resize-none font-medium text-slate-700 shadow-inner leading-relaxed" placeholder="Напишите здесь важную информацию о луте с этого босса (например, нужен кусок сета или тринкет)..."></textarea>
             <div class="flex justify-end gap-3 mt-6">
-                <!-- Кнопка Отмена (Крестик) -->
                 <button onclick="closeCommentModal()" class="w-12 h-12 flex items-center justify-center rounded-xl border-2 border-slate-200 text-slate-400 hover:text-red-500 hover:border-red-500 hover:bg-red-50 transition-colors shadow-sm" title="Отмена (ESC)">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
-                <!-- Кнопка Сохранить (Галочка) -->
                 <button onclick="saveCommentFromModal()" class="w-12 h-12 flex items-center justify-center rounded-xl border-2 border-green-500 text-white bg-green-500 hover:bg-green-600 hover:border-green-600 transition-all shadow-md hover:shadow-lg" title="Сохранить комментарий">
                     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
                 </button>
@@ -293,10 +283,10 @@
             'deathknight': { name: 'Рыцарь смерти', icon: 'https://wow.zamimg.com/images/wow/icons/large/spell_deathknight_classicon.jpg' }
         };
         
-        // Массив слотов (16 штук: 1-17, без рубашки 4)
+        // Массив слотов (16 штук)
         const SLOTS = [1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
         
-        // Массив боссов (с заглушками)
+        // Массив боссов
         const BOSSES = [
             { id: 'boss_1', name: 'Нимрисса Волногон', icon: './ICONS/BOSSES/NO_ICON_BOSS.jpg' },
             { id: 'boss_2', name: 'Nek\'zali the Soulcoiler', icon: './ICONS/BOSSES/ICON_BOSS_1.jpg' },
@@ -313,9 +303,8 @@
         let isTestMode = false;
         let currentAllLootData = {};
         let currentActivePlayers = [];
-        let currentEditCommentBossId = null;
+        let currentEditParams = null; // { bossId, charType }
 
-        // Названия слотов на русском
         function getSlotName(slotNumber) {
             const names = {
                 1: 'Голова', 2: 'Шея', 3: 'Плечи', 5: 'Грудь', 6: 'Пояс', 7: 'Ноги', 8: 'Ступни',
@@ -333,10 +322,35 @@
         function updateClassIcon(type) {
             const select = document.getElementById(`${type}-class`);
             const iconImg = document.getElementById(`${type}-icon`);
-            if (select && iconImg) {
-                const classData = WOW_CLASSES[select.value];
+            const className = select.value;
+            const classData = WOW_CLASSES[className];
+            
+            if (iconImg) {
                 iconImg.src = classData ? classData.icon : WOW_CLASSES['none'].icon;
             }
+
+            // Прячем или показываем строчки в анкете для этого персонажа
+            document.querySelectorAll(`.row-char-${type}`).forEach(row => {
+                if (className === 'none') {
+                    row.style.display = 'none';
+                } else {
+                    row.style.display = '';
+                    const rowIcon = row.querySelector('.display-icon');
+                    if (rowIcon) rowIcon.src = classData.icon;
+                }
+            });
+            showFloatingSave();
+        }
+
+        function updateCharName(type) {
+            const input = document.getElementById(`${type}-name`);
+            const newName = input.value.trim() || currentUser;
+
+            // Обновляем имена в строках вишлиста
+            document.querySelectorAll(`.row-char-${type}`).forEach(row => {
+                const nameEl = row.querySelector('.display-name');
+                if (nameEl) nameEl.innerText = newName;
+            });
             showFloatingSave();
         }
 
@@ -347,7 +361,6 @@
                 playerSelect.insertAdjacentHTML('beforeend', `<option value="${p}" class="text-slate-800">${p}</option>`);
             });
 
-            // Заполняем дропдауны классов
             ['main', 'alt1', 'alt2'].forEach(type => {
                 const select = document.getElementById(`${type}-class`);
                 for (const [key, val] of Object.entries(WOW_CLASSES)) {
@@ -385,10 +398,7 @@
             }
             
             box.classList.remove('hidden');
-            setTimeout(() => {
-                box.classList.remove('-translate-y-4', 'opacity-0');
-            }, 10);
-
+            setTimeout(() => box.classList.remove('-translate-y-4', 'opacity-0'), 10);
             setTimeout(() => {
                 box.classList.add('opacity-0', '-translate-y-4');
                 setTimeout(() => box.classList.add('hidden'), 300);
@@ -452,14 +462,14 @@
                 btn.classList.replace('hover:text-emerald-700', 'hover:text-amber-700');
                 btn.classList.replace('border-transparent', 'border-amber-200');
                 btn.classList.add('bg-amber-50');
-                showMessage('Включен тестовый режим (20 игроков)', 'info');
+                showMessage('Включен тестовый режим', 'info');
             } else {
                 btn.innerText = 'Тест: ВЫКЛ';
                 btn.classList.replace('text-amber-500', 'text-emerald-500');
                 btn.classList.replace('hover:text-amber-700', 'hover:text-emerald-700');
                 btn.classList.replace('border-amber-200', 'border-transparent');
                 btn.classList.remove('bg-amber-50');
-                showMessage('Тестовый режим отключен (реальные данные)', 'info');
+                showMessage('Тестовый режим отключен', 'info');
             }
             
             if (!document.getElementById('view-dashboard').classList.contains('hidden-view')) {
@@ -509,11 +519,11 @@
             showFloatingSave();
         }
 
-        function openCommentModal(bossId) {
-            currentEditCommentBossId = bossId;
-            const hiddenInput = document.getElementById(`comment-${bossId}`);
+        function openCommentModal(bossId, charType) {
+            currentEditParams = { bossId, charType };
+            const hiddenInput = document.getElementById(`comment-${bossId}-${charType}`);
             const textarea = document.getElementById('modal-textarea');
-            textarea.value = hiddenInput.value;
+            textarea.value = hiddenInput ? hiddenInput.value : '';
             
             const modal = document.getElementById('comment-modal');
             const content = document.getElementById('comment-modal-content');
@@ -532,29 +542,32 @@
             
             setTimeout(() => {
                 modal.classList.add('hidden');
-                currentEditCommentBossId = null;
+                currentEditParams = null;
             }, 200); 
         }
 
         window.saveCommentFromModal = function() {
-            if (!currentEditCommentBossId) return;
+            if (!currentEditParams) return;
+            const { bossId, charType } = currentEditParams;
             
             const textarea = document.getElementById('modal-textarea');
-            const hiddenInput = document.getElementById(`comment-${currentEditCommentBossId}`);
-            const btn = document.getElementById(`btn-comment-${currentEditCommentBossId}`);
+            const hiddenInput = document.getElementById(`comment-${bossId}-${charType}`);
+            const btn = document.getElementById(`btn-comment-${bossId}-${charType}`);
             
-            hiddenInput.value = textarea.value.trim();
-            
-            if (hiddenInput.value) {
-                btn.classList.add('border-green-500', 'text-green-500', 'shadow-[0_0_8px_rgba(34,197,94,0.5)]', 'bg-green-50');
-                btn.classList.remove('border-slate-200', 'text-slate-400');
-            } else {
-                btn.classList.remove('border-green-500', 'text-green-500', 'shadow-[0_0_8px_rgba(34,197,94,0.5)]', 'bg-green-50');
-                btn.classList.add('border-slate-200', 'text-slate-400');
+            if (hiddenInput && btn) {
+                hiddenInput.value = textarea.value.trim();
+                
+                if (hiddenInput.value) {
+                    btn.classList.add('border-green-500', 'text-green-500', 'shadow-[0_0_8px_rgba(34,197,94,0.5)]', 'bg-green-50');
+                    btn.classList.remove('border-slate-200', 'text-slate-400');
+                } else {
+                    btn.classList.remove('border-green-500', 'text-green-500', 'shadow-[0_0_8px_rgba(34,197,94,0.5)]', 'bg-green-50');
+                    btn.classList.add('border-slate-200', 'text-slate-400');
+                }
             }
             
             closeCommentModal();
-            saveForm(); // Автосохранение
+            saveForm(); 
         }
 
         document.addEventListener('keydown', (e) => {
@@ -563,68 +576,135 @@
             }
         });
 
-        function renderForm(userData = {}) {
-            // 1. Заполняем персонажей
-            const chars = userData.characters || {};
+        // Функция миграции данных со старой версии на новую
+        function migrateData(oldData) {
+            if (!oldData) return null;
+            if (oldData.bosses) return oldData; // Если уже новый формат
+
+            let newData = {
+                characters: {
+                    main: { class: 'none', name: '' },
+                    alt1: { class: 'none', name: '' },
+                    alt2: { class: 'none', name: '' }
+                },
+                stream_link: oldData.stream_link || '',
+                bosses: {}
+            };
+
+            if (oldData.characters) {
+                newData.characters = oldData.characters;
+            }
+
+            BOSSES.forEach(b => {
+                if (oldData[b.id]) {
+                    newData.bosses[b.id] = {
+                        main: {
+                            items: oldData[b.id].items || [],
+                            comment: oldData[b.id].comment || ''
+                        },
+                        alt1: { items: [], comment: '' },
+                        alt2: { items: [], comment: '' }
+                    };
+                }
+            });
+            return newData;
+        }
+
+        function renderForm(rawData = {}) {
+            // Прогоняем через мигратор
+            const userData = migrateData(rawData) || {
+                characters: { main: { class: 'none', name: '' }, alt1: { class: 'none', name: '' }, alt2: { class: 'none', name: '' } },
+                stream_link: '', bosses: {}
+            };
+
+            const chars = userData.characters;
             ['main', 'alt1', 'alt2'].forEach(type => {
                 const charData = chars[type] || { class: 'none', name: '' };
                 document.getElementById(`${type}-class`).value = charData.class || 'none';
                 document.getElementById(`${type}-name`).value = charData.name || '';
-                updateClassIcon(type);
+                updateClassIcon(type); // Обновит иконку и спрячет/покажет строки
             });
 
-            // 2. Ссылка на стрим
             const streamInput = document.getElementById('stream-link');
             if (streamInput) streamInput.value = userData.stream_link || '';
 
-            // 3. Рендер боссов (карточки)
             const container = document.getElementById('form-body-bosses');
             container.innerHTML = '';
 
             BOSSES.forEach(boss => {
-                const bossData = userData[boss.id] || { items: [], comment: '' };
+                const bData = userData.bosses[boss.id] || {};
                 
-                let slotsHtml = '';
-                SLOTS.forEach(slotId => {
-                    const isSelected = bossData.items.includes(slotId);
-                    slotsHtml += `
-                        <img src="${getSlotIconPath(slotId)}" 
-                             alt="${getSlotName(slotId)}" 
-                             data-slot-id="${slotId}"
-                             class="form-item-icon w-[42px] h-[42px] sm:w-12 sm:h-12 object-cover ${isSelected ? 'selected' : ''}"
-                             onclick="toggleItemSlot(this)"
-                             title="${getSlotName(slotId)}">
+                let rowsHtml = '';
+                ['main', 'alt1', 'alt2'].forEach(charType => {
+                    const charData = chars[charType] || { class: 'none', name: '' };
+                    const charLoot = bData[charType] || { items: [], comment: '' };
+                    
+                    let slotsHtml = '';
+                    SLOTS.forEach(slotId => {
+                        const isSelected = charLoot.items.includes(slotId);
+                        slotsHtml += `
+                            <img src="${getSlotIconPath(slotId)}" 
+                                 alt="${getSlotName(slotId)}" 
+                                 data-slot-id="${slotId}"
+                                 class="form-item-icon w-11 h-11 object-cover ${isSelected ? 'selected' : ''}"
+                                 onclick="toggleItemSlot(this)"
+                                 title="${getSlotName(slotId)}">
+                        `;
+                    });
+
+                    const hasComment = charLoot.comment && charLoot.comment.trim() !== '';
+                    const btnClasses = hasComment 
+                        ? 'border-green-500 text-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)] bg-green-50' 
+                        : 'border-slate-200 text-slate-400 hover:text-slate-600 hover:border-slate-400';
+
+                    const isHidden = charData.class === 'none' ? 'style="display: none;"' : '';
+                    const displayName = charData.name || currentUser;
+                    const displayIcon = WOW_CLASSES[charData.class]?.icon || WOW_CLASSES['none'].icon;
+
+                    rowsHtml += `
+                        <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors row-char-${charType}" ${isHidden} data-char-type="${charType}">
+                            <td class="py-4 px-4 w-[25%] text-base">
+                                <div class="flex items-center gap-3">
+                                    <img src="${displayIcon}" class="display-icon w-8 h-8 rounded border border-slate-300 object-cover shadow-sm">
+                                    <div class="flex flex-col leading-tight">
+                                        <span class="display-name truncate font-bold text-slate-800">${displayName}</span>
+                                        <span class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">${currentUser}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="py-4 px-4 w-[60%]">
+                                <div class="flex flex-wrap items-center gap-1.5 w-max loot-grid-char">
+                                    ${slotsHtml}
+                                </div>
+                            </td>
+                            <td class="py-4 px-4 w-[15%] text-center">
+                                <div class="flex justify-center items-center">
+                                    <button id="btn-comment-${boss.id}-${charType}" onclick="openCommentModal('${boss.id}', '${charType}')" class="w-11 h-11 rounded-lg border-2 flex items-center justify-center transition-colors ${btnClasses}" title="Оставить комментарий">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+                                    </button>
+                                    <input type="hidden" id="comment-${boss.id}-${charType}" value="${charLoot.comment || ''}">
+                                </div>
+                            </td>
+                        </tr>
                     `;
                 });
 
-                const hasComment = bossData.comment && bossData.comment.trim() !== '';
-                const btnClasses = hasComment 
-                    ? 'border-green-500 text-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)] bg-green-50' 
-                    : 'border-slate-200 text-slate-400 hover:text-slate-600 hover:border-slate-400';
-
-                const rowHtml = `
-                    <div class="flex flex-col xl:flex-row items-center gap-4 p-4 bg-white rounded-2xl shadow-sm border border-slate-200 hover:border-blue-200 transition-colors">
-                        <!-- Босс -->
-                        <div class="w-full xl:w-56 flex items-center gap-4 shrink-0">
-                            <img src="${boss.icon}" alt="${boss.name}" class="w-14 h-14 rounded-xl shadow-sm border border-slate-200 object-cover bg-slate-900">
-                            <span class="font-black text-slate-800 leading-tight text-lg">${boss.name}</span>
+                const bossContainerHtml = `
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden" data-boss-id="${boss.id}">
+                        <div class="bg-slate-50 p-4 border-b border-slate-200 flex items-center gap-4">
+                            <img src="${boss.icon}" alt="${boss.name}" class="w-12 h-12 rounded-lg shadow-sm border border-slate-300 object-cover bg-slate-900">
+                            <h3 class="text-xl font-black text-slate-800 uppercase tracking-wide">${boss.name}</h3>
                         </div>
-                        <!-- Иконки -->
-                        <div class="flex-1 overflow-x-auto custom-scrollbar pb-2 xl:pb-0 w-full flex justify-center xl:justify-start">
-                            <div class="loot-grid min-w-[750px] xl:min-w-[0]">
-                                ${slotsHtml}
-                            </div>
-                        </div>
-                        <!-- Коммент -->
-                        <div class="shrink-0 flex items-center justify-center w-full xl:w-auto xl:pl-6 xl:border-l border-slate-100">
-                            <button id="btn-comment-${boss.id}" onclick="openCommentModal('${boss.id}')" class="w-12 h-12 rounded-xl border-2 flex items-center justify-center transition-colors ${btnClasses}" title="Оставить комментарий">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
-                            </button>
-                            <input type="hidden" id="comment-${boss.id}" value="${bossData.comment || ''}">
+                        <div class="overflow-x-auto custom-scrollbar pb-2">
+                            <table class="w-full min-w-[900px]">
+                                <tbody class="text-sm">
+                                    ${rowsHtml}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 `;
-                container.insertAdjacentHTML('beforeend', rowHtml);
+                container.insertAdjacentHTML('beforeend', bossContainerHtml);
             });
         }
 
@@ -635,36 +715,36 @@
             btn.innerHTML = `<div class="w-6 h-6 border-4 border-white border-t-transparent rounded-full loader"></div>`;
             btn.disabled = true;
 
-            const dataToSave = {};
-
-            // Сохраняем персонажей
-            dataToSave.characters = {
-                main: { class: document.getElementById('main-class').value, name: document.getElementById('main-name').value.trim() },
-                alt1: { class: document.getElementById('alt1-class').value, name: document.getElementById('alt1-name').value.trim() },
-                alt2: { class: document.getElementById('alt2-class').value, name: document.getElementById('alt2-name').value.trim() }
+            const dataToSave = {
+                characters: {
+                    main: { class: document.getElementById('main-class').value, name: document.getElementById('main-name').value.trim() },
+                    alt1: { class: document.getElementById('alt1-class').value, name: document.getElementById('alt1-name').value.trim() },
+                    alt2: { class: document.getElementById('alt2-class').value, name: document.getElementById('alt2-name').value.trim() }
+                },
+                stream_link: document.getElementById('stream-link') ? document.getElementById('stream-link').value.trim() : '',
+                bosses: {}
             };
-
-            // Сохраняем стрим
-            dataToSave.stream_link = document.getElementById('stream-link') ? document.getElementById('stream-link').value.trim() : '';
             
-            // Сохраняем боссов
             BOSSES.forEach(boss => {
-                const grid = document.querySelector(`.loot-grid[data-boss-id="${boss.id}"]`);
-                const commentInput = document.getElementById(`comment-${boss.id}`);
+                const bossBlock = document.querySelector(`div[data-boss-id="${boss.id}"]`);
+                dataToSave.bosses[boss.id] = { main: {items:[], comment:''}, alt1: {items:[], comment:''}, alt2: {items:[], comment:''} };
                 
-                const selectedItems = [];
-                if (grid) {
-                    grid.querySelectorAll('.form-item-icon.selected').forEach(img => {
-                        selectedItems.push(parseInt(img.getAttribute('data-slot-id')));
+                if (bossBlock) {
+                    ['main', 'alt1', 'alt2'].forEach(charType => {
+                        const row = bossBlock.querySelector(`.row-char-${charType}`);
+                        if (row) {
+                            const selectedItems = [];
+                            row.querySelectorAll('.form-item-icon.selected').forEach(img => {
+                                selectedItems.push(parseInt(img.getAttribute('data-slot-id')));
+                            });
+                            const commentInput = document.getElementById(`comment-${boss.id}-${charType}`);
+                            dataToSave.bosses[boss.id][charType] = {
+                                items: selectedItems,
+                                comment: commentInput ? commentInput.value.trim() : ''
+                            };
+                        }
                     });
                 }
-                
-                const comment = commentInput ? commentInput.value.trim() : '';
-
-                dataToSave[boss.id] = {
-                    items: selectedItems,
-                    comment: comment
-                };
             });
 
             const jsonString = JSON.stringify(dataToSave, null, 2);
@@ -673,10 +753,7 @@
             const fileData = await githubAPI('GET', `loot_${currentUser}.json`);
             const sha = fileData ? fileData.sha : null;
 
-            const body = {
-                message: `Update loot priority for ${currentUser}`,
-                content: base64Content
-            };
+            const body = { message: `Update loot priority for ${currentUser}`, content: base64Content };
             if (sha) body.sha = sha;
 
             const result = await githubAPI('PUT', `loot_${currentUser}.json`, body);
@@ -703,7 +780,6 @@
 
         async function loadUserFormFromGitHub() {
             const fileData = await githubAPI('GET', `loot_${currentUser}.json`);
-            
             if (fileData && fileData.content) {
                 const jsonString = decodeURIComponent(escape(atob(fileData.content)));
                 const data = JSON.parse(jsonString);
@@ -757,11 +833,9 @@
                     if (fileData && fileData.content) {
                         try {
                             const jsonString = decodeURIComponent(escape(atob(fileData.content)));
-                            allLootData[player] = JSON.parse(jsonString);
+                            allLootData[player] = migrateData(JSON.parse(jsonString));
                             playersWhoFilled.push(player);
-                        } catch(e) {
-                            console.error(`Ошибка парсинга файла ${player}`, e);
-                        }
+                        } catch(e) {}
                     }
                 });
             }
@@ -803,47 +877,55 @@
             let finalHtml = '';
 
             BOSSES.forEach(boss => {
-                let interestedPlayers = [];
+                let interestedCharacters = []; // Собираем теперь не игроков, а конкретных персонажей (Мейн, Альт)
                 
                 currentActivePlayers.forEach(player => {
                     if (playerFilterValue !== 'all' && player !== playerFilterValue) return;
 
-                    const pData = currentAllLootData[player]?.[boss.id];
-                    const streamLink = currentAllLootData[player]?.stream_link || '';
-                    const mainChar = currentAllLootData[player]?.characters?.main || null;
-                    
-                    if (pData) {
-                        let hasItems = pData.items && pData.items.length > 0;
-                        let hasComment = pData.comment && pData.comment.trim() !== '';
-                        
-                        let passesItemFilter = true;
-                        if (itemFilterValue !== 'all') {
-                            const slotNum = parseInt(itemFilterValue);
-                            passesItemFilter = pData.items && pData.items.includes(slotNum);
-                        }
+                    const pData = currentAllLootData[player];
+                    if (!pData) return;
 
-                        let shouldInclude = false;
-                        if (itemFilterValue !== 'all') {
-                            shouldInclude = passesItemFilter;
-                        } else {
-                            shouldInclude = hasItems || hasComment;
-                        }
+                    const streamLink = pData.stream_link || '';
+                    const chars = pData.characters || {};
+                    const bossLoot = pData.bosses?.[boss.id] || {};
 
-                        if (shouldInclude) {
-                            interestedPlayers.push({
-                                accountName: player,
-                                main: mainChar,
-                                items: pData.items || [],
-                                comment: pData.comment || '',
-                                stream_link: streamLink
-                            });
+                    ['main', 'alt1', 'alt2'].forEach(charType => {
+                        const charConfig = chars[charType];
+                        const charLoot = bossLoot[charType];
+
+                        if (charConfig && charConfig.class !== 'none' && charLoot) {
+                            let hasItems = charLoot.items && charLoot.items.length > 0;
+                            let hasComment = charLoot.comment && charLoot.comment.trim() !== '';
+                            
+                            let passesItemFilter = true;
+                            if (itemFilterValue !== 'all') {
+                                const slotNum = parseInt(itemFilterValue);
+                                passesItemFilter = charLoot.items && charLoot.items.includes(slotNum);
+                            }
+
+                            let shouldInclude = false;
+                            if (itemFilterValue !== 'all') {
+                                shouldInclude = passesItemFilter;
+                            } else {
+                                shouldInclude = hasItems || hasComment;
+                            }
+
+                            if (shouldInclude) {
+                                interestedCharacters.push({
+                                    accountName: player,
+                                    charConfig: charConfig,
+                                    items: charLoot.items || [],
+                                    comment: charLoot.comment || '',
+                                    stream_link: streamLink
+                                });
+                            }
                         }
-                    }
+                    });
                 });
 
-                interestedPlayers.sort((a, b) => b.items.length - a.items.length);
+                interestedCharacters.sort((a, b) => b.items.length - a.items.length);
 
-                if (interestedPlayers.length > 0) {
+                if (interestedCharacters.length > 0) {
                     let bossHtml = `
                         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                             <div class="bg-slate-50 p-4 border-b border-slate-200 flex items-center gap-4">
@@ -855,20 +937,20 @@
                                     <tbody class="text-sm">
                     `;
 
-                    interestedPlayers.forEach((p, index) => {
-                        const isLast = index === interestedPlayers.length - 1;
+                    interestedCharacters.forEach((c, index) => {
+                        const isLast = index === interestedCharacters.length - 1;
                         const borderClass = isLast ? '' : 'border-b border-slate-100';
                         
-                        let gridHtml = `<div class="loot-grid w-[600px]">`;
+                        let gridHtml = `<div class="flex flex-wrap items-center gap-1.5 w-max">`;
                         SLOTS.forEach(slotId => {
-                            const hasItem = p.items.includes(slotId);
+                            const hasItem = c.items.includes(slotId);
                             const imgClass = hasItem ? 'dash-item-icon active' : 'dash-item-icon empty';
-                            gridHtml += `<img src="${getSlotIconPath(slotId)}" class="w-full h-[42px] object-cover ${imgClass}" title="${getSlotName(slotId)}">`;
+                            gridHtml += `<img src="${getSlotIconPath(slotId)}" class="w-11 h-11 object-cover ${imgClass}" title="${getSlotName(slotId)}">`;
                         });
                         gridHtml += `</div>`;
 
-                        const streamUrl = p.stream_link.startsWith('http') ? p.stream_link : `https://${p.stream_link}`;
-                        const streamIconHtml = p.stream_link ? `
+                        const streamUrl = c.stream_link.startsWith('http') ? c.stream_link : `https://${c.stream_link}`;
+                        const streamIconHtml = c.stream_link ? `
                             <a href="${streamUrl}" target="_blank" title="Перейти на трансляцию игрока" class="flex-shrink-0 hover:scale-105 transition-transform duration-200 ml-3">
                                 <div class="w-8 h-8 bg-purple-600 rounded-md flex items-center justify-center shadow-sm border border-purple-700 text-white hover:bg-purple-500">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
@@ -876,31 +958,27 @@
                             </a>
                         ` : '';
 
-                        // Имя игрока (с иконкой мейна, если есть)
-                        let playerDisplayHtml = `<span class="truncate font-bold">${p.accountName}</span>`;
-                        if (p.main && p.main.class && p.main.class !== 'none') {
-                            const classIcon = WOW_CLASSES[p.main.class].icon;
-                            const mainName = p.main.name || p.accountName;
-                            playerDisplayHtml = `
-                                <img src="${classIcon}" class="w-6 h-6 rounded border border-slate-300 object-cover shadow-sm">
-                                <div class="flex flex-col leading-tight">
-                                    <span class="truncate font-bold text-slate-800">${mainName}</span>
-                                    <span class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">${p.accountName}</span>
-                                </div>
-                            `;
-                        }
+                        const classIcon = WOW_CLASSES[c.charConfig.class]?.icon || WOW_CLASSES['none'].icon;
+                        const displayName = c.charConfig.name || c.accountName;
+                        let playerDisplayHtml = `
+                            <img src="${classIcon}" class="w-8 h-8 rounded border border-slate-300 object-cover shadow-sm">
+                            <div class="flex flex-col leading-tight">
+                                <span class="truncate font-bold text-slate-800 text-base">${displayName}</span>
+                                <span class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">${c.accountName}</span>
+                            </div>
+                        `;
 
                         bossHtml += `
                                         <tr class="${borderClass} hover:bg-slate-50 transition-colors">
-                                            <td class="py-4 px-4 w-[20%] text-base">
-                                                <div class="flex items-center gap-2">
+                                            <td class="py-4 px-4 w-[25%]">
+                                                <div class="flex items-center gap-3">
                                                     ${playerDisplayHtml}
                                                     ${streamIconHtml}
                                                 </div>
                                             </td>
-                                            <td class="py-4 px-4 w-[50%]">${gridHtml}</td>
-                                            <td class="py-4 px-4 w-[30%]">
-                                                ${p.comment ? `<div class="bg-slate-100 text-slate-700 px-3 py-2 rounded-lg text-xs font-medium border border-slate-200">${p.comment}</div>` : ''}
+                                            <td class="py-4 px-4 w-[60%]">${gridHtml}</td>
+                                            <td class="py-4 px-4 w-[15%]">
+                                                ${c.comment ? `<div class="bg-slate-100 text-slate-700 px-3 py-2 rounded-lg text-xs font-medium border border-slate-200">${c.comment}</div>` : ''}
                                             </td>
                                         </tr>
                         `;
@@ -948,7 +1026,6 @@
                 const response = await fetch(url, options);
                 if (!response.ok) {
                     if (response.status === 404 && method === 'GET') return null; 
-                    
                     const text = await response.text();
                     let errMsg = response.statusText;
                     try {
