@@ -2,43 +2,37 @@
   "characters": {
     "main": {
       "class": "paladin",
-      "name": "Рейн"
+      "name": "Рейннон"
     },
     "alt1": {
-      "class": "druid",
-      "name": "Арей"
+      "class": "none",
+      "name": ""
     },
     "alt2": {
-      "class": "monk",
-      "name": "Гор"
+      "class": "none",
+      "name": ""
     }
   },
-  "stream_link": "https://www.twitch.tv/rainon_",
+  "stream_link": "",
   "bosses": {
     "boss_1": {
       "main": {
-        "items": [
-          2
-        ],
-        "comment": "57456"
+        "items": [],
+        "comment": ""
       },
       "alt1": {
-        "items": [
-          6
-        ],
+        "items": [],
         "comment": ""
       },
       "alt2": {
-        "items": [
-          3
-        ],
+        "items": [],
         "comment": ""
       }
     },
     "boss_2": {
       "main": {
         "items": [],
-        "comment": "Штаны не обязательны, но хотелось бы"
+        "comment": ""
       },
       "alt1": {
         "items": [],
