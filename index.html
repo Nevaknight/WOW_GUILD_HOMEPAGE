@@ -114,43 +114,58 @@
             </div>
 
             <!-- Блок Фильтров -->
-            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
-                <div class="flex flex-col sm:flex-row sm:items-center gap-4 w-full">
-                    <span class="text-slate-800 font-bold text-[15px] whitespace-nowrap">Фильтры:</span>
-                    <div class="flex flex-wrap items-center gap-3 w-full">
-                        <!-- Фильтр по игроку -->
-                        <div class="relative w-full sm:w-[260px]">
-                            <select id="dashboard-player-filter" onchange="applyFilter()" class="w-full h-[42px] pl-3 pr-8 border border-slate-300 rounded-lg text-sm font-semibold text-slate-700 bg-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 shadow-sm appearance-none cursor-pointer disabled:opacity-50" disabled>
-                                <option value="all">Загрузка...</option>
-                            </select>
-                            <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-slate-400">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </div>
+            <div class="flex flex-col lg:flex-row lg:items-start justify-between gap-4 bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex flex-wrap items-center gap-3 w-full">
+                    
+                    <!-- Фильтр по боссам (Мультивыбор) -->
+                    <div class="relative w-full sm:w-[220px]" id="boss-filter-container">
+                        <div onclick="document.getElementById('boss-filter-dropdown').classList.toggle('hidden')" class="w-full h-[42px] px-3 border border-slate-300 rounded-lg text-sm font-semibold text-slate-700 bg-white shadow-sm cursor-pointer flex items-center justify-between transition-colors hover:bg-slate-50">
+                            <span id="boss-filter-text" class="truncate">Все боссы</span>
+                            <svg class="w-4 h-4 text-slate-400 shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </div>
-                        <!-- Фильтр по предмету -->
-                        <div class="relative w-full sm:w-[260px]">
-                            <select id="dashboard-item-filter" onchange="applyFilter()" class="w-full h-[42px] pl-3 pr-8 border border-slate-300 rounded-lg text-sm font-semibold text-slate-700 bg-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 shadow-sm appearance-none cursor-pointer disabled:opacity-50" disabled>
-                                <option value="all">Загрузка...</option>
-                            </select>
-                            <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-slate-400">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </div>
+                        <div id="boss-filter-dropdown" class="absolute z-[100] w-[260px] mt-1 bg-white border border-slate-200 rounded-lg shadow-xl hidden max-h-[300px] overflow-y-auto p-1.5 flex flex-col gap-1">
+                            <label class="flex items-center gap-3 p-2 hover:bg-slate-50 rounded-md cursor-pointer transition-colors">
+                                <input type="checkbox" value="all" class="boss-filter-cb w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500" checked onchange="handleBossFilterChange(this)">
+                                <span class="text-sm font-bold text-slate-700">Все боссы</span>
+                            </label>
+                            <!-- Сюда JS добавит остальных боссов -->
                         </div>
-                        <!-- Фильтр: Только мейны -->
-                        <label class="flex items-center gap-2 h-[42px] px-4 border border-slate-300 rounded-lg bg-white cursor-pointer hover:bg-slate-50 transition shadow-sm select-none shrink-0 w-full sm:w-auto">
-                            <input type="checkbox" id="dashboard-mains-only" onchange="applyFilter()" class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500 cursor-pointer">
-                            <span class="text-sm font-semibold text-slate-700 whitespace-nowrap">Только мейны</span>
-                        </label>
-                        <!-- Фильтр: Ключи -->
-                        <label class="flex items-center gap-2 h-[42px] px-4 border border-slate-300 rounded-lg bg-white cursor-pointer hover:bg-slate-50 transition shadow-sm select-none shrink-0 w-full sm:w-auto">
-                            <input type="checkbox" id="dashboard-keys-toggle" onchange="applyFilter()" class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500 cursor-pointer" checked>
-                            <span class="text-sm font-semibold text-slate-700 whitespace-nowrap">Ключи</span>
-                        </label>
                     </div>
+
+                    <!-- Фильтр по игроку -->
+                    <div class="relative w-full sm:w-[220px]">
+                        <select id="dashboard-player-filter" onchange="applyFilter()" class="w-full h-[42px] pl-3 pr-8 border border-slate-300 rounded-lg text-sm font-semibold text-slate-700 bg-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 shadow-sm appearance-none cursor-pointer disabled:opacity-50" disabled>
+                            <option value="all">Загрузка...</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-slate-400">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </div>
+
+                    <!-- Фильтр по предмету -->
+                    <div class="relative w-full sm:w-[220px]">
+                        <select id="dashboard-item-filter" onchange="applyFilter()" class="w-full h-[42px] pl-3 pr-8 border border-slate-300 rounded-lg text-sm font-semibold text-slate-700 bg-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 shadow-sm appearance-none cursor-pointer disabled:opacity-50" disabled>
+                            <option value="all">Загрузка...</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-slate-400">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </div>
+
+                    <!-- Фильтр: Только мейны -->
+                    <label class="flex items-center gap-2 h-[42px] px-4 border border-slate-300 rounded-lg bg-white cursor-pointer hover:bg-slate-50 transition shadow-sm select-none shrink-0 w-full sm:w-auto">
+                        <input type="checkbox" id="dashboard-mains-only" onchange="applyFilter()" class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500 cursor-pointer">
+                        <span class="text-sm font-semibold text-slate-700 whitespace-nowrap">Только мейны</span>
+                    </label>
+
+                    <!-- Фильтр: Ключи -->
+                    <label class="flex items-center gap-2 h-[42px] px-4 border border-slate-300 rounded-lg bg-white cursor-pointer hover:bg-slate-50 transition shadow-sm select-none shrink-0 w-full sm:w-auto">
+                        <input type="checkbox" id="dashboard-keys-toggle" onchange="applyFilter()" class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500 cursor-pointer" checked>
+                        <span class="text-sm font-semibold text-slate-700 whitespace-nowrap">Ключи</span>
+                    </label>
                 </div>
-                <button onclick="loadAllData()" class="h-[42px] px-5 bg-white border border-slate-300 rounded-lg text-sm font-bold text-slate-700 hover:bg-slate-50 transition flex items-center justify-center gap-2 shadow-sm shrink-0 w-full lg:w-auto">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-                    Обновить данные
+                <button onclick="resetFiltersAndRefresh()" class="w-[42px] h-[42px] bg-white border border-slate-300 hover:border-red-300 hover:bg-red-50 hover:text-red-500 text-slate-400 rounded-lg transition-colors flex items-center justify-center shadow-sm shrink-0" title="Сбросить фильтры и обновить данные">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                 </button>
             </div>
             
@@ -177,7 +192,7 @@
                         <div class="flex-1 flex flex-col gap-2">
                             <select id="main-class" onchange="updateClassIcon('main')" class="w-full border border-slate-300 rounded-lg p-2 outline-none focus:border-blue-500 text-sm font-semibold text-slate-700 bg-white shadow-sm">
                             </select>
-                            <input type="text" id="main-name" placeholder="Ник персонажа" class="w-full border border-slate-300 rounded-lg p-2 outline-none focus:border-blue-500 text-sm font-semibold shadow-sm" oninput="updateCharName('main')">
+                            <input type="text" id="main-name" placeholder="Ник персонажа" maxlength="12" class="w-full border border-slate-300 rounded-lg p-2 outline-none focus:border-blue-500 text-sm font-semibold shadow-sm" oninput="updateCharName('main')">
                         </div>
                     </div>
                 </div>
@@ -189,7 +204,7 @@
                         <div class="flex-1 flex flex-col gap-2">
                             <select id="alt1-class" onchange="updateClassIcon('alt1')" class="w-full border border-slate-300 rounded-lg p-2 outline-none focus:border-blue-500 text-sm font-semibold text-slate-700 bg-white shadow-sm">
                             </select>
-                            <input type="text" id="alt1-name" placeholder="Ник персонажа" class="w-full border border-slate-300 rounded-lg p-2 outline-none focus:border-blue-500 text-sm font-semibold shadow-sm" oninput="updateCharName('alt1')">
+                            <input type="text" id="alt1-name" placeholder="Ник персонажа" maxlength="12" class="w-full border border-slate-300 rounded-lg p-2 outline-none focus:border-blue-500 text-sm font-semibold shadow-sm" oninput="updateCharName('alt1')">
                         </div>
                     </div>
                 </div>
@@ -201,7 +216,7 @@
                         <div class="flex-1 flex flex-col gap-2">
                             <select id="alt2-class" onchange="updateClassIcon('alt2')" class="w-full border border-slate-300 rounded-lg p-2 outline-none focus:border-blue-500 text-sm font-semibold text-slate-700 bg-white shadow-sm">
                             </select>
-                            <input type="text" id="alt2-name" placeholder="Ник персонажа" class="w-full border border-slate-300 rounded-lg p-2 outline-none focus:border-blue-500 text-sm font-semibold shadow-sm" oninput="updateCharName('alt2')">
+                            <input type="text" id="alt2-name" placeholder="Ник персонажа" maxlength="12" class="w-full border border-slate-300 rounded-lg p-2 outline-none focus:border-blue-500 text-sm font-semibold shadow-sm" oninput="updateCharName('alt2')">
                         </div>
                     </div>
                 </div>
@@ -259,7 +274,7 @@
         
         <!-- ФУТЕР -->
         <footer class="text-center pt-10 pb-4 text-slate-400 font-medium text-sm mt-auto">
-            Guild Planner V2.7 - @Rainon
+            Guild Planner V2.8 - @Rainon
         </footer>
         
     </main>
@@ -495,6 +510,8 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            initBossFilter(); // Инициализация мультивыбора боссов
+
             const playerSelect = document.getElementById('login-player');
             playerSelect.innerHTML = '<option value="" disabled selected hidden>Выбери своё имя</option>';
             PLAYERS.forEach(p => {
@@ -518,6 +535,92 @@
                 showView('login');
             }
         });
+
+        function initBossFilter() {
+            const dropdown = document.getElementById('boss-filter-dropdown');
+            if (!dropdown) return;
+            BOSSES.forEach(boss => {
+                const label = document.createElement('label');
+                label.className = "flex items-center gap-3 p-2 hover:bg-slate-50 rounded-md cursor-pointer transition-colors";
+                label.innerHTML = `
+                    <input type="checkbox" value="${boss.id}" class="boss-filter-cb w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500" onchange="handleBossFilterChange(this)">
+                    <img src="${boss.icon}" class="w-6 h-6 rounded-md border border-slate-300 object-cover bg-slate-900 shrink-0">
+                    <span class="text-sm font-semibold text-slate-700 truncate">${boss.name}</span>
+                `;
+                dropdown.appendChild(label);
+            });
+
+            document.addEventListener('click', (e) => {
+                const container = document.getElementById('boss-filter-container');
+                if (container && !container.contains(e.target)) {
+                    document.getElementById('boss-filter-dropdown').classList.add('hidden');
+                }
+            });
+        }
+
+        function handleBossFilterChange(changedCb) {
+            const checkboxes = Array.from(document.querySelectorAll('.boss-filter-cb'));
+            const allCb = checkboxes.find(cb => cb.value === 'all');
+            
+            if (changedCb.value === 'all') {
+                if (changedCb.checked) {
+                    checkboxes.forEach(cb => { if (cb.value !== 'all') cb.checked = false; });
+                } else {
+                    changedCb.checked = true; 
+                }
+            } else {
+                if (changedCb.checked) {
+                    allCb.checked = false;
+                } else {
+                    const anyChecked = checkboxes.some(cb => cb.value !== 'all' && cb.checked);
+                    if (!anyChecked) allCb.checked = true;
+                }
+            }
+
+            const selected = checkboxes.filter(cb => cb.value !== 'all' && cb.checked);
+            const textEl = document.getElementById('boss-filter-text');
+            if (selected.length === 0) {
+                textEl.innerText = 'Все боссы';
+            } else if (selected.length === 1) {
+                textEl.innerText = BOSSES.find(b => b.id === selected[0].value).name;
+            } else {
+                textEl.innerText = `Боссов: ${selected.length}`;
+            }
+
+            applyFilter();
+        }
+
+        function getSelectedBosses() {
+            const checkboxes = Array.from(document.querySelectorAll('.boss-filter-cb'));
+            if (!checkboxes || checkboxes.length === 0) return [];
+            const allCb = checkboxes.find(cb => cb.value === 'all');
+            if (allCb && allCb.checked) return [];
+            return checkboxes.filter(cb => cb.value !== 'all' && cb.checked).map(cb => cb.value);
+        }
+
+        window.resetFiltersAndRefresh = function() {
+            const pFilter = document.getElementById('dashboard-player-filter');
+            if (pFilter) pFilter.value = 'all';
+
+            const iFilter = document.getElementById('dashboard-item-filter');
+            if (iFilter) iFilter.value = 'all';
+
+            const mOnly = document.getElementById('dashboard-mains-only');
+            if (mOnly) mOnly.checked = false;
+
+            const kToggle = document.getElementById('dashboard-keys-toggle');
+            if (kToggle) kToggle.checked = true;
+
+            const checkboxes = Array.from(document.querySelectorAll('.boss-filter-cb'));
+            if (checkboxes.length > 0) {
+                checkboxes.forEach(cb => {
+                    cb.checked = (cb.value === 'all');
+                });
+                document.getElementById('boss-filter-text').innerText = 'Все боссы';
+            }
+
+            loadAllData();
+        }
 
         function showMessage(msg, type = 'info') {
             const box = document.getElementById('message-box');
@@ -925,8 +1028,8 @@
                         <div class="flex items-center gap-1.5 bg-slate-50 p-2 rounded-xl border border-slate-200 shadow-sm shrink-0" data-dungeon-id="${d.id}">
                             <img src="${d.icon}" alt="${d.name}" class="w-[48px] h-[48px] rounded-lg object-cover bg-slate-900 border border-slate-300" title="${d.name}">
                             <div class="flex flex-col gap-1 justify-center">
-                                <button onclick="toggleDungeonBtn(this, 'rio')" data-active="${dState.rio}" class="dungeon-btn-rio w-10 h-[22px] rounded border text-[11px] font-black transition-colors flex items-center justify-center ${rioCls}">RIO</button>
-                                <button onclick="toggleDungeonBtn(this, 'w')" data-active="${dState.w}" class="dungeon-btn-w w-10 h-[22px] rounded border text-[11px] font-black transition-colors flex items-center justify-center ${wCls}">W</button>
+                                <button onclick="toggleDungeonBtn(this, 'rio')" data-active="${dState.rio}" class="dungeon-btn-rio w-10 h-[22px] rounded border text-[10px] font-black transition-colors flex items-center justify-center ${rioCls}">RIO</button>
+                                <button onclick="toggleDungeonBtn(this, 'w')" data-active="${dState.w}" class="dungeon-btn-w w-10 h-[22px] rounded border text-[10px] font-black transition-colors flex items-center justify-center ${wCls}">W</button>
                             </div>
                         </div>
                     `;
@@ -1335,6 +1438,9 @@
             const mainsOnly = document.getElementById('dashboard-mains-only').checked;
             const showKeys = document.getElementById('dashboard-keys-toggle').checked;
             
+            // Получаем выбранных боссов
+            const selectedBosses = getSelectedBosses();
+            
             if (currentActivePlayers.length === 0) {
                 container.innerHTML = `<div class="p-12 text-center bg-white rounded-2xl border border-slate-200 border-dashed text-slate-500">Данных для отображения пока нет.</div>`;
                 return;
@@ -1386,13 +1492,13 @@
                     const wActive = wList.length > 0 ? 'bg-purple-100 text-purple-700 border-purple-300 hover:bg-purple-200 shadow-sm cursor-pointer' : 'bg-slate-50 text-slate-400 border-slate-200 cursor-auto';
 
                     dashDungeonsHtml += `
-                        <div class="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-sm w-full">
+                        <div class="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-sm shrink-0 w-full">
                             <img src="${d.icon}" alt="${d.name}" class="w-[60px] h-[60px] rounded-lg object-cover bg-slate-900 shadow-sm shrink-0 border border-slate-200">
                             <div class="flex flex-col gap-2 w-full overflow-hidden items-center text-center">
                                 <span class="text-sm font-bold text-slate-800 truncate w-full" title="${d.name}">${d.name}</span>
                                 <div class="flex gap-1.5 w-full mt-auto">
-                                    <button ${rioList.length > 0 ? `onclick="openDungeonListModal('${d.id}_rio')"` : ''} class="flex-1 h-7 rounded border text-[12px] font-black transition-colors ${rioActive}" title="${rioNames}">RIO - ${rioList.length}</button>
-                                    <button ${wList.length > 0 ? `onclick="openDungeonListModal('${d.id}_w')"` : ''} class="flex-1 h-7 rounded border text-[12px] font-black transition-colors ${wActive}" title="${wNames}">W - ${wList.length}</button>
+                                    <button ${rioList.length > 0 ? `onclick="openDungeonListModal('${d.id}_rio')"` : ''} class="flex-1 h-7 rounded border text-[11px] font-black transition-colors ${rioActive}" title="${rioNames}">RIO - ${rioList.length}</button>
+                                    <button ${wList.length > 0 ? `onclick="openDungeonListModal('${d.id}_w')"` : ''} class="flex-1 h-7 rounded border text-[11px] font-black transition-colors ${wActive}" title="${wNames}">W - ${wList.length}</button>
                                 </div>
                             </div>
                         </div>
@@ -1410,9 +1516,6 @@
                 if (keysFound) {
                     finalHtml += `
                         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-8">
-                            <div class="bg-slate-50 p-4 border-b border-slate-200 flex items-center gap-4">
-                                <img src="./ICONS/DUNGEONS/ЭПОХАЛЬНЫЙ_КЛЮЧ.jpg" alt="Эпохальные подземелья" class="w-12 h-12 rounded-lg shadow-sm border border-slate-300 object-cover bg-slate-900">
-                            </div>
                             <div class="p-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 bg-slate-50/50">
                                 ${dashDungeonsHtml}
                             </div>
@@ -1434,7 +1537,9 @@
             // --- БЛОК БОССОВ ---
             let bossesFound = false;
 
-            BOSSES.forEach(boss => {
+            const bossesToRender = BOSSES.filter(b => selectedBosses.length === 0 || selectedBosses.includes(b.id));
+
+            bossesToRender.forEach(boss => {
                 let interestedAccounts = [];
                 
                 currentActivePlayers.forEach(player => {
