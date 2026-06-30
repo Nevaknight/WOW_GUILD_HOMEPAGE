@@ -7,37 +7,25 @@
     },
     "stream_link": "",
     "dungeons": {
-      "dungeon_1": {
-        "main": { "rio": true, "w": false },
-        "alt1": { "rio": false, "w": false },
-        "alt2": { "rio": false, "w": false }
-      },
-      "dungeon_2": {
-        "main": { "rio": false, "w": true },
-        "alt1": { "rio": false, "w": false },
-        "alt2": { "rio": false, "w": false }
-      }
+      "dungeon_1": { "main": { "rio": true, "w": false } },
+      "dungeon_2": { "main": { "rio": false, "w": true } }
     },
     "bosses": {
-      "boss_1": {
-        "main": { "items": [1, 8], "comment": "Очень надо" },
-        "alt1": { "items": [], "comment": "" },
-        "alt2": { "items": [], "comment": "" }
-      }
+      "boss_1": { "main": { "items": [1, 8], "comment": "Очень надо" } }
     }
   },
   "Рейнон": {
     "characters": {
-      "main": { "class": "druid", "name": "Рейнон" },
-      "alt1": { "class": "warrior", "name": "РейТанк" },
-      "alt2": { "class": "none", "name": "" }
+      "main": { "class": "druid", "name": "Рейннон" },
+      "alt1": { "class": "warrior", "name": "Второйчар" },
+      "alt2": { "class": "monk", "name": "Третийчар" }
     },
-    "stream_link": "twitch.tv/rainon_",
+    "stream_link": "https://www.twitch.tv/rainon_",
     "dungeons": {
       "dungeon_1": {
         "main": { "rio": true, "w": true },
         "alt1": { "rio": true, "w": false },
-        "alt2": { "rio": false, "w": false }
+        "alt2": { "rio": false, "w": true }
       },
       "dungeon_3": {
         "main": { "rio": false, "w": false },
@@ -49,7 +37,7 @@
       "boss_1": {
         "main": { "items": [1, 2, 3], "comment": "Любая шмотка отсюда" },
         "alt1": { "items": [16, 17], "comment": "Щит на танка!" },
-        "alt2": { "items": [], "comment": "" }
+        "alt2": { "items": [10], "comment": "" }
       }
     }
   },
@@ -63,15 +51,287 @@
     "dungeons": {
       "dungeon_1": {
         "main": { "rio": false, "w": true },
-        "alt1": { "rio": true, "w": false },
-        "alt2": { "rio": false, "w": false }
+        "alt1": { "rio": true, "w": false }
+      },
+      "dungeon_4": {
+        "main": { "rio": true, "w": true }
       }
     },
     "bosses": {
       "boss_2": {
         "main": { "items": [5, 6, 7], "comment": "Нужны куски сета" },
-        "alt1": { "items": [], "comment": "" },
-        "alt2": { "items": [], "comment": "" }
+        "alt1": { "items": [16], "comment": "" }
+      }
+    }
+  },
+  "Рипыч": {
+    "characters": {
+      "main": { "class": "demonhunter", "name": "Рипыч" },
+      "alt1": { "class": "none", "name": "" },
+      "alt2": { "class": "none", "name": "" }
+    },
+    "stream_link": "https://youtube.com/@ripych",
+    "dungeons": {
+      "dungeon_2": { "main": { "rio": true, "w": false } },
+      "dungeon_5": { "main": { "rio": true, "w": true } }
+    },
+    "bosses": {
+      "boss_4": { "main": { "items": [16, 17], "comment": "Бис пушка" } }
+    }
+  },
+  "Тралл": {
+    "characters": {
+      "main": { "class": "shaman", "name": "Тралл" },
+      "alt1": { "class": "warrior", "name": "ТраллТанк" },
+      "alt2": { "class": "none", "name": "" }
+    },
+    "stream_link": "",
+    "dungeons": {
+      "dungeon_1": { "main": { "rio": true, "w": false }, "alt1": { "rio": false, "w": true } }
+    },
+    "bosses": {
+      "boss_1": { "main": { "items": [1, 2, 3], "comment": "" } },
+      "boss_8": { "main": { "items": [16, 17], "comment": "Молот Рока" }, "alt1": { "items": [5, 6], "comment": "" } }
+    }
+  },
+  "Джайна": {
+    "characters": {
+      "main": { "class": "mage", "name": "Джайна" },
+      "alt1": { "class": "priest", "name": "ДжайнаХил" },
+      "alt2": { "class": "none", "name": "" }
+    },
+    "stream_link": "https://twitch.tv/jaina_proudmoore",
+    "dungeons": {
+      "dungeon_6": { "main": { "rio": true, "w": true }, "alt1": { "rio": true, "w": false } }
+    },
+    "bosses": {
+      "boss_2": { "main": { "items": [1, 5, 7], "comment": "" } },
+      "boss_5": { "main": { "items": [13, 14], "comment": "Тринька мастхэв" }, "alt1": { "items": [13], "comment": "" } }
+    }
+  },
+  "Артас": {
+    "characters": {
+      "main": { "class": "deathknight", "name": "Артас" },
+      "alt1": { "class": "paladin", "name": "АртасСвет" },
+      "alt2": { "class": "warrior", "name": "АртасВар" }
+    },
+    "stream_link": "",
+    "dungeons": {
+      "dungeon_8": { "main": { "rio": true, "w": false }, "alt1": { "rio": false, "w": true }, "alt2": { "rio": true, "w": true } }
+    },
+    "bosses": {
+      "boss_3": { "main": { "items": [16], "comment": "Фростморн жаждет крови" } },
+      "boss_6": { "main": { "items": [1, 3], "comment": "Латные шмотки" }, "alt1": { "items": [1], "comment": "" } }
+    }
+  },
+  "Иллидан": {
+    "characters": {
+      "main": { "class": "demonhunter", "name": "Иллидан" },
+      "alt1": { "class": "rogue", "name": "ИллиданРога" },
+      "alt2": { "class": "none", "name": "" }
+    },
+    "stream_link": "https://twitch.tv/illidan_stormrage",
+    "dungeons": {
+      "dungeon_2": { "main": { "rio": true, "w": true }, "alt1": { "rio": true, "w": false } }
+    },
+    "bosses": {
+      "boss_6": { "main": { "items": [17], "comment": "Вторая аззинотка" } },
+      "boss_8": { "main": { "items": [11, 12], "comment": "" }, "alt1": { "items": [5], "comment": "" } }
+    }
+  },
+  "Сильвана": {
+    "characters": {
+      "main": { "class": "hunter", "name": "Сильвана" },
+      "alt1": { "class": "rogue", "name": "СильванаРога" },
+      "alt2": { "class": "none", "name": "" }
+    },
+    "stream_link": "",
+    "dungeons": {
+      "dungeon_3": { "main": { "rio": false, "w": true } },
+      "dungeon_4": { "main": { "rio": true, "w": true } }
+    },
+    "bosses": {
+      "boss_2": { "main": { "items": [5, 6, 7], "comment": "" } },
+      "boss_4": { "main": { "items": [15, 16], "comment": "Лук" }, "alt1": { "items": [16, 17], "comment": "Даггеры" } }
+    }
+  },
+  "Утер": {
+    "characters": {
+      "main": { "class": "paladin", "name": "Утер" },
+      "alt1": { "class": "none", "name": "" },
+      "alt2": { "class": "none", "name": "" }
+    },
+    "stream_link": "",
+    "dungeons": {
+      "dungeon_1": { "main": { "rio": true, "w": false } }
+    },
+    "bosses": {
+      "boss_1": { "main": { "items": [1, 3, 5], "comment": "За свет!" } },
+      "boss_6": { "main": { "items": [16], "comment": "" } }
+    }
+  },
+  "Тирион": {
+    "characters": {
+      "main": { "class": "paladin", "name": "Тирион" },
+      "alt1": { "class": "none", "name": "" },
+      "alt2": { "class": "none", "name": "" }
+    },
+    "stream_link": "",
+    "dungeons": {
+      "dungeon_5": { "main": { "rio": true, "w": true } },
+      "dungeon_6": { "main": { "rio": true, "w": true } }
+    },
+    "bosses": {
+      "boss_4": { "main": { "items": [16, 17], "comment": "" } },
+      "boss_7": { "main": { "items": [1, 5, 7], "comment": "" } }
+    }
+  },
+  "Вариан": {
+    "characters": {
+      "main": { "class": "warrior", "name": "Вариан" },
+      "alt1": { "class": "none", "name": "" },
+      "alt2": { "class": "none", "name": "" }
+    },
+    "stream_link": "",
+    "dungeons": {
+      "dungeon_7": { "main": { "rio": true, "w": false } }
+    },
+    "bosses": {
+      "boss_1": { "main": { "items": [16], "comment": "Меч" } },
+      "boss_2": { "main": { "items": [17], "comment": "Щит" } },
+      "boss_5": { "main": { "items": [5, 7], "comment": "" } }
+    }
+  },
+  "Андуин": {
+    "characters": {
+      "main": { "class": "priest", "name": "Андуин" },
+      "alt1": { "class": "paladin", "name": "АндуинПал" },
+      "alt2": { "class": "none", "name": "" }
+    },
+    "stream_link": "",
+    "dungeons": {
+      "dungeon_2": { "main": { "rio": false, "w": true }, "alt1": { "rio": true, "w": false } }
+    },
+    "bosses": {
+      "boss_2": { "main": { "items": [1, 2, 3], "comment": "Прист шмот" } },
+      "boss_6": { "main": { "items": [13, 14], "comment": "" }, "alt1": { "items": [1, 5], "comment": "" } }
+    }
+  },
+  "Гулдан": {
+    "characters": {
+      "main": { "class": "warlock", "name": "Гулдан" },
+      "alt1": { "class": "shaman", "name": "ГулданШам" },
+      "alt2": { "class": "none", "name": "" }
+    },
+    "stream_link": "",
+    "dungeons": {
+      "dungeon_3": { "main": { "rio": true, "w": true }, "alt1": { "rio": false, "w": true } }
+    },
+    "bosses": {
+      "boss_1": { "main": { "items": [1, 5], "comment": "" } },
+      "boss_3": { "main": { "items": [13], "comment": "Магия скверны" }, "alt1": { "items": [16], "comment": "" } },
+      "boss_4": { "main": { "items": [16], "comment": "Посох" } }
+    }
+  },
+  "Кадгар": {
+    "characters": {
+      "main": { "class": "mage", "name": "Кадгар" },
+      "alt1": { "class": "none", "name": "" },
+      "alt2": { "class": "none", "name": "" }
+    },
+    "stream_link": "",
+    "dungeons": {
+      "dungeon_8": { "main": { "rio": true, "w": false } }
+    },
+    "bosses": {
+      "boss_3": { "main": { "items": [13, 14], "comment": "" } },
+      "boss_5": { "main": { "items": [1, 2, 3], "comment": "" } },
+      "boss_8": { "main": { "items": [11], "comment": "Атиеш" } }
+    }
+  },
+  "Малфурион": {
+    "characters": {
+      "main": { "class": "druid", "name": "Малфурион" },
+      "alt1": { "class": "none", "name": "" },
+      "alt2": { "class": "none", "name": "" }
+    },
+    "stream_link": "",
+    "dungeons": {
+      "dungeon_4": { "main": { "rio": false, "w": true } }
+    },
+    "bosses": {
+      "boss_1": { "main": { "items": [1, 3], "comment": "" } },
+      "boss_4": { "main": { "items": [5, 7], "comment": "" } },
+      "boss_7": { "main": { "items": [16, 17], "comment": "" } }
+    }
+  },
+  "Тиранда": {
+    "characters": {
+      "main": { "class": "priest", "name": "Тиранда" },
+      "alt1": { "class": "hunter", "name": "ТирандаХант" },
+      "alt2": { "class": "none", "name": "" }
+    },
+    "stream_link": "",
+    "dungeons": {
+      "dungeon_5": { "main": { "rio": true, "w": true }, "alt1": { "rio": true, "w": false } }
+    },
+    "bosses": {
+      "boss_2": { "main": { "items": [11, 12], "comment": "" } },
+      "boss_5": { "main": { "items": [16], "comment": "" }, "alt1": { "items": [15, 16], "comment": "Стрелы Элуны" } },
+      "boss_7": { "main": { "items": [15], "comment": "" } },
+      "boss_8": { "main": { "items": [13, 14], "comment": "" } }
+    }
+  },
+  "Майев": {
+    "characters": {
+      "main": { "class": "rogue", "name": "Майев" },
+      "alt1": { "class": "none", "name": "" },
+      "alt2": { "class": "none", "name": "" }
+    },
+    "stream_link": "",
+    "dungeons": {
+      "dungeon_6": { "main": { "rio": true, "w": false } }
+    },
+    "bosses": {
+      "boss_1": { "main": { "items": [1, 8], "comment": "" } },
+      "boss_3": { "main": { "items": [16, 17], "comment": "Глефы" } },
+      "boss_6": { "main": { "items": [5], "comment": "" } }
+    }
+  },
+  "Кельтас": {
+    "characters": {
+      "main": { "class": "mage", "name": "Кельтас" },
+      "alt1": { "class": "warlock", "name": "КельЛок" },
+      "alt2": { "class": "none", "name": "" }
+    },
+    "stream_link": "https://twitch.tv/kaelthas",
+    "dungeons": {
+      "dungeon_7": { "main": { "rio": true, "w": true }, "alt1": { "rio": false, "w": true } }
+    },
+    "bosses": {
+      "boss_3": { "main": { "items": [1], "comment": "Сферы" }, "alt1": { "items": [13], "comment": "" } },
+      "boss_5": { "main": { "items": [5, 6, 7], "comment": "" } },
+      "boss_7": { "main": { "items": [15], "comment": "Плащ" } }
+    }
+  },
+  "Волджин": {
+    "characters": {
+      "main": { "class": "hunter", "name": "Волджин" },
+      "alt1": { "class": "shaman", "name": "ВолджинШам" },
+      "alt2": { "class": "rogue", "name": "ВолджинРога" }
+    },
+    "stream_link": "",
+    "dungeons": {
+      "dungeon_1": { "main": { "rio": true, "w": true }, "alt1": { "rio": true, "w": false }, "alt2": { "rio": false, "w": true } },
+      "dungeon_8": { "main": { "rio": false, "w": true }, "alt1": { "rio": true, "w": false }, "alt2": { "rio": false, "w": false } }
+    },
+    "bosses": {
+      "boss_1": { "main": { "items": [16], "comment": "" } },
+      "boss_4": { "main": { "items": [1, 2, 3], "comment": "" }, "alt1": { "items": [5, 7], "comment": "" } },
+      "boss_6": {
+        "main": { "items": [13, 14], "comment": "" },
+        "alt1": { "items": [1, 5], "comment": "Сет на шамана" },
+        "alt2": { "items": [16, 17], "comment": "Кинжалы" }
       }
     }
   }
