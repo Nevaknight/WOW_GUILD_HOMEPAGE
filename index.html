@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Гильдия</title>
-    <!-- Иконка сундука -->
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📦%3C/text%3E%3C/svg%3E">
+    <!-- Иконка звезда -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌟%3C/text%3E%3C/svg%3E">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <style>
@@ -57,7 +57,7 @@
     <nav class="bg-white shadow-sm border-b border-slate-200 sticky top-0 z-20">
         <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
             <h1 class="text-xl font-bold text-slate-900 tracking-tight cursor-pointer flex items-center gap-2" onclick="showView('dashboard')">
-                <span>📦</span> ПЛАНИРОВЩИК ГИЛЬДИИ
+                <span>🌟</span> ПЛАНИРОВЩИК ГИЛЬДИИ
             </h1>
             <div id="nav-user" class="hidden flex items-center gap-4">
                 <button id="nav-btn-test" onclick="toggleTestMode()" class="text-sm px-3 py-1.5 rounded-md transition font-bold border border-transparent text-emerald-500 hover:text-emerald-700">Тест: ВЫКЛ</button>
@@ -225,7 +225,7 @@
                 <h3 class="text-xl font-black text-slate-800 mb-2 uppercase tracking-wide px-2 flex items-center justify-center gap-2">
                     Эпохальные подземелья
                 </h3>
-                <p class="text-slate-500 text-sm mb-4 px-2 max-w-3xl mx-auto">Выберите подземелья, в которых вам нужен RIO или W (недельный ключ) для каждого персонажа.</p>
+                <p class="text-slate-500 text-sm mb-4 px-2 max-w-3xl mx-auto text-center">Выберите подземелья, в которых вам нужен RIO или W (недельный ключ) для каждого персонажа.</p>
                 
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden tree-container-block text-left">
                     <div class="overflow-x-auto custom-scrollbar pb-2">
@@ -243,7 +243,7 @@
                 <h3 class="text-xl font-black text-slate-800 mb-2 uppercase tracking-wide px-2 flex items-center justify-center gap-2">
                     Рейдовые подземелья
                 </h3>
-                <p class="text-slate-500 text-sm mb-4 px-2 max-w-3xl mx-auto">Выбери предметы для каждого персонажа. Нажми на иконку комментария справа, чтобы оставить пояснение.</p>
+                <p class="text-slate-500 text-sm mb-4 px-2 max-w-3xl mx-auto text-center">Выбери предметы для каждого персонажа. Нажми на иконку комментария справа, чтобы оставить пояснение.</p>
                 
                 <div id="form-body-bosses" class="space-y-6 text-left">
                     <!-- Сюда рендерятся боссы (карточки) -->
@@ -253,7 +253,7 @@
         
         <!-- ФУТЕР -->
         <footer class="text-center pt-10 pb-4 text-slate-400 font-medium text-sm mt-auto">
-            Guild Planner V2.1 - @Rainon
+            Guild Planner V2.2 - @Rainon
         </footer>
         
     </main>
@@ -352,7 +352,7 @@
         const WOW_CLASSES = {
             'none': { name: 'Не выбран', icon: 'https://wow.zamimg.com/images/wow/icons/large/inv_misc_questionmark.jpg' },
             'paladin': { name: 'Паладин', icon: 'https://wow.zamimg.com/images/wow/icons/large/classicon_paladin.jpg' },
-            'druid': { name: 'Друид', icon: 'https://wow.zamimg.com/images/wow/icons/large/classicon_druid.jpg' },
+            'druid': { name: 'Друид', icon: 'https://wow.wowhead.com/images/wow/icons/large/classicon_druid.jpg' },
             'monk': { name: 'Монах', icon: 'https://wow.zamimg.com/images/wow/icons/large/classicon_monk.jpg' },
             'mage': { name: 'Маг', icon: 'https://wow.zamimg.com/images/wow/icons/large/classicon_mage.jpg' },
             'evoker': { name: 'Пробудитель', icon: 'https://wow.wowhead.com/images/wow/icons/large/classicon_evoker.jpg' },
@@ -401,7 +401,7 @@
         let currentEditParams = null; 
         let hasUnsavedChanges = false;
         let lastModifiedBox = null;
-        let globalDungeonLists = {}; // Глобальное хранилище для списков подземелий
+        let globalDungeonLists = {};
 
         function getSlotName(slotNumber) {
             const names = {
@@ -425,8 +425,8 @@
                 
                 if(!mainRow) return;
 
-                const hasAlt1 = alt1Row && alt1Row.style.display !== 'none';
-                const hasAlt2 = alt2Row && alt2Row.style.display !== 'none';
+                const hasAlt1 = alt1Row && !alt1Row.classList.contains('hidden');
+                const hasAlt2 = alt2Row && !alt2Row.classList.contains('hidden');
                 const hasAnyAlts = hasAlt1 || hasAlt2;
 
                 const mainLine = mainRow.querySelector('.tree-line-container');
@@ -465,9 +465,9 @@
 
             document.querySelectorAll(`.row-char-${type}`).forEach(row => {
                 if (className === 'none') {
-                    row.style.display = 'none';
+                    row.classList.add('hidden');
                 } else {
-                    row.style.display = '';
+                    row.classList.remove('hidden');
                     const rowIcon = row.querySelector('.display-icon');
                     if (rowIcon) rowIcon.src = classData.icon;
                 }
@@ -577,7 +577,6 @@
         }
 
         function showView(viewId) {
-            // Защита от потери данных
             if (hasUnsavedChanges && viewId !== 'form') {
                 if (lastModifiedBox) {
                     lastModifiedBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -666,9 +665,6 @@
             showView('login');
         }
 
-        // ==========================================
-        // ЛОГИКА АНКЕТЫ (ВИШЛИСТА И КОММЕНТАРИЕВ)
-        // ==========================================
         function toggleItemSlot(imgElement) {
             imgElement.classList.toggle('selected');
             showFloatingSave(imgElement);
@@ -910,14 +906,14 @@
                 });
                 dungeonsHtml += `</div>`;
 
-                const isHidden = charData.class === 'none' ? 'style="display: none;"' : '';
+                const isHiddenClass = charData.class === 'none' ? 'hidden' : '';
                 const displayName = charData.name || currentUser;
                 const displayIcon = WOW_CLASSES[charData.class]?.icon || WOW_CLASSES['none'].icon;
                 const isAlt = charType !== 'main';
                 const rowBgClass = isAlt ? 'bg-slate-50/50' : '';
 
                 dRowsHtml += `
-                    <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors row-char-${charType} ${rowBgClass}" ${isHidden} data-char-type="${charType}">
+                    <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors row-char-${charType} ${rowBgClass} ${isHiddenClass}" data-char-type="${charType}">
                         <td class="w-[280px] p-0 border-r border-slate-100/50 align-middle">
                             <div class="relative flex items-center h-[64px] w-full">
                                 <div class="tree-line-container w-[40px] shrink-0 relative h-full"></div>
@@ -970,14 +966,14 @@
                         ? 'border-green-500 text-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)] bg-green-50' 
                         : 'border-slate-200 text-slate-400 hover:text-slate-600 hover:border-slate-400';
 
-                    const isHidden = charData.class === 'none' ? 'style="display: none;"' : '';
+                    const isHiddenClass = charData.class === 'none' ? 'hidden' : '';
                     const displayName = charData.name || currentUser;
                     const displayIcon = WOW_CLASSES[charData.class]?.icon || WOW_CLASSES['none'].icon;
                     const isAlt = charType !== 'main';
                     const rowBgClass = isAlt ? 'bg-slate-50/50' : '';
 
                     rowsHtml += `
-                        <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors row-char-${charType} ${rowBgClass}" ${isHidden} data-char-type="${charType}">
+                        <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors row-char-${charType} ${rowBgClass} ${isHiddenClass}" data-char-type="${charType}">
                             <td class="w-[280px] p-0 border-r border-slate-100/50 align-middle">
                                 <div class="relative flex items-center h-[56px] w-full">
                                     <div class="tree-line-container w-[40px] shrink-0 relative h-full"></div>
@@ -1105,6 +1101,10 @@
             const result = await githubAPI('PUT', `loot_${currentUser}.json`, body);
 
             if (result) {
+                // СБРАСЫВАЕМ ГРЯЗНЫЙ ФЛАГ ДО ТАЙМАУТА! 
+                hasUnsavedChanges = false;
+                lastModifiedBox = null;
+                
                 btn.innerHTML = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> <span>Сохранено!</span>`;
                 btn.classList.replace('bg-green-600', 'bg-emerald-500');
                 btn.classList.replace('hover:bg-green-700', 'hover:bg-emerald-600');
@@ -1160,8 +1160,11 @@
                 if (fileData && fileData.content) {
                     try {
                         const jsonString = decodeURIComponent(escape(atob(fileData.content)));
-                        allLootData = JSON.parse(jsonString);
-                        playersWhoFilled = Object.keys(allLootData).filter(p => typeof allLootData[p] === 'object');
+                        const parsedData = JSON.parse(jsonString);
+                        playersWhoFilled = Object.keys(parsedData).filter(p => typeof parsedData[p] === 'object');
+                        playersWhoFilled.forEach(p => {
+                            allLootData[p] = migrateData(parsedData[p]);
+                        });
                     } catch(e) {
                         console.error("Ошибка парсинга testdata.json", e);
                         showMessage("Ошибка чтения тестовых данных", "error");
@@ -1248,7 +1251,6 @@
 
             const rowClass = isAlt ? 'bg-slate-50/50' : '';
 
-            // СТРОГАЯ ФИКСАЦИЯ ШИРИНЫ 
             let playerDisplayHtml = `
                 <div class="relative flex items-center h-[56px] w-full">
                     <div class="w-[40px] shrink-0 relative h-full">
