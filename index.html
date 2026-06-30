@@ -208,7 +208,7 @@
             </div>
 
             <!-- Блок для ссылки на трансляцию -->
-            <div class="mb-8 bg-purple-50 p-5 rounded-2xl border border-purple-100 flex flex-col sm:flex-row sm:items-center gap-4 shadow-sm">
+            <div class="mb-10 bg-purple-50 p-5 rounded-2xl border border-purple-100 flex flex-col sm:flex-row sm:items-center gap-4 shadow-sm">
                 <div class="flex-shrink-0 flex justify-center">
                     <div class="w-14 h-14 bg-purple-600 text-white rounded-xl flex items-center justify-center shadow-md">
                         <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
@@ -222,18 +222,16 @@
 
             <!-- Блок Ключей (Подземелий) -->
             <div class="bg-transparent mb-10 text-center">
-                <h3 class="text-xl font-black text-slate-800 mb-2 uppercase tracking-wide px-2 flex items-center justify-center gap-2">
-                    Эпохальные подземелья
-                </h3>
-                <p class="text-slate-500 text-sm mb-4 px-2 max-w-3xl mx-auto text-center">Выберите подземелья, в которых вам нужен RIO или W (недельный ключ) для каждого персонажа.</p>
-                
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden tree-container-block text-left relative">
                     <div class="bg-slate-50 p-4 border-b border-slate-200 flex items-center justify-between gap-4">
                         <div class="flex items-center gap-4">
-                            <span class="text-2xl ml-2">🗝️</span>
-                            <h3 class="text-lg font-black text-slate-800 uppercase tracking-wide">Ключи</h3>
+                            <img src="./ICONS/DUNGEONS/ЭПОХАЛЬНЫЙ_КЛЮЧ.jpg" alt="Ключи" class="w-12 h-12 rounded-lg shadow-sm border border-slate-300 object-cover bg-slate-900">
+                            <div class="flex flex-col">
+                                <h3 class="text-xl font-black text-slate-800 uppercase tracking-wide">Эпохальные подземелья</h3>
+                                <p class="text-slate-500 text-xs">Выберите подземелья, в которых вам нужен RIO или W (недельный ключ).</p>
+                            </div>
                         </div>
-                        <button onclick="resetDungeonsSelection()" class="text-slate-400 hover:text-red-500 bg-white border border-slate-200 hover:border-red-200 hover:bg-red-50 p-2 rounded-xl transition-all shadow-sm flex items-center gap-2" title="Сбросить выбор всех ключей">
+                        <button onclick="resetDungeonsSelection()" class="text-slate-400 hover:text-red-500 bg-white border border-slate-200 hover:border-red-200 hover:bg-red-50 p-2 rounded-xl transition-all shadow-sm flex items-center gap-2 shrink-0" title="Сбросить выбор всех ключей">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                         </button>
                     </div>
@@ -248,11 +246,11 @@
             </div>
 
             <!-- Блок Вишлиста (Рейд) -->
-            <div class="bg-transparent mb-6 text-center">
-                <h3 class="text-xl font-black text-slate-800 mb-2 uppercase tracking-wide px-2 flex items-center justify-center gap-2">
+            <div class="bg-transparent mb-6 text-center mt-10">
+                <h3 class="text-xl font-black text-slate-800 mb-2 uppercase tracking-wide flex items-center justify-center gap-2">
                     Рейдовые подземелья
                 </h3>
-                <p class="text-slate-500 text-sm mb-4 px-2 max-w-3xl mx-auto text-center">Выбери предметы для каждого персонажа. Нажми на иконку комментария справа, чтобы оставить пояснение.</p>
+                <p class="text-slate-500 text-sm mb-6 text-center w-full">Выбери предметы для каждого персонажа. Нажми на иконку комментария справа, чтобы оставить пояснение.</p>
                 
                 <div id="form-body-bosses" class="space-y-6 text-left">
                     <!-- Сюда рендерятся боссы (карточки) -->
@@ -262,7 +260,7 @@
         
         <!-- ФУТЕР -->
         <footer class="text-center pt-10 pb-4 text-slate-400 font-medium text-sm mt-auto">
-            Guild Planner V2.4 - @Rainon
+            Guild Planner V2.5 - @Rainon
         </footer>
         
     </main>
@@ -440,24 +438,24 @@
 
                 const mainLine = mainRow.querySelector('.tree-line-container');
                 if (mainLine) {
-                    mainLine.innerHTML = hasAnyAlts ? `<div class="absolute left-[20px] top-1/2 bottom-[-1px] border-emerald-400 z-0" style="border-left-width: 2px;"></div>` : '';
+                    mainLine.innerHTML = hasAnyAlts ? `<div class="absolute left-[14px] top-1/2 bottom-[-1px] border-emerald-400 z-0" style="border-left-width: 2px;"></div>` : '';
                 }
 
                 const alt1Line = alt1Row ? alt1Row.querySelector('.tree-line-container') : null;
                 if (alt1Line) {
                     if (hasAlt2) {
                         alt1Line.innerHTML = `
-                            <div class="absolute left-[20px] top-[-1px] bottom-1/2 w-4 border-emerald-400 z-0" style="border-left-width: 2px; border-bottom-width: 2px; border-bottom-left-radius: 8px;"></div>
-                            <div class="absolute left-[20px] top-1/2 bottom-[-1px] border-emerald-400 z-0" style="border-left-width: 2px;"></div>
+                            <div class="absolute left-[14px] top-[-1px] bottom-1/2 w-4 border-emerald-400 z-0" style="border-left-width: 2px; border-bottom-width: 2px; border-bottom-left-radius: 8px;"></div>
+                            <div class="absolute left-[14px] top-1/2 bottom-[-1px] border-emerald-400 z-0" style="border-left-width: 2px;"></div>
                         `;
                     } else {
-                        alt1Line.innerHTML = `<div class="absolute left-[20px] top-[-1px] bottom-1/2 w-4 border-emerald-400 z-0" style="border-left-width: 2px; border-bottom-width: 2px; border-bottom-left-radius: 8px;"></div>`;
+                        alt1Line.innerHTML = `<div class="absolute left-[14px] top-[-1px] bottom-1/2 w-4 border-emerald-400 z-0" style="border-left-width: 2px; border-bottom-width: 2px; border-bottom-left-radius: 8px;"></div>`;
                     }
                 }
 
                 const alt2Line = alt2Row ? alt2Row.querySelector('.tree-line-container') : null;
                 if (alt2Line) {
-                    alt2Line.innerHTML = `<div class="absolute left-[20px] top-[-1px] bottom-1/2 w-4 border-emerald-400 z-0" style="border-left-width: 2px; border-bottom-width: 2px; border-bottom-left-radius: 8px;"></div>`;
+                    alt2Line.innerHTML = `<div class="absolute left-[14px] top-[-1px] bottom-1/2 w-4 border-emerald-400 z-0" style="border-left-width: 2px; border-bottom-width: 2px; border-bottom-left-radius: 8px;"></div>`;
                 }
             });
         }
@@ -918,18 +916,18 @@
                 const charData = chars[charType] || { class: 'none', name: '' };
                 const charDungeons = userData.dungeons || {};
                 
-                let dungeonsHtml = `<div class="flex gap-4">`;
+                let dungeonsHtml = `<div class="flex gap-2 w-max">`;
                 DUNGEONS.forEach(d => {
                     const dState = charDungeons[d.id]?.[charType] || { rio: false, w: false };
                     const rioCls = dState.rio ? 'bg-blue-500 text-white border-blue-600' : 'bg-slate-100 text-slate-400 border-slate-200';
                     const wCls = dState.w ? 'bg-purple-500 text-white border-purple-600' : 'bg-slate-100 text-slate-400 border-slate-200';
                     
                     dungeonsHtml += `
-                        <div class="flex items-center gap-2 bg-slate-50 p-2 rounded-xl border border-slate-200 shadow-sm shrink-0" data-dungeon-id="${d.id}">
-                            <img src="${d.icon}" alt="${d.name}" class="w-[48px] h-[48px] rounded-lg object-cover bg-slate-900 border border-slate-300" title="${d.name}">
+                        <div class="flex items-center gap-1.5 bg-slate-50 p-1.5 rounded-xl border border-slate-200 shadow-sm shrink-0" data-dungeon-id="${d.id}">
+                            <img src="${d.icon}" alt="${d.name}" class="w-[44px] h-[44px] rounded-lg object-cover bg-slate-900 border border-slate-300" title="${d.name}">
                             <div class="flex flex-col gap-1 justify-center">
-                                <button onclick="toggleDungeonBtn(this, 'rio')" data-active="${dState.rio}" class="dungeon-btn-rio w-10 h-[22px] rounded border text-[10px] font-black transition-colors flex items-center justify-center ${rioCls}">RIO</button>
-                                <button onclick="toggleDungeonBtn(this, 'w')" data-active="${dState.w}" class="dungeon-btn-w w-10 h-[22px] rounded border text-[10px] font-black transition-colors flex items-center justify-center ${wCls}">W</button>
+                                <button onclick="toggleDungeonBtn(this, 'rio')" data-active="${dState.rio}" class="dungeon-btn-rio w-9 h-[20px] rounded border text-[9px] font-black transition-colors flex items-center justify-center ${rioCls}">RIO</button>
+                                <button onclick="toggleDungeonBtn(this, 'w')" data-active="${dState.w}" class="dungeon-btn-w w-9 h-[20px] rounded border text-[9px] font-black transition-colors flex items-center justify-center ${wCls}">W</button>
                             </div>
                         </div>
                     `;
@@ -944,20 +942,20 @@
 
                 dRowsHtml += `
                     <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors row-char-${charType} ${rowBgClass} ${isHiddenClass}" data-char-type="${charType}">
-                        <td class="w-[280px] p-0 border-r border-slate-100/50 align-middle">
+                        <td class="w-[240px] p-0 border-r border-slate-100/50 align-middle">
                             <div class="relative flex items-center h-[64px] w-full">
                                 <div class="tree-line-container w-[40px] shrink-0 relative h-full"></div>
-                                <div class="flex items-center gap-3 w-[190px] shrink-0">
+                                <div class="flex items-center gap-2 w-[160px] shrink-0">
                                     <img src="${displayIcon}" class="display-icon w-8 h-8 rounded-md border border-slate-300 object-cover shadow-sm bg-slate-900 shrink-0">
-                                    <div class="flex flex-col leading-tight overflow-hidden w-full pr-2">
-                                        <span class="display-name truncate font-bold text-slate-800 text-[15px]">${displayName}</span>
+                                    <div class="flex flex-col leading-tight overflow-hidden w-full pr-1">
+                                        <span class="display-name truncate font-bold text-slate-800 text-[14px]">${displayName}</span>
                                         <span class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">${charType === 'main' ? currentUser : 'Альт'}</span>
                                     </div>
                                 </div>
-                                <div class="w-[50px] shrink-0 flex justify-center"></div>
+                                <div class="w-[40px] shrink-0 flex justify-center"></div>
                             </div>
                         </td>
-                        <td class="w-[930px] px-4 py-2 align-middle">
+                        <td class="px-4 py-2 align-middle">
                             ${dungeonsHtml}
                         </td>
                     </tr>
@@ -1004,17 +1002,17 @@
 
                     rowsHtml += `
                         <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors row-char-${charType} ${rowBgClass} ${isHiddenClass}" data-char-type="${charType}">
-                            <td class="w-[280px] p-0 border-r border-slate-100/50 align-middle">
+                            <td class="w-[240px] p-0 border-r border-slate-100/50 align-middle">
                                 <div class="relative flex items-center h-[56px] w-full">
                                     <div class="tree-line-container w-[40px] shrink-0 relative h-full"></div>
-                                    <div class="flex items-center gap-3 w-[190px] shrink-0">
+                                    <div class="flex items-center gap-2 w-[160px] shrink-0">
                                         <img src="${displayIcon}" class="display-icon w-8 h-8 rounded-md border border-slate-300 object-cover shadow-sm bg-slate-900 shrink-0">
-                                        <div class="flex flex-col leading-tight overflow-hidden w-full pr-2">
-                                            <span class="display-name truncate font-bold text-slate-800 text-[15px]">${displayName}</span>
+                                        <div class="flex flex-col leading-tight overflow-hidden w-full pr-1">
+                                            <span class="display-name truncate font-bold text-slate-800 text-[14px]">${displayName}</span>
                                             <span class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">${charType === 'main' ? currentUser : 'Альт'}</span>
                                         </div>
                                     </div>
-                                    <div class="w-[50px] shrink-0 flex justify-center"></div>
+                                    <div class="w-[40px] shrink-0 flex justify-center"></div>
                                 </div>
                             </td>
                             <td class="w-[830px] px-4 py-2 border-r border-slate-100/50 align-middle">
@@ -1136,7 +1134,6 @@
             const result = await githubAPI('PUT', `loot_${currentUser}.json`, body);
 
             if (result) {
-                // СБРАСЫВАЕМ ГРЯЗНЫЙ ФЛАГ ДО ТАЙМАУТА! 
                 hasUnsavedChanges = false;
                 lastModifiedBox = null;
                 
@@ -1288,20 +1285,19 @@
 
             const rowClass = isAlt ? 'bg-slate-50/50' : '';
 
-            // СТРОГАЯ ФИКСАЦИЯ ШИРИНЫ 
             let playerDisplayHtml = `
                 <div class="relative flex items-center h-[56px] w-full">
                     <div class="w-[40px] shrink-0 relative h-full">
                         ${treeLineHtml}
                     </div>
-                    <div class="flex items-center gap-3 w-[190px] shrink-0">
+                    <div class="flex items-center gap-2 w-[160px] shrink-0">
                         <img src="${classIcon}" class="w-8 h-8 rounded-md border border-slate-300 object-cover shadow-sm bg-slate-900 shrink-0">
-                        <div class="flex flex-col leading-tight overflow-hidden w-full pr-2">
-                            <span class="truncate font-bold text-slate-800 text-[15px]">${displayName}</span>
+                        <div class="flex flex-col leading-tight overflow-hidden w-full pr-1">
+                            <span class="truncate font-bold text-slate-800 text-[14px]">${displayName}</span>
                             <span class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">${charType === 'main' ? account.accountName : 'Альт'}</span>
                         </div>
                     </div>
-                    <div class="w-[50px] shrink-0 flex justify-center">
+                    <div class="w-[40px] shrink-0 flex justify-center">
                         ${streamIconHtml}
                     </div>
                 </div>
@@ -1321,7 +1317,7 @@
 
             return `
                 <tr class="hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0 ${rowClass}">
-                    <td class="w-[280px] p-0 border-r border-slate-100/50 align-middle">
+                    <td class="w-[240px] p-0 border-r border-slate-100/50 align-middle">
                         ${playerDisplayHtml}
                     </td>
                     <td class="w-[830px] px-4 py-2 border-r border-slate-100/50 align-middle">${gridHtml}</td>
@@ -1402,7 +1398,8 @@
 
                 finalHtml += `
                     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-8">
-                        <div class="bg-slate-50 p-4 border-b border-slate-200 flex items-center justify-center gap-4">
+                        <div class="bg-slate-50 p-4 border-b border-slate-200 flex items-center gap-4">
+                            <img src="./ICONS/DUNGEONS/ЭПОХАЛЬНЫЙ_КЛЮЧ.jpg" alt="Эпохальные подземелья" class="w-12 h-12 rounded-lg shadow-sm border border-slate-300 object-cover bg-slate-900">
                             <h3 class="text-xl font-black text-slate-800 uppercase tracking-wide">Эпохальные подземелья</h3>
                         </div>
                         <div class="p-5 flex flex-wrap justify-center gap-4 bg-slate-50/50">
@@ -1476,7 +1473,7 @@
                 if (interestedAccounts.length > 0) {
                     let bossHtml = `
                         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-8">
-                            <div class="bg-slate-50 p-4 border-b border-slate-200 flex items-center justify-center gap-4">
+                            <div class="bg-slate-50 p-4 border-b border-slate-200 flex items-center gap-4">
                                 <img src="${boss.icon}" alt="${boss.name}" class="w-12 h-12 rounded-lg shadow-sm border border-slate-300 object-cover bg-slate-900">
                                 <h3 class="text-xl font-black text-slate-800 uppercase tracking-wide">${boss.name}</h3>
                             </div>
