@@ -1,4 +1,5 @@
 {
+  "stream_link": "",
   "boss_1": {
     "items": [
       1
@@ -6,8 +7,10 @@
     "comment": "57456"
   },
   "boss_2": {
-    "items": [],
-    "comment": ""
+    "items": [
+      7
+    ],
+    "comment": "Штаны не обязательны, но хотелось бы"
   },
   "boss_3": {
     "items": [],
