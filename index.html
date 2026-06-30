@@ -225,7 +225,7 @@
                 <h3 class="text-xl font-black text-slate-800 mb-2 uppercase tracking-wide px-2 flex items-center justify-center gap-2">
                     Эпохальные подземелья
                 </h3>
-                <p class="text-slate-500 text-sm mb-4 px-2 max-w-3xl mx-auto text-center">Выберите подземелья, в которых вам нужен RIO или W (недельный ключ) для каждого персонажа.</p>
+                <p class="text-slate-500 text-sm mb-4 px-2 text-center">Выберите подземелья, в которых вам нужен RIO или W (недельный ключ) для каждого персонажа.</p>
                 
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden tree-container-block text-left">
                     <div class="overflow-x-auto custom-scrollbar pb-2">
@@ -243,7 +243,7 @@
                 <h3 class="text-xl font-black text-slate-800 mb-2 uppercase tracking-wide px-2 flex items-center justify-center gap-2">
                     Рейдовые подземелья
                 </h3>
-                <p class="text-slate-500 text-sm mb-4 px-2 max-w-3xl mx-auto text-center">Выбери предметы для каждого персонажа. Нажми на иконку комментария справа, чтобы оставить пояснение.</p>
+                <p class="text-slate-500 text-sm mb-4 px-2 text-center">Выбери предметы для каждого персонажа. Нажми на иконку комментария справа, чтобы оставить пояснение.</p>
                 
                 <div id="form-body-bosses" class="space-y-6 text-left">
                     <!-- Сюда рендерятся боссы (карточки) -->
@@ -253,7 +253,7 @@
         
         <!-- ФУТЕР -->
         <footer class="text-center pt-10 pb-4 text-slate-400 font-medium text-sm mt-auto">
-            Guild Planner V2.2 - @Rainon
+            Guild Planner V2.3 - @Rainon
         </footer>
         
     </main>
@@ -431,24 +431,24 @@
 
                 const mainLine = mainRow.querySelector('.tree-line-container');
                 if (mainLine) {
-                    mainLine.innerHTML = hasAnyAlts ? `<div class="absolute left-[20px] top-1/2 bottom-[-1px] border-l-[3px] border-emerald-400 z-0"></div>` : '';
+                    mainLine.innerHTML = hasAnyAlts ? `<div class="absolute left-[20px] top-1/2 bottom-[-1px] border-emerald-400 z-0" style="border-left-width: 2px;"></div>` : '';
                 }
 
                 const alt1Line = alt1Row ? alt1Row.querySelector('.tree-line-container') : null;
                 if (alt1Line) {
                     if (hasAlt2) {
                         alt1Line.innerHTML = `
-                            <div class="absolute left-[20px] top-[-1px] bottom-1/2 w-4 border-l-[3px] border-b-[3px] border-emerald-400 rounded-bl-[8px] z-0"></div>
-                            <div class="absolute left-[20px] top-1/2 bottom-[-1px] border-l-[3px] border-emerald-400 z-0"></div>
+                            <div class="absolute left-[20px] top-[-1px] bottom-1/2 w-4 border-emerald-400 z-0" style="border-left-width: 2px; border-bottom-width: 2px; border-bottom-left-radius: 8px;"></div>
+                            <div class="absolute left-[20px] top-1/2 bottom-[-1px] border-emerald-400 z-0" style="border-left-width: 2px;"></div>
                         `;
                     } else {
-                        alt1Line.innerHTML = `<div class="absolute left-[20px] top-[-1px] bottom-1/2 w-4 border-l-[3px] border-b-[3px] border-emerald-400 rounded-bl-[8px] z-0"></div>`;
+                        alt1Line.innerHTML = `<div class="absolute left-[20px] top-[-1px] bottom-1/2 w-4 border-emerald-400 z-0" style="border-left-width: 2px; border-bottom-width: 2px; border-bottom-left-radius: 8px;"></div>`;
                     }
                 }
 
                 const alt2Line = alt2Row ? alt2Row.querySelector('.tree-line-container') : null;
                 if (alt2Line) {
-                    alt2Line.innerHTML = `<div class="absolute left-[20px] top-[-1px] bottom-1/2 w-4 border-l-[3px] border-b-[3px] border-emerald-400 rounded-bl-[8px] z-0"></div>`;
+                    alt2Line.innerHTML = `<div class="absolute left-[20px] top-[-1px] bottom-1/2 w-4 border-emerald-400 z-0" style="border-left-width: 2px; border-bottom-width: 2px; border-bottom-left-radius: 8px;"></div>`;
                 }
             });
         }
@@ -1026,8 +1026,11 @@
         }
 
         window.saveForm = async function() {
+            hasUnsavedChanges = false;
+            lastModifiedBox = null;
+
             const btn = document.getElementById('floating-save-btn');
-            const originalContent = btn.innerHTML;
+            const originalContent = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg><span>Сохранить</span>`;
             
             btn.innerHTML = `<div class="w-6 h-6 border-4 border-white border-t-transparent rounded-full loader"></div>`;
             btn.disabled = true;
@@ -1101,10 +1104,6 @@
             const result = await githubAPI('PUT', `loot_${currentUser}.json`, body);
 
             if (result) {
-                // СБРАСЫВАЕМ ГРЯЗНЫЙ ФЛАГ ДО ТАЙМАУТА! 
-                hasUnsavedChanges = false;
-                lastModifiedBox = null;
-                
                 btn.innerHTML = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> <span>Сохранено!</span>`;
                 btn.classList.replace('bg-green-600', 'bg-emerald-500');
                 btn.classList.replace('hover:bg-green-700', 'hover:bg-emerald-600');
@@ -1117,10 +1116,10 @@
                     hideFloatingSave();
                 }, 2000);
             } else {
+                hasUnsavedChanges = true; // Возвращаем флаг при ошибке
                 showMessage('Ошибка при сохранении на GitHub', 'error');
                 btn.innerHTML = originalContent;
                 btn.disabled = false;
-                hideFloatingSave();
             }
         }
 
@@ -1169,6 +1168,8 @@
                         console.error("Ошибка парсинга testdata.json", e);
                         showMessage("Ошибка чтения тестовых данных", "error");
                     }
+                } else {
+                    showMessage("Файл testdata.json не найден на GitHub!", "error");
                 }
             } else {
                 const fetchPromises = PLAYERS.map(player => 
@@ -1237,14 +1238,14 @@
 
             let treeLineHtml = '';
             if (charType === 'main' && hasAlts) {
-                treeLineHtml = `<div class="absolute left-[20px] top-1/2 bottom-[-1px] border-l-[3px] border-emerald-400 z-0"></div>`;
+                treeLineHtml = `<div class="absolute left-[20px] top-1/2 bottom-[-1px] border-emerald-400 z-0" style="border-left-width: 2px;"></div>`;
             } else if (isAlt) {
                 if (isLastAlt) {
-                    treeLineHtml = `<div class="absolute left-[20px] top-[-1px] bottom-1/2 w-4 border-l-[3px] border-b-[3px] border-emerald-400 rounded-bl-[8px] z-0"></div>`;
+                    treeLineHtml = `<div class="absolute left-[20px] top-[-1px] bottom-1/2 w-4 border-emerald-400 z-0" style="border-left-width: 2px; border-bottom-width: 2px; border-bottom-left-radius: 8px;"></div>`;
                 } else {
                     treeLineHtml = `
-                        <div class="absolute left-[20px] top-[-1px] bottom-1/2 w-4 border-l-[3px] border-b-[3px] border-emerald-400 rounded-bl-[8px] z-0"></div>
-                        <div class="absolute left-[20px] top-1/2 bottom-[-1px] border-l-[3px] border-emerald-400 z-0"></div>
+                        <div class="absolute left-[20px] top-[-1px] bottom-1/2 w-4 border-emerald-400 z-0" style="border-left-width: 2px; border-bottom-width: 2px; border-bottom-left-radius: 8px;"></div>
+                        <div class="absolute left-[20px] top-1/2 bottom-[-1px] border-emerald-400 z-0" style="border-left-width: 2px;"></div>
                     `;
                 }
             }
@@ -1374,6 +1375,13 @@
                 `;
             }
 
+            finalHtml += `
+                <div class="bg-transparent mb-6 text-center mt-10">
+                    <h3 class="text-xl font-black text-slate-800 mb-2 uppercase tracking-wide px-2 flex items-center justify-center gap-2">
+                        Рейдовые подземелья
+                    </h3>
+                </div>
+            `;
 
             // --- БЛОК БОССОВ ---
             BOSSES.forEach(boss => {
@@ -1431,7 +1439,7 @@
                 if (interestedAccounts.length > 0) {
                     let bossHtml = `
                         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-8">
-                            <div class="bg-slate-50 p-4 border-b border-slate-200 flex items-center justify-center gap-4">
+                            <div class="bg-slate-50 p-4 border-b border-slate-200 flex items-center gap-4">
                                 <img src="${boss.icon}" alt="${boss.name}" class="w-12 h-12 rounded-lg shadow-sm border border-slate-300 object-cover bg-slate-900">
                                 <h3 class="text-xl font-black text-slate-800 uppercase tracking-wide">${boss.name}</h3>
                             </div>
