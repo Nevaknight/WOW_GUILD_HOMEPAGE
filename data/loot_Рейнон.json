@@ -1,15 +1,25 @@
 {
+  "characters": {
+    "main": {
+      "class": "paladin",
+      "name": "Паладин"
+    },
+    "alt1": {
+      "class": "druid",
+      "name": "Друид"
+    },
+    "alt2": {
+      "class": "monk",
+      "name": "Монах"
+    }
+  },
   "stream_link": "https://www.twitch.tv/rainon_",
   "boss_1": {
-    "items": [
-      1
-    ],
+    "items": [],
     "comment": "57456"
   },
   "boss_2": {
-    "items": [
-      7
-    ],
+    "items": [],
     "comment": "Штаны не обязательны, но хотелось бы"
   },
   "boss_3": {
@@ -33,6 +43,10 @@
     "comment": ""
   },
   "boss_8": {
+    "items": [],
+    "comment": ""
+  },
+  "boss_9": {
     "items": [],
     "comment": ""
   }
