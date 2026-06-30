@@ -119,7 +119,7 @@
                     <span class="text-slate-800 font-bold text-[15px] whitespace-nowrap">Фильтры:</span>
                     <div class="flex flex-wrap items-center gap-3 w-full">
                         <!-- Фильтр по игроку -->
-                        <div class="relative w-full sm:w-[260px]">
+                        <div class="relative w-full sm:w-[220px]">
                             <select id="dashboard-player-filter" onchange="applyFilter()" class="w-full h-[42px] pl-3 pr-8 border border-slate-300 rounded-lg text-sm font-semibold text-slate-700 bg-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 shadow-sm appearance-none cursor-pointer disabled:opacity-50" disabled>
                                 <option value="all">Загрузка...</option>
                             </select>
@@ -128,7 +128,7 @@
                             </div>
                         </div>
                         <!-- Фильтр по предмету -->
-                        <div class="relative w-full sm:w-[260px]">
+                        <div class="relative w-full sm:w-[220px]">
                             <select id="dashboard-item-filter" onchange="applyFilter()" class="w-full h-[42px] pl-3 pr-8 border border-slate-300 rounded-lg text-sm font-semibold text-slate-700 bg-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 shadow-sm appearance-none cursor-pointer disabled:opacity-50" disabled>
                                 <option value="all">Загрузка...</option>
                             </select>
@@ -140,6 +140,11 @@
                         <label class="flex items-center gap-2 h-[42px] px-4 border border-slate-300 rounded-lg bg-white cursor-pointer hover:bg-slate-50 transition shadow-sm select-none shrink-0 w-full sm:w-auto">
                             <input type="checkbox" id="dashboard-mains-only" onchange="applyFilter()" class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500 cursor-pointer">
                             <span class="text-sm font-semibold text-slate-700 whitespace-nowrap">Только мейны</span>
+                        </label>
+                        <!-- Фильтр: Ключи -->
+                        <label class="flex items-center gap-2 h-[42px] px-4 border border-slate-300 rounded-lg bg-white cursor-pointer hover:bg-slate-50 transition shadow-sm select-none shrink-0 w-full sm:w-auto">
+                            <input type="checkbox" id="dashboard-keys-toggle" onchange="applyFilter()" class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500 cursor-pointer" checked>
+                            <span class="text-sm font-semibold text-slate-700 whitespace-nowrap">Ключи</span>
                         </label>
                     </div>
                 </div>
@@ -215,10 +220,30 @@
                 </div>
             </div>
 
-            <!-- Блок Вишлиста -->
+            <!-- Блок Ключей (Подземелий) -->
+            <div class="bg-transparent mb-10">
+                <h3 class="text-xl font-black text-slate-800 mb-2 uppercase tracking-wide px-2 flex items-center gap-2">
+                    <span class="text-2xl">🗝️</span> Ключи
+                </h3>
+                <p class="text-slate-500 text-sm mb-4 px-2">Выберите подземелья, в которых вам нужен RIO или конкретные вещи (W) для каждого персонажа.</p>
+                
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden tree-container-block">
+                    <div class="overflow-x-auto custom-scrollbar pb-2">
+                        <table class="w-max min-w-full table-fixed border-collapse">
+                            <tbody id="form-body-dungeons" class="text-sm border-b border-slate-200">
+                                <!-- Сюда рендерятся подземелья -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Блок Вишлиста (Рейд) -->
             <div class="bg-transparent mb-6">
-                <h3 class="text-xl font-black text-slate-800 mb-2 uppercase tracking-wide px-2">Приоритет Лута</h3>
-                <p class="text-slate-500 text-sm mb-6 px-2">Выбери предметы для каждого персонажа. Чтобы у босса появилась отдельная строчка для Альта, выбери класс Альта выше.</p>
+                <h3 class="text-xl font-black text-slate-800 mb-2 uppercase tracking-wide px-2 flex items-center gap-2">
+                    <span class="text-2xl">⚔️</span> Приоритет Лута (Рейд)
+                </h3>
+                <p class="text-slate-500 text-sm mb-4 px-2">Выбери предметы для каждого персонажа. Нажми на иконку комментария справа, чтобы оставить пояснение.</p>
                 
                 <div id="form-body-bosses" class="space-y-6">
                     <!-- Сюда рендерятся боссы (карточки) -->
@@ -228,7 +253,7 @@
         
         <!-- ФУТЕР -->
         <footer class="text-center pt-10 pb-4 text-slate-400 font-medium text-sm mt-auto">
-            Guild Planner V1.9 - @Rainon
+            Guild Planner V2.0 - @Rainon
         </footer>
         
     </main>
@@ -274,6 +299,29 @@
                 </button>
             </div>
             <p id="view-modal-text" class="text-slate-700 font-medium leading-relaxed whitespace-pre-wrap break-words"></p>
+        </div>
+    </div>
+
+    <!-- Модальное окно для списка игроков подземелья -->
+    <div id="dungeon-list-modal" onclick="if(event.target === this) closeDungeonListModal()" class="fixed inset-0 bg-slate-900 bg-opacity-60 z-[100] hidden flex items-center justify-center backdrop-blur-sm cursor-pointer">
+        <div class="bg-white rounded-2xl shadow-2xl p-0 w-[90%] max-w-md transform transition-all scale-95 opacity-0 cursor-auto flex flex-col overflow-hidden" id="dungeon-list-modal-content">
+            <div class="p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+                <div class="flex items-center gap-4">
+                     <img id="dl-modal-icon" src="" class="w-12 h-12 rounded-lg border border-slate-300 shadow-sm object-cover bg-slate-900">
+                     <div class="flex flex-col">
+                         <h3 id="dl-modal-title" class="font-black text-slate-800 text-lg leading-tight"></h3>
+                         <div class="mt-1">
+                             <span id="dl-modal-type" class="text-[10px] font-black tracking-wider text-white px-2 py-1 rounded bg-slate-500 uppercase"></span>
+                         </div>
+                     </div>
+                </div>
+                <button onclick="closeDungeonListModal()" class="text-slate-400 hover:text-red-500 hover:bg-red-50 p-2 rounded-xl transition-colors shrink-0" title="Закрыть (ESC)">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div id="dl-modal-list" class="p-2 max-h-[60vh] overflow-y-auto custom-scrollbar bg-white flex flex-col">
+                <!-- Сюда вставляется список -->
+            </div>
         </div>
     </div>
 
@@ -334,6 +382,18 @@
             { id: 'boss_9', name: 'Ула\'тек', icon: './ICONS/BOSSES/NO_ICON_BOSS.jpg' }
         ];
 
+        // Массив подземелий (Ключи)
+        const DUNGEONS = [
+            { id: 'dungeon_1', name: 'Алтарь Клыков', icon: './ICONS/DUNGEONS/АЛТАРЬ_КЛЫКОВ.jpg' },
+            { id: 'dungeon_2', name: 'Арена Шрама Бездны', icon: './ICONS/DUNGEONS/АРЕНА_ШРАМА_БЕЗДНЫ.jpg' },
+            { id: 'dungeon_3', name: 'Берлога Налоракка', icon: './ICONS/DUNGEONS/БЕРЛОГА_НАЛОРАККА.jpg' },
+            { id: 'dungeon_4', name: 'Гробница Королей', icon: './ICONS/DUNGEONS/ГРОБНИЦА_КОРОЛЕЙ.jpg' },
+            { id: 'dungeon_5', name: 'Закоулок Душегубов', icon: './ICONS/DUNGEONS/ЗАКОУЛОК_ДУШЕГУБОВ.jpg' },
+            { id: 'dungeon_6', name: 'Рубиновые Омуты Жизни', icon: './ICONS/DUNGEONS/РУБИНОВЫЕ_ОМУТЫ_ЖИЗНИ.jpg' },
+            { id: 'dungeon_7', name: 'Слепящая Долина', icon: './ICONS/DUNGEONS/СЛЕПЯЩАЯ_ДОЛИНА.jpg' },
+            { id: 'dungeon_8', name: 'Храм Сетралисс', icon: './ICONS/DUNGEONS/ХРАМ_СЕТРАЛИСС.jpg' }
+        ];
+
         let currentUser = null;
         let isTestMode = false;
         let currentAllLootData = {};
@@ -341,6 +401,7 @@
         let currentEditParams = null; 
         let hasUnsavedChanges = false;
         let lastModifiedBox = null;
+        let globalDungeonLists = {}; // Глобальное хранилище для списков подземелий
 
         function getSlotName(slotNumber) {
             const names = {
@@ -357,10 +418,10 @@
         }
 
         function updateFormTreeLines() {
-            document.querySelectorAll('div[data-boss-id]').forEach(bossBlock => {
-                const mainRow = bossBlock.querySelector('.row-char-main');
-                const alt1Row = bossBlock.querySelector('.row-char-alt1');
-                const alt2Row = bossBlock.querySelector('.row-char-alt2');
+            document.querySelectorAll('.tree-container-block').forEach(block => {
+                const mainRow = block.querySelector('.row-char-main');
+                const alt1Row = block.querySelector('.row-char-alt1');
+                const alt2Row = block.querySelector('.row-char-alt2');
                 
                 if(!mainRow) return;
 
@@ -516,7 +577,7 @@
         }
 
         function showView(viewId) {
-            // Если есть несохраненные изменения и мы пытаемся уйти из анкеты
+            // Защита от потери данных
             if (hasUnsavedChanges && viewId !== 'form') {
                 if (lastModifiedBox) {
                     lastModifiedBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -613,6 +674,22 @@
             showFloatingSave(imgElement);
         }
 
+        window.toggleDungeonBtn = function(btn, type) {
+            const isActive = btn.getAttribute('data-active') === 'true';
+            if (!isActive) {
+                btn.setAttribute('data-active', 'true');
+                btn.classList.remove('bg-slate-100', 'text-slate-400', 'border-slate-200');
+                if (type === 'rio') btn.classList.add('bg-blue-500', 'text-white', 'border-blue-600');
+                if (type === 'w') btn.classList.add('bg-purple-500', 'text-white', 'border-purple-600');
+            } else {
+                btn.setAttribute('data-active', 'false');
+                btn.classList.add('bg-slate-100', 'text-slate-400', 'border-slate-200');
+                if (type === 'rio') btn.classList.remove('bg-blue-500', 'text-white', 'border-blue-600');
+                if (type === 'w') btn.classList.remove('bg-purple-500', 'text-white', 'border-purple-600');
+            }
+            showFloatingSave(btn);
+        }
+
         function openCommentModal(bossId, charType) {
             currentEditParams = { bossId, charType };
             const hiddenInput = document.getElementById(`comment-${bossId}-${charType}`);
@@ -661,6 +738,57 @@
             }, 200); 
         }
 
+        window.openDungeonListModal = function(listKey) {
+            const data = globalDungeonLists[listKey];
+            if (!data) return;
+
+            document.getElementById('dl-modal-icon').src = data.dungeon.icon;
+            document.getElementById('dl-modal-title').innerText = data.dungeon.name;
+            
+            const typeBadge = document.getElementById('dl-modal-type');
+            typeBadge.innerText = data.type;
+            if (data.type === 'RIO') {
+                typeBadge.className = 'text-[10px] font-black tracking-wider text-white px-2 py-1 rounded uppercase bg-blue-500';
+            } else {
+                typeBadge.className = 'text-[10px] font-black tracking-wider text-white px-2 py-1 rounded uppercase bg-purple-500';
+            }
+
+            let listHtml = '';
+            if (data.list.length === 0) {
+                listHtml = `<div class="p-4 text-center text-slate-500 font-medium">Нет желающих</div>`;
+            } else {
+                data.list.forEach(p => {
+                    const classIcon = WOW_CLASSES[p.charConfig.class]?.icon || WOW_CLASSES['none'].icon;
+                    const displayName = p.charConfig.name || p.accountName;
+                    const charTag = p.charType === 'main' ? p.accountName : 'Альт';
+                    
+                    listHtml += `
+                        <div class="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-xl transition-colors border-b border-slate-100 last:border-0">
+                            <img src="${classIcon}" class="w-8 h-8 rounded border border-slate-300 object-cover shadow-sm bg-slate-900 shrink-0">
+                            <div class="flex flex-col leading-tight overflow-hidden">
+                                <span class="truncate font-bold text-slate-800 text-[15px]">${displayName}</span>
+                                <span class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">${charTag}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            
+            document.getElementById('dl-modal-list').innerHTML = listHtml;
+
+            const modal = document.getElementById('dungeon-list-modal');
+            const content = document.getElementById('dungeon-list-modal-content');
+            modal.classList.remove('hidden');
+            requestAnimationFrame(() => content.classList.remove('scale-95', 'opacity-0'));
+        }
+
+        window.closeDungeonListModal = function() {
+            const modal = document.getElementById('dungeon-list-modal');
+            const content = document.getElementById('dungeon-list-modal-content');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => modal.classList.add('hidden'), 200); 
+        }
+
         window.saveCommentFromModal = function() {
             if (!currentEditParams) return;
             const { bossId, charType } = currentEditParams;
@@ -687,51 +815,62 @@
         }
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !document.getElementById('comment-modal').classList.contains('hidden')) {
-                closeCommentModal();
-            }
-            if (e.key === 'Escape' && !document.getElementById('view-comment-modal').classList.contains('hidden')) {
-                closeViewCommentModal();
+            if (e.key === 'Escape') {
+                if (!document.getElementById('comment-modal').classList.contains('hidden')) closeCommentModal();
+                if (!document.getElementById('view-comment-modal').classList.contains('hidden')) closeViewCommentModal();
+                if (!document.getElementById('dungeon-list-modal').classList.contains('hidden')) closeDungeonListModal();
             }
         });
 
         function migrateData(oldData) {
             if (!oldData) return null;
-            if (oldData.bosses) return oldData;
-
-            let newData = {
+            
+            // Если данные уже новые, нужно только убедиться что есть dungeons
+            let isNew = !!oldData.bosses;
+            let newData = isNew ? oldData : {
                 characters: {
                     main: { class: 'none', name: '' },
                     alt1: { class: 'none', name: '' },
                     alt2: { class: 'none', name: '' }
                 },
                 stream_link: oldData.stream_link || '',
-                bosses: {}
+                bosses: {},
+                dungeons: {}
             };
 
-            if (oldData.characters) {
-                newData.characters = oldData.characters;
+            if (!isNew) {
+                if (oldData.characters) newData.characters = oldData.characters;
+                BOSSES.forEach(b => {
+                    if (oldData[b.id]) {
+                        newData.bosses[b.id] = {
+                            main: { items: oldData[b.id].items || [], comment: oldData[b.id].comment || '' },
+                            alt1: { items: [], comment: '' },
+                            alt2: { items: [], comment: '' }
+                        };
+                    }
+                });
             }
 
-            BOSSES.forEach(b => {
-                if (oldData[b.id]) {
-                    newData.bosses[b.id] = {
-                        main: {
-                            items: oldData[b.id].items || [],
-                            comment: oldData[b.id].comment || ''
-                        },
-                        alt1: { items: [], comment: '' },
-                        alt2: { items: [], comment: '' }
+            if (!newData.dungeons) {
+                newData.dungeons = {};
+            }
+            DUNGEONS.forEach(d => {
+                if (!newData.dungeons[d.id]) {
+                    newData.dungeons[d.id] = {
+                        main: { rio: false, w: false },
+                        alt1: { rio: false, w: false },
+                        alt2: { rio: false, w: false }
                     };
                 }
             });
+
             return newData;
         }
 
         function renderForm(rawData = {}) {
             const userData = migrateData(rawData) || {
                 characters: { main: { class: 'none', name: '' }, alt1: { class: 'none', name: '' }, alt2: { class: 'none', name: '' } },
-                stream_link: '', bosses: {}
+                stream_link: '', bosses: {}, dungeons: {}
             };
 
             const chars = userData.characters;
@@ -745,6 +884,64 @@
             const streamInput = document.getElementById('stream-link');
             if (streamInput) streamInput.value = userData.stream_link || '';
 
+            // Рендер Подземелий (Ключей)
+            const dContainer = document.getElementById('form-body-dungeons');
+            dContainer.innerHTML = '';
+            
+            let dRowsHtml = '';
+            ['main', 'alt1', 'alt2'].forEach(charType => {
+                const charData = chars[charType] || { class: 'none', name: '' };
+                const charDungeons = userData.dungeons || {};
+                
+                let dungeonsHtml = `<div class="flex gap-4">`;
+                DUNGEONS.forEach(d => {
+                    const dState = charDungeons[d.id]?.[charType] || { rio: false, w: false };
+                    const rioCls = dState.rio ? 'bg-blue-500 text-white border-blue-600' : 'bg-slate-100 text-slate-400 border-slate-200';
+                    const wCls = dState.w ? 'bg-purple-500 text-white border-purple-600' : 'bg-slate-100 text-slate-400 border-slate-200';
+                    
+                    dungeonsHtml += `
+                        <div class="flex items-center gap-2 bg-slate-50 p-1.5 rounded-xl border border-slate-200 shadow-sm shrink-0" data-dungeon-id="${d.id}">
+                            <img src="${d.icon}" alt="${d.name}" class="w-[42px] h-[42px] rounded-lg object-cover bg-slate-900 border border-slate-300" title="${d.name}">
+                            <div class="flex flex-col gap-[3px]">
+                                <button onclick="toggleDungeonBtn(this, 'rio')" data-active="${dState.rio}" class="dungeon-btn-rio w-8 h-[19px] rounded border text-[8px] font-black transition-colors ${rioCls}">RIO</button>
+                                <button onclick="toggleDungeonBtn(this, 'w')" data-active="${dState.w}" class="dungeon-btn-w w-8 h-[19px] rounded border text-[8px] font-black transition-colors ${wCls}">W</button>
+                            </div>
+                        </div>
+                    `;
+                });
+                dungeonsHtml += `</div>`;
+
+                const isHidden = charData.class === 'none' ? 'style="display: none;"' : '';
+                const displayName = charData.name || currentUser;
+                const displayIcon = WOW_CLASSES[charData.class]?.icon || WOW_CLASSES['none'].icon;
+                const isAlt = charType !== 'main';
+                const rowBgClass = isAlt ? 'bg-slate-50/50' : '';
+
+                dRowsHtml += `
+                    <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors row-char-${charType} ${rowBgClass}" ${isHidden} data-char-type="${charType}">
+                        <td class="w-[280px] p-0 border-r border-slate-100/50 align-middle">
+                            <div class="relative flex items-center h-[64px] w-full">
+                                <div class="tree-line-container w-[40px] shrink-0 relative h-full"></div>
+                                <div class="flex items-center gap-3 w-[190px] shrink-0">
+                                    <img src="${displayIcon}" class="display-icon w-8 h-8 rounded-md border border-slate-300 object-cover shadow-sm bg-slate-900 shrink-0">
+                                    <div class="flex flex-col leading-tight overflow-hidden w-full pr-2">
+                                        <span class="display-name truncate font-bold text-slate-800 text-[15px]">${displayName}</span>
+                                        <span class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">${charType === 'main' ? currentUser : 'Альт'}</span>
+                                    </div>
+                                </div>
+                                <div class="w-[50px] shrink-0 flex justify-center"></div>
+                            </div>
+                        </td>
+                        <td class="w-[930px] px-4 py-2 align-middle">
+                            ${dungeonsHtml}
+                        </td>
+                    </tr>
+                `;
+            });
+            dContainer.innerHTML = dRowsHtml;
+
+
+            // Рендер Боссов
             const container = document.getElementById('form-body-bosses');
             container.innerHTML = '';
 
@@ -780,7 +977,6 @@
                     const isAlt = charType !== 'main';
                     const rowBgClass = isAlt ? 'bg-slate-50/50' : '';
 
-                    // СТРОГАЯ ФИКСАЦИЯ ШИРИНЫ КАК В ДАШБОРДЕ
                     rowsHtml += `
                         <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors row-char-${charType} ${rowBgClass}" ${isHidden} data-char-type="${charType}">
                             <td class="w-[280px] p-0 border-r border-slate-100/50 align-middle">
@@ -814,7 +1010,7 @@
                 });
 
                 const bossContainerHtml = `
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden" data-boss-id="${boss.id}">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden tree-container-block" data-boss-id="${boss.id}">
                         <div class="bg-slate-50 p-4 border-b border-slate-200 flex items-center gap-4">
                             <img src="${boss.icon}" alt="${boss.name}" class="w-12 h-12 rounded-lg shadow-sm border border-slate-300 object-cover bg-slate-900">
                             <h3 class="text-xl font-black text-slate-800 uppercase tracking-wide">${boss.name}</h3>
@@ -848,9 +1044,34 @@
                     alt2: { class: document.getElementById('alt2-class').value, name: document.getElementById('alt2-name').value.trim() }
                 },
                 stream_link: document.getElementById('stream-link') ? document.getElementById('stream-link').value.trim() : '',
-                bosses: {}
+                bosses: {},
+                dungeons: {}
             };
+
+            // Собираем Подземелья
+            const dContainer = document.getElementById('form-body-dungeons');
+            DUNGEONS.forEach(d => { dataToSave.dungeons[d.id] = { main: {rio:false, w:false}, alt1: {rio:false, w:false}, alt2: {rio:false, w:false} }; });
             
+            if (dContainer) {
+                ['main', 'alt1', 'alt2'].forEach(charType => {
+                    const row = dContainer.querySelector(`.row-char-${charType}`);
+                    if (row) {
+                        DUNGEONS.forEach(d => {
+                            const block = row.querySelector(`div[data-dungeon-id="${d.id}"]`);
+                            if (block) {
+                                const rioBtn = block.querySelector('.dungeon-btn-rio');
+                                const wBtn = block.querySelector('.dungeon-btn-w');
+                                dataToSave.dungeons[d.id][charType] = {
+                                    rio: rioBtn ? rioBtn.getAttribute('data-active') === 'true' : false,
+                                    w: wBtn ? wBtn.getAttribute('data-active') === 'true' : false
+                                };
+                            }
+                        });
+                    }
+                });
+            }
+            
+            // Собираем Боссов
             BOSSES.forEach(boss => {
                 const bossBlock = document.querySelector(`div[data-boss-id="${boss.id}"]`);
                 dataToSave.bosses[boss.id] = { main: {items:[], comment:''}, alt1: {items:[], comment:''}, alt2: {items:[], comment:''} };
@@ -914,7 +1135,6 @@
             } else {
                 renderForm({});
             }
-            // Сбрасываем статус несохраненности, так как первоначальный рендер мог его случайно триггернуть
             hideFloatingSave();
         }
 
@@ -1029,7 +1249,6 @@
 
             const rowClass = isAlt ? 'bg-slate-50/50' : '';
 
-            // СТРОГАЯ ФИКСАЦИЯ ШИРИНЫ 
             let playerDisplayHtml = `
                 <div class="relative flex items-center h-[56px] w-full">
                     <div class="w-[40px] shrink-0 relative h-full">
@@ -1078,6 +1297,7 @@
             const playerFilterValue = document.getElementById('dashboard-player-filter').value;
             const itemFilterValue = document.getElementById('dashboard-item-filter').value;
             const mainsOnly = document.getElementById('dashboard-mains-only').checked;
+            const showKeys = document.getElementById('dashboard-keys-toggle').checked;
             
             if (currentActivePlayers.length === 0) {
                 container.innerHTML = `<div class="p-12 text-center bg-white rounded-2xl border border-slate-200 border-dashed text-slate-500">Данных для отображения пока нет.</div>`;
@@ -1085,7 +1305,78 @@
             }
 
             let finalHtml = '';
+            globalDungeonLists = {}; // Сброс глобальных данных подземелий
 
+            // --- БЛОК КЛЮЧЕЙ (ПОДЗЕМЕЛИЙ) ---
+            if (showKeys) {
+                let dashDungeonsHtml = '';
+                
+                DUNGEONS.forEach(d => {
+                    let rioList = [];
+                    let wList = [];
+
+                    currentActivePlayers.forEach(player => {
+                        if (playerFilterValue !== 'all' && player !== playerFilterValue) return;
+                        const pData = currentAllLootData[player];
+                        if (!pData || !pData.dungeons) return;
+
+                        const chars = pData.characters || {};
+                        const dLoot = pData.dungeons[d.id] || {};
+
+                        ['main', 'alt1', 'alt2'].forEach(charType => {
+                            const charConfig = chars[charType];
+                            if (!charConfig || charConfig.class === 'none') return;
+                            if (mainsOnly && charType !== 'main') return;
+
+                            const cData = dLoot[charType];
+                            if (cData) {
+                                const entry = { accountName: player, charType: charType, charConfig: charConfig };
+                                if (cData.rio) rioList.push(entry);
+                                if (cData.w) wList.push(entry);
+                            }
+                        });
+                    });
+
+                    // Сохраняем в глобальный объект для модалки
+                    globalDungeonLists[`${d.id}_rio`] = { dungeon: d, type: 'RIO', list: rioList };
+                    globalDungeonLists[`${d.id}_w`] = { dungeon: d, type: 'W', list: wList };
+
+                    // Ники для тултипа
+                    const rioNames = rioList.map(x => x.charConfig.name || x.accountName).join(', ') || 'Нет желающих';
+                    const wNames = wList.map(x => x.charConfig.name || x.accountName).join(', ') || 'Нет желающих';
+
+                    const rioActive = rioList.length > 0 ? 'bg-blue-100 text-blue-700 border-blue-300 hover:bg-blue-200 shadow-sm cursor-pointer' : 'bg-slate-50 text-slate-400 border-slate-200 cursor-auto';
+                    const wActive = wList.length > 0 ? 'bg-purple-100 text-purple-700 border-purple-300 hover:bg-purple-200 shadow-sm cursor-pointer' : 'bg-slate-50 text-slate-400 border-slate-200 cursor-auto';
+
+                    dashDungeonsHtml += `
+                        <div class="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-sm shrink-0 w-[230px]">
+                            <img src="${d.icon}" alt="${d.name}" class="w-[52px] h-[52px] rounded-lg object-cover bg-slate-900 shadow-sm shrink-0 border border-slate-200">
+                            <div class="flex flex-col gap-1.5 w-full overflow-hidden">
+                                <span class="text-xs font-bold text-slate-800 truncate" title="${d.name}">${d.name}</span>
+                                <div class="flex gap-1.5 w-full">
+                                    <button ${rioList.length > 0 ? `onclick="openDungeonListModal('${d.id}_rio')"` : ''} class="flex-1 h-6 rounded border text-[10px] font-black transition-colors ${rioActive}" title="${rioNames}">RIO (${rioList.length})</button>
+                                    <button ${wList.length > 0 ? `onclick="openDungeonListModal('${d.id}_w')"` : ''} class="flex-1 h-6 rounded border text-[10px] font-black transition-colors ${wActive}" title="${wNames}">W (${wList.length})</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                finalHtml += `
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-8">
+                        <div class="bg-slate-50 p-4 border-b border-slate-200 flex items-center gap-4">
+                            <span class="text-2xl">🗝️</span>
+                            <h3 class="text-xl font-black text-slate-800 uppercase tracking-wide">Ключи</h3>
+                        </div>
+                        <div class="p-5 flex flex-wrap gap-4 bg-slate-50/50">
+                            ${dashDungeonsHtml}
+                        </div>
+                    </div>
+                `;
+            }
+
+
+            // --- БЛОК БОССОВ ---
             BOSSES.forEach(boss => {
                 let interestedAccounts = [];
                 
